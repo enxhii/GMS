@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{4} (%F:%L) : %m%n" />
+		</Console>
+		
+	</Appenders>
+
+	<Loggers>
+		<logger name="CTS-FE-Log" additivity="false" level="debug">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="FileFE" />
+		</logger>
+
+		<logger name="CTS-FE-ERROR-Log" additivity="false" level="error">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="FileErrorFE" />
+		</logger>
+
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+
+		</Root>
+	</Loggers>
+
+</Configuration>

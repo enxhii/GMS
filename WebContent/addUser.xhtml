@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Default title</title>
+</h:head>
+
+<h:body>
+<h:form>
+<table>
+			<tr>
+				<td><h:messages showDetail="true" /></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value=" Name : " /></td>
+				<td><h:inputText value="#{userbean.user.name}"
+						required="true"
+						requiredMessage="Your First name must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</h:inputText></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value=" Surname : " /></td>
+				<td><h:inputText value="#{userbean.user.surname}"
+						required="true"
+						requiredMessage="Your Surname must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</h:inputText></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value="Username : " /></td>
+				<td><h:inputText value="#{userbean.user.username}"
+						required="true"
+						requiredMessage="Username is required!Your Last name must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</h:inputText></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value="Password : "/></td>
+				<td><h:inputSecret id="password1"
+						value="#{userbean.user.password}" required="true"
+						requiredMessage="Password is required">
+						<f:validateLength minimum="8"/>
+					</h:inputSecret> </td>
+					<h:message for="password1" errorClass="invalid"
+							id="password1Error" />
+			</tr>
+			<tr>
+				<td><h:outputText value="Mobile : " /></td>
+				<td><h:inputText value="#{userbean.user.phone}"
+						required="true" requiredMessage="Mobile is required">
+					</h:inputText></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value=" Email: " /></td>
+				<td><h:inputText value="#{userbean.user.email}" required="true"
+						requiredMessage="Email is required">
+						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+					</h:inputText></td>
+			</tr>
+
+<tr>
+<h:selectOneRadio value="#{userbean.user.gender}">
+   	<f:selectItem itemValue="female" itemLabel="Female" />
+   	<f:selectItem itemValue="male" itemLabel="Male" />
+</h:selectOneRadio>
+</tr>
+			<tr>
+
+				<td><h:outputText value="Status : " /></td>
+				<td><h:inputText value="1" readonly="true">
+					</h:inputText></td>
+			</tr>
+			<tr>
+				<td><h:outputText value="Country " /></td>
+				<td><h:inputText value="#{userbean.address.country}"
+						required="true" requiredMessage="Country is required">
+					</h:inputText></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value=" City " /></td>
+				<td><h:inputText value="#{userbean.address.city}"
+						required="true" requiredMessage="City is required">
+					</h:inputText></td>
+			</tr>
+
+			<tr>
+				<td><h:outputText value="Zip code" /></td>
+				<td><h:inputText value="#{userbean.address.zipcode}"
+						required="true" requiredMessage="ZipCode  is required">
+					</h:inputText></td>
+			</tr>
+<p:selectOneMenu value="#{userbean.role.name}"
+converter="role" height="250" effect="fade" var="p">
+<f:selectItem itemLabel="Select One" itemValue="" />
+<f:selectItems value="#{userbean.role}" var="role" itemLabel="#{role.name}" itemValue="#{role}"/>
+</p:selectOneMenu>
+			<tr>
+				<td><h:commandButton value="Insert" styleClass="commandButton"
+						action="#{userbean.addUser}" /></td>
+			</tr>
+		</table>
+
+</h:form>
+
+
+</h:body>
+
+</html>

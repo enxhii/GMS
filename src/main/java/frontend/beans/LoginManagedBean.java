@@ -1,5 +1,10 @@
 package frontend.beans;
+
 import java.io.IOException;
+import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -9,8 +14,6 @@ import javax.servlet.http.HttpSession;
 import backend.SessionUtils.SessionUtils;
 import backend.model.Role;
 import backend.model.User;
-import backend.model.UserRole;
-import backend.service.RoleService;
 import backend.service.UserService;
 @ManagedBean(name = "login")
 @RequestScoped
@@ -20,32 +23,36 @@ public class LoginManagedBean {
 	private String password;
 	@ManagedProperty(value = "#{userServiceImpl}")
 	private UserService userService;
-	@ManagedProperty(value = "#{roleServiceImpl}")
-	private RoleService roleService;
 	private User user;
-	private UserRole userRole;
 	private Role role;
-
+	private List<User> userlist;
+	final static Logger logger = LogManager.getLogger(LoginManagedBean.class);
 	public void submit() throws IOException {
 		try {
 				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-
-			if (userService.doesExists(username) && username != null) {
-				user = userService.getUser(username, password);
-				System.out.print(user.getUsername());
-				HttpSession session = SessionUtils.getSession();
+		if (userService.doesExists(username)) {
+			
+			logger.debug("Checking if user exists ");
+			user = userService.getUser(username, password);
+			HttpSession session = SessionUtils.getSession();
 				session.setAttribute("id", user.getId());
-				session.setAttribute("username", username);
-				externalContext.redirect(externalContext.getRequestContextPath() + "/adminPages/admin.xhtml");
+				session.setAttribute("username",user.getUsername());
+		        logger.debug("User Found");
+		       // if(userService.findByUser(user.getId()) == (role.getId()){
+				externalContext.redirect(externalContext.getRequestContextPath() + "/admin/admin.xhtml");
+		        logger.debug("User with username " + username +"logged in");
 
-			}	
-			externalContext.redirect(externalContext.getRequestContextPath() + "/login.xhtml");
+				}
+		else {
+	        logger.error("User doesn't exists");
+	        externalContext.redirect(externalContext.getRequestContextPath() + "/login.xhtml");
+
+		}
 
 		} catch (Exception e) {
 			e.getMessage();
 		}
 	}
-
 	public void logout() throws IOException {
 		@SuppressWarnings("unused")
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -84,14 +91,6 @@ public class LoginManagedBean {
 		return LOGOUT;
 	}
 
-	public UserRole getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
-	}
-
 	public Role getRole() {
 		return role;
 	}
@@ -107,12 +106,11 @@ public class LoginManagedBean {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-	public RoleService getRoleService() {
-		return roleService;
+	public List<User> getUserlist() {
+		return userlist;
+	}
+	public void setUserlist(List<User> userlist) {
+		this.userlist = userlist;
 	}
 
-	public void setRoleService(RoleService roleService) {
-		this.roleService = roleService;
-	}
 }

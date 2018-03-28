@@ -7,8 +7,9 @@
 	<persistence-unit name="jpa-persistence"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>backend.model.Right</class>
 		<properties>
-		 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/gms" />
+		 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/gms?useSSL=false" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.password" value="enxhi1996" />

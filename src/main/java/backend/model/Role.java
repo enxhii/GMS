@@ -1,6 +1,7 @@
 package backend.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +15,13 @@ public class Role implements Serializable {
 	private String description;
 @Column(name="name")
 private String name;
-
+/*
+@ManyToMany
+@JoinTable(name="role_rights" , joinColumns=@JoinColumn(name="role_id" , referencedColumnName="id"),
+inverseJoinColumns=@JoinColumn(name="rights_id", referencedColumnName="id"))
+*/
+/// private List<Right> rights;
+ 
 	public Role() {
 	}
 
@@ -41,6 +48,8 @@ private String name;
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	
 
 
 }

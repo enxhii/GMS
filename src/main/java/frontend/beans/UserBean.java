@@ -6,14 +6,12 @@ import javax.faces.bean.SessionScoped;
 import backend.model.Address;
 import backend.model.Role;
 import backend.model.User;
-import backend.model.UserRole;
 import backend.service.UserService;
 @ManagedBean(name="userbean")
 @SessionScoped
 public class UserBean {
 private User user;
 private Role role;
-private UserRole userRole;
 @ManagedProperty(value = "#{userServiceImpl}")
 private UserService userService;
 public boolean logged;
@@ -22,11 +20,10 @@ private Address address;
 public void init() {
 	user=new User();
 	address= new Address();
-	userRole= new UserRole();
 }
 public void addUser()
 {
-userService.save(user, address,userRole);
+userService.save(user, address);
 	}
 
 	public void removeUser() {
@@ -66,11 +63,6 @@ public Role getRole() {
 public void setRole(Role role) {
 	this.role = role;
 }
-public UserRole getUserRole() {
-	return userRole;
-}
-public void setUserRole(UserRole userRole) {
-	this.userRole = userRole;
-}
+
 
 }

@@ -1,0 +1,20 @@
+
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Admin page </title>
+</h:head>
+
+<h:body>
+<h:form>
+Welcome #{login.user.username} 
+<br/> <br/>
+    <p:commandButton value="Logout" icon="ui-icon-star" action="#{login.logout}"> </p:commandButton>
+</h:form>
+</h:body>
+
+</html>

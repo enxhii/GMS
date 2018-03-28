@@ -1,6 +1,8 @@
 package backend.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -25,6 +27,10 @@ public class Customer implements Serializable {
 	@JoinColumn(name="id")
 	private User user;
 
+	@ManyToMany
+    @JoinTable(name="cust_attends_prog", joinColumns=@JoinColumn(name="customer_id", referencedColumnName="id"),
+    inverseJoinColumns=@JoinColumn(name="program_id", referencedColumnName="id"))
+	private List<Programm> programms;
 	public Customer() {
 	}
 

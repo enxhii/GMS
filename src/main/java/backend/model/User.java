@@ -1,39 +1,38 @@
 package backend.model;
-
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.*;
 @Entity
+@Table(name="user")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	//@Column(name="id")
+	@Column(name="id")
 	private int id;
-
-	//@Column(name="email")
+	@Column(name="email")
 	private String email;
 
-	//@Column(name="gender")
+	@Column(name="gender")
 	private String gender;
 	
-	//@Column(name="name")
+	@Column(name="name")
 	private String name;
 	
-	//@Column(name="password")
+	@Column(name="password")
 	private String password;
 	
-	//@Column(name="phone")
+	@Column(name="phone")
 	private String phone;
 	
-	//@Column(name="surname")
+	@Column(name="surname")
 	private String surname;
 	
-	//@Column(name="username")
+	@Column(name="username")
 	private String username;
 	
-	//@Column(name="status")
-private Integer status ;
+	@Column(name="status")
+    private Integer status ;
 	//bi-directional one-to-one association to Customer
 	@OneToOne(mappedBy="user")
 	private Customer customer;;
@@ -42,6 +41,11 @@ private Integer status ;
 	@ManyToOne
 	@JoinColumn(name="adresa_id")
 	private Address address;
+	
+@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+@JoinTable(name="user_roles" , joinColumns=@JoinColumn(name="user_id" , referencedColumnName="id"),
+inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
+	private Collection<Role> roles;
 
 	public User() {
 	}
@@ -137,6 +141,14 @@ private Integer status ;
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
 	}
 
 }

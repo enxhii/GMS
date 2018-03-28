@@ -1,6 +1,6 @@
 package backend.service;
 
-import backend.pojo.User;
+import backend.model.*;
 
 public interface RegisterService {
 public boolean doesExist(String email);

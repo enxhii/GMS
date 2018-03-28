@@ -3,13 +3,11 @@ package backend.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import backend.dao.RoleDao;
-import backend.model.UserRole;
-import backend.pojo.Role;
+import backend.model.*;
 import backend.service.RoleService;
 
 @Transactional
@@ -30,11 +28,7 @@ private  RoleDao roledao ;
 		return null;
 	}
 
-	@Override
-	public UserRole getUserRole(String username) {
-		System.out.println("RoleServiceIMPLCLASS");
-		return roledao.getUserRole(username);
-	}
+	
 
 	public RoleDao getRoledao() {
 		return roledao;

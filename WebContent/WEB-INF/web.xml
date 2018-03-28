@@ -11,6 +11,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/applicationContext.xml</param-value>
 	</context-param>
+	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -43,7 +44,6 @@
 		<welcome-file>login.xhtml</welcome-file>
 		
 	</welcome-file-list>
-
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -55,6 +55,27 @@
 		<url-pattern>*.xhtml</url-pattern>
 		
 	</servlet-mapping>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error/access-denied.xhtml</location>
+	</error-page>
 
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.xhtml</location>
+	</error-page>
+<error-page>
+		<error-code>900</error-code>
+		<location>/error/page_authorization.xhtml</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/generic_error.xhtml</location>
+	</error-page>
 
+	<error-page>
+		<error-code>440</error-code>
+		<location>/error/session_expired.xhtml</location>
+	</error-page>
+	
 </web-app>

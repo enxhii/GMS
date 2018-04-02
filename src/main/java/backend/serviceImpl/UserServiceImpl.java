@@ -1,52 +1,60 @@
 package backend.serviceImpl;
+
 import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import backend.dao.UserDao;
 import backend.model.Address;
+import backend.model.Customer;
 import backend.model.Role;
 import backend.model.User;
 import backend.service.UserService;
-@Transactional
+
+@Transactional(noRollbackFor = Exception.class)
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userdao;
+	final static Logger logger = LogManager.getLogger(UserServiceImpl.class);
+	private List<User> users;
 
 	@Override
 	public boolean doesExists(String username) {
-		if(userdao.doesExists(username)) {
+		if (userdao.doesExists(username)) {
 			System.out.println("ServiceImpl works");
 			System.out.println("username");
 
-		return true;
-	}
-		System.out.println("ServiceImpl does not works");
+			return true;
+		}
 
-	return  false ;
-}
+		return false;
+	}
+
 	@Override
 	public List<User> listAll() {
+		try {
+			logger.info("Result Found //UserServiceImpl");
+			users = userdao.listAll();
+			return users;
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info(e.getMessage() + "Error catched in ServiceImpl");
+		}
 		return null;
+
 	}
 
 	@Override
 	public User getById(int id) {
 		return null;
 	}
+
 	@Override
 	public void update(User entity) {
-
-	}
-
-	@Override
-	public void delete(User entity) {
-
-	}
-
-	@Override
-	public void deleteById(int entityId) {
 
 	}
 
@@ -57,21 +65,84 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(String username, String password) {
-				return userdao.getUser(username,password);
+		try {
+			logger.debug("Getting user data.....");
+			return userdao.getUser(username, password);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			logger.debug("User not found");
+		}
+		return null;
+	}
+
+	@Override
+	public void save(User entity, Address address, Customer customer, Role role) {
+		try {
+			userdao.addUser(entity, address, customer, role);
+			logger.info("User succesfully added");
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			e.printStackTrace();
+			logger.info("Something went wrong");
+		}
+	}
+
+	@Override
+	public List<Role> findByUser(int id) {
+		logger.info("succedd");
+		return userdao.findByUser(id);
+	}
+
+	@Override
+	public void customerReg(User user, Address address) {
+		try {
+			logger.debug("Inserting user......");
+			userdao.customerReg(user, address);
+		} catch (Exception e) {
+			// logger.debug(e.getMessage(), e);
+			e.printStackTrace();
+		}
 
 	}
+
 	@Override
-	public void logout() {
-		
+	public void delete(Integer id) {
+		userdao.deleteUser(id);
 	}
+
+	public UserDao getUserdao() {
+		return userdao;
+	}
+
+	public void setUserdao(UserDao userdao) {
+		this.userdao = userdao;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	@Override
-	public void save(User entity, Address address) {
+	public void add(User entity) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
-	public List<Role> findByUser(int id) {
-return userdao.findByUser(id);
+	public void delete(User entity) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void deleteById(int entityId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

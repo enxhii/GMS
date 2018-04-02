@@ -10,14 +10,16 @@
   </h:head>
    
   <h:body>
-        <h:form>
+        <h:form method="POST" action="admin">
               <p:messages id="messages" />
               <p:panelGrid columns="2">
                     <p:outputLabel for="username" value="Username:" />
-                    <p:inputText id="username" value="#{login.username}" required="Username required" />
+                    <p:inputText id="username" value="#{login.username}" required="true"
+                    requiredMessage="Username is mandatory" />
                     
                     <p:outputLabel for="password" value="Password:" />
-                    <p:password id="password" value="#{login.password}"  required="Password required "/>
+                    <p:password id="password" value="#{login.password}"  required="true" 
+                    requiredMessage="Password is mandatory"/>
                     
                     <p:commandButton value="Login" icon="ui-icon-star" action="#{login.submit}"  ajax="false">
                     </p:commandButton>

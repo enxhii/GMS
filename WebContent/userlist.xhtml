@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>User Information</title>
+</h:head>
+<h:body>
+	<h:form id="userForm">
+		<p:dataTable var="u" value="#{userbean.users}" rows="9" layout="grid" 
+		id="userss" emptyMessage="Why" paginator="true">
+			<p:column headerText="Id">
+				<h:outputText value="#{u.id}" />
+								</p:column>
+				
+				<p:column headerText="First Name">
+					<h:outputText value="#{u.name}" />
+				</p:column>
+				<p:column headerText="Last Name">
+					<h:outputText value="#{u.surname}" />
+				</p:column>
+
+				<p:column headerText="Username">
+					<h:outputText value="#{u.username}" />
+				</p:column>
+				<p:column headerText="Email">
+					<h:outputText value="#{u.email}" />
+				</p:column>
+				<p:column headerText="Gender">
+					<h:outputText value="#{u.gender}" />
+				</p:column>
+				<p:column headerText="Phone">
+					<h:outputText value="#{u.phone}" />
+				</p:column>
+				<p:column headerText="Country">
+					<h:outputText value="#{u.address.country}" />
+				</p:column>
+				<p:column headerText="City">
+					<h:outputText value="#{u.address.city}" />
+				</p:column>
+		</p:dataTable>
+
+	</h:form>
+
+
+
+</h:body>
+</html>

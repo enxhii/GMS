@@ -8,6 +8,8 @@ import javax.persistence.*;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+
 	@Column(name="id")
 	private int id;
 	@Column(name="email")
@@ -34,18 +36,25 @@ public class User implements Serializable {
 	@Column(name="status")
     private Integer status ;
 	//bi-directional one-to-one association to Customer
-	@OneToOne(mappedBy="user")
-	private Customer customer;;
+	//@OneToOne(mappedBy="user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	//private Customer customer;
 
 	//bi-directional many-to-one association to Address
 	@ManyToOne
-	@JoinColumn(name="adresa_id")
+	@JoinColumn(name="adresa_id",nullable=false)
 	private Address address;
 	
 @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 @JoinTable(name="user_roles" , joinColumns=@JoinColumn(name="user_id" , referencedColumnName="id"),
 inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
+
 	private Collection<Role> roles;
+
+
+@OneToMany(
+    mappedBy = "user", 
+    cascade = CascadeType.ALL)
+private Collection<Programm> program ;
 
 	public User() {
 	}
@@ -114,13 +123,13 @@ inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
 		this.username = username;
 	}
 
-	public Customer getCustomer() {
-		return this.customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+//	public Customer getCustomer() {
+//		return this.customer;
+//	}
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
 
 
 	public Address getAddress() {
@@ -149,6 +158,14 @@ inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
 
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Collection<Programm> getProgram() {
+		return program;
+	}
+
+	public void setProgram(Collection<Programm> program) {
+		this.program = program;
 	}
 
 }

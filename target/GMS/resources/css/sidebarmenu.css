@@ -1,0 +1,56 @@
+body{
+	margin:0px;
+	padding:0px;
+	font-family:"Helvetica Neve " , Helvetica ,Arial;
+}
+
+#sidebar{
+	width:200px;
+	height:100%
+	display:block;
+	position:fixed;
+	background:#151719;
+}
+
+ul{
+margin:0px;
+padding:0px;	
+}
+
+ul li {
+	list-style:none;
+} 
+
+ul li a {
+	background :#1C1E1F;
+	color:#ccc;
+	border-bottom: 1px solid #111;
+	display:block;
+	width:180px;
+	padding:10px;
+	text-decoration:none;
+	
+}
+#sidebar.visible{
+		left:0px;
+		transition:left 0.5s linear ;
+	}
+	
+	
+#sidebar-btn{
+	display:inline-block;
+	vertical-align:middle;
+	width:20px;
+	height:15px;
+	cursor:pointer;
+	margin:20px;
+	position:absolute;
+	top:0px;
+	right:-60px;
+}
+	#sidebar-btn span{
+height:1px;
+background:#111;
+margin-bottom:5px;
+display:block;
+}

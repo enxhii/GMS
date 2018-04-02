@@ -1,13 +1,17 @@
-C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\model\Equipment.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\dao\TrainerDao.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\frontend\beans\UserType.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\serviceImpl\LoginServiceImpl.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\model\Customer.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\model\Address.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\frontend\beans\package-info.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\serviceImpl\TrainerServiceImpl.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\RegisterService.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\dao\RoleDao.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\UserService.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\frontend\package-info.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\package-info.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\frontend\beans\UserProfileBean.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\TrainerService.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\dao\package-info.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\filters\package-info.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\serviceImpl\UserServiceImpl.java
@@ -28,4 +32,6 @@ C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\package-info.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\LoginService.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\serviceImpl\package-info.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\RoleService.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\frontend\beans\TrainerBean.java
 C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\filters\TrainerFilter.java
+C:\Users\pc\eclipse-workspace\GMS\src\main\java\backend\service\GenericService.java

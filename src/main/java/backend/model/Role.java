@@ -1,35 +1,36 @@
 package backend.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
+@Table(name = "role")
+@NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
-@Column(name="description")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	@Column(name = "description")
 	private String description;
-@Column(name="name")
-private String name;
-/*
-@ManyToMany
-@JoinTable(name="role_rights" , joinColumns=@JoinColumn(name="role_id" , referencedColumnName="id"),
-inverseJoinColumns=@JoinColumn(name="rights_id", referencedColumnName="id"))
-*/
-/// private List<Right> rights;
- 
+	@Column(name = "name")
+	private String name;
+
+	@ManyToMany(mappedBy="roles", cascade = CascadeType.ALL)
+	private List<User> users;
+
 	public Role() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -49,7 +50,11 @@ inverseJoinColumns=@JoinColumn(name="rights_id", referencedColumnName="id"))
 		this.name = name;
 	}
 
-	
+	public List<User> getUsers() {
+		return users;
+	}
 
-
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 }

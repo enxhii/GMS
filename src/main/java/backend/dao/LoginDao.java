@@ -1,3 +1,5 @@
+
+
 package backend.dao;
 
 import java.util.List;
@@ -19,7 +21,6 @@ public class LoginDao {
 	public User getUser(String username, String password) {
 		   
         try {
-       @SuppressWarnings("unused")
        TypedQuery<User> query = entityManager.createQuery("from User where username=?1 and password=?2" ,User.class)
        .setParameter(1, username).setParameter(2,password);
     	    List<User> emps = query.getResultList();

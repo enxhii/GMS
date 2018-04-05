@@ -154,13 +154,11 @@
         <groupId>com.sun.faces</groupId>
         <artifactId>jsf-api</artifactId>
         <version>2.2.12</version>
-        <scope>runtime</scope>
     </dependency>
     <dependency>
         <groupId>com.sun.faces</groupId>
         <artifactId>jsf-impl</artifactId>
         <version>2.2.12</version>
-        <scope>runtime</scope>
 </dependency>
 
 
@@ -199,4 +197,8 @@
 </dependency>
   
 	</dependencies>
+	<properties>
+	<!-- PrimeFaces Version -->
+		<primefaces.version>6.0</primefaces.version>
+	</properties>
 </project>

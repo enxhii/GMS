@@ -1,5 +1,4 @@
 package frontend.beans;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +33,7 @@ private List<Programm> lista;
 public void init() {
 	user=new User();
 	programm= new Programm();
-	lista=new ArrayList<>();
+	lista=trainerService.list();
 }
 public void addProgramm() {
 	user.setId(userProfileBean.getUser().getId());
@@ -87,5 +86,8 @@ public void setLista(List<Programm> lista) {
 }
 public void setUserProfileBean(UserProfileBean userProfileBean) {
 	this.userProfileBean = userProfileBean;
+}
+public UserProfileBean getUserProfileBean() {
+	return userProfileBean;
 }
 }

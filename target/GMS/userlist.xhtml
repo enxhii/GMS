@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -8,43 +8,64 @@
 	<title>User Information</title>
 </h:head>
 <h:body>
-	<h:form id="userForm">
-		<p:dataTable var="u" value="#{userbean.users}" rows="9" layout="grid" 
-		id="userss" emptyMessage="Why" paginator="true">
+	<h:form id="form">
+		<p:growl id="growl" life="2000" showDetail="true" />
+		<p:dataTable var="u" value="#{userbean.users}" editable="true"
+			style="margin-bottom:20px" id="userss"
+			emptyMessage="No records found !">
+			
+
 			<p:column headerText="Id">
 				<h:outputText value="#{u.id}" />
-								</p:column>
-				
-				<p:column headerText="First Name">
-					<h:outputText value="#{u.name}" />
-				</p:column>
-				<p:column headerText="Last Name">
-					<h:outputText value="#{u.surname}" />
-				</p:column>
+			</p:column>
 
-				<p:column headerText="Username">
-					<h:outputText value="#{u.username}" />
-				</p:column>
-				<p:column headerText="Email">
-					<h:outputText value="#{u.email}" />
-				</p:column>
-				<p:column headerText="Gender">
-					<h:outputText value="#{u.gender}" />
-				</p:column>
-				<p:column headerText="Phone">
-					<h:outputText value="#{u.phone}" />
-				</p:column>
-				<p:column headerText="Country">
-					<h:outputText value="#{u.address.country}" />
-				</p:column>
-				<p:column headerText="City">
-					<h:outputText value="#{u.address.city}" />
-				</p:column>
+			<p:column headerText="First Name">
+					<h:outputText value="#{u.name}" />
+			</p:column>
+			<p:column headerText="Last Name">
+				<h:outputText value="#{u.surname}" />
+			</p:column>
+			<p:column headerText="Username">
+				<h:outputText value="#{u.username}" />
+			</p:column>
+			<p:column headerText="Email">
+				<h:outputText value="#{u.email}" />
+			</p:column>
+			<p:column headerText="Gender">
+				<h:outputText value="#{u.gender}" />
+			</p:column>
+			<p:column headerText="Phone">
+				<h:outputText value="#{u.phone}" />
+			</p:column>
+			<p:column headerText="Country">
+				<h:outputText value="#{u.address.country}" />
+			</p:column>
+			<p:column headerText="City">
+				<h:outputText value="#{u.address.city}" />
+			</p:column>
+			<p:column width="50" headerText="Delete User">
+				<p:commandLink action="#{userbean.deleteUser}" update=":form:userss">
+					<i class="fa fa-trash w3-xlarge" style="color: #c43636;"></i>
+					<f:setPropertyActionListener value="#{u}"
+						target="#{userbean.userDelete}" />
+					<p:confirm header="Konfirmo"
+						message="Do you want to delete this user?" icon="ui-icon-alert" />
+				</p:commandLink>
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Confirm" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+						update="form" />
+					<p:commandButton value="Cancel" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						update="form" />
+				</p:confirmDialog>
+			</p:column>
+
+			<p:column style="width:32px" headerText="Edit User">
+<p:commandLink action="#{userbean.updateUsers}" value="Edit"> </p:commandLink>
+			</p:column>
 		</p:dataTable>
 
 	</h:form>
-
-
-
 </h:body>
 </html>

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
+
 import backend.model.Address;
 import backend.model.Customer;
 import backend.model.Role;
@@ -17,13 +18,14 @@ import backend.model.User;
 @Repository
 public class UserDao {
 	@PersistenceContext
-	EntityManager entityManager;
+	private EntityManager entityManager;
 	final static Logger logger = LogManager.getLogger(UserDao.class);
 	private static final int valid = 1;
 	private static final int invalid = 0;
 
 	private User user;
 	List<Role> list;
+	private RoleDao roleDao;
 
 	public User getUser(String username, String password) {
 		try {
@@ -68,64 +70,43 @@ public class UserDao {
 		}
 	}
 
+	public User getUserById(Integer id) {
+		String query = "select u.id from User u where u.id=?1";
+		return entityManager.createQuery(query, User.class).setParameter(1, id).getSingleResult();
+	}
+
 	public Role getRoleById() {
 		String query = "select r from Role r where r.name='Member'";
 		Role role = entityManager.createQuery(query, Role.class).getSingleResult();
 		return role;
 	}
 
-	public void addUser(User user, Address address, Customer customer, Role role) {
+	public void addUser(User user, Address address,Role role) {
 		try {
-			/*
-			 * entityManager.persist(address); entityManager.flush();
-			 * logger.info("Address inserted"); user.setAddress(address); user.setStatus(0);
-			 * Role list=getRoleById(); user.getRoles().add(list); entityManager.flush();
-			 * logger.info("Role Inserted"); entityManager.persist(user);
-			 * entityManager.flush(); logger.info("User Inserted"); customer.setUser(user);
-			 * entityManager.persist(customer); logger.info("Customer Inserted");
-			 * logger.info("User succesfully registered");
-			 * 
-			 */
-
+			Customer customer = new Customer();
+			List<Role> roles = roleDao.listAll();
+			entityManager.persist(address);
+			logger.info("Address inserted");
+			user.setAddress(address);
+			user.setStatus(0);
+			user.setRoles(roles);
+			entityManager.persist(user);
+			logger.info("Role Inserted");
+			//if(roles.)
+			customer.setUser(user);
+			entityManager.persist(customer);
+			logger.info("Customer Inserted");
+			logger.info("User succesfully registered");
 		} catch (Exception e) {
 			e.getMessage();
 		}
 	}
-/*
-	public void customerReg(User user, Address address, Customer customer, Role role) {
-		
-			List<Role> roles = new ArrayList<Role>();
-			role = getRoleById();
-			roles.add(role);
-			entityManager.persist(address);
-			entityManager.flush();
-			logger.info("Address inserted");
-			user.setAddress(address);
-			user.setStatus(0);
-			
-			logger.debug(role);
-			logger.debug(role.getName());
-			logger.debug(role.getId());
-			user.setRoles(roles);
-			//entityManager.flush();
-			logger.info("Role Inserted");
-			customer.setUser(user);
-			user.setCustomer(customer);
-			entityManager.persist(customer);
-			entityManager.flush();
-			entityManager.persist(user);
 
-			logger.info("Customer Inserted");
-			logger.info("User succesfully registered");
-
-		
-	}
-*/
 	public List<User> listAll() {
 		try {
 			logger.info("Getting result from user");
 			String sql = "select u from User u where u.status=?1";
-			List<User> lista = entityManager.createQuery(sql,User.class).setParameter(1, valid).getResultList();
+			List<User> lista = entityManager.createQuery(sql, User.class).setParameter(1, valid).getResultList();
 			logger.info("Fetching result from user");
 			return lista;
 		} catch (Exception exception) {
@@ -133,27 +114,28 @@ public class UserDao {
 			System.out.println(exception.getMessage());
 			System.out.println(exception);
 			exception.printStackTrace();
-		}			
+		}
 		return null;
 
 	}
 
 	public void deleteUser(Integer id) {
 		try {
-			String query="update User set status=?1 where id=?2";
-			Query query2=entityManager.createQuery(query).setParameter(1, invalid).setParameter(2, id);
+			String query = "update User set status=?1 where id=?2";
+			Query query2 = entityManager.createQuery(query).setParameter(1, invalid).setParameter(2, id);
 			query2.executeUpdate();
-		}catch (Exception e) {
+		} catch (Exception e) {
 		}
 	}
-	
-	
-	
-	
-	
+
+	public void updateUser(User user, Address address) {
+		user.setAddress(address);
+		entityManager.merge(user);
+	}
+
 	public void customerReg(User user, Address address) {
-		Role role= new Role();
-		Customer customer= new Customer();
+		Role role = new Role();
+		Customer customer = new Customer();
 		List<Role> roles = new ArrayList<Role>();
 		role = getRoleById();
 		roles.add(role);
@@ -173,8 +155,42 @@ public class UserDao {
 		logger.info("Customer Inserted");
 		logger.info("User succesfully registered");
 
-	
-}
+	}
+
+	public void updateProfile(User user, Address address) {
+		logger.debug("Inserting new values for user");
+		user.setEmail(user.getEmail());
+		logger.debug("Email Inserted");
+		user.setName(user.getName());
+		logger.debug("FirstName Inserted");
+		user.setSurname(user.getSurname());
+		logger.debug("Lastname Inserted");
+		user.setPhone(user.getPhone());
+		logger.debug("Mobile  Inserted");
+		address.setCity(address.getCity());
+		logger.debug("City Inserted");
+		address.setCountry(address.getCountry());
+		logger.debug("Country  Inserted");
+		user.setAddress(address);
+		logger.debug("Address Done");
+		entityManager.merge(user);
+		logger.debug("User successfully updated ");
+
+	}
+
+	public void updatePassword(User user, String password) {
+		try {
+			logger.debug("Setting new password");
+			user.setPassword(password);
+			logger.debug("Updating password");
+			entityManager.merge(user);
+			logger.debug("Password succesfully updated ");
+		} catch (Exception e) {
+			logger.debug("Error from UserDao class" + e);
+		}
+
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -189,6 +205,22 @@ public class UserDao {
 
 	public EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	public List<Role> getList() {
+		return list;
+	}
+
+	public void setList(List<Role> list) {
+		this.list = list;
+	}
+
+	public RoleDao getRoleDao() {
+		return roleDao;
+	}
+
+	public void setRoleDao(RoleDao roleDao) {
+		this.roleDao = roleDao;
 	}
 
 }

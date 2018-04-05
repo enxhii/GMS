@@ -3,12 +3,9 @@ package backend.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import backend.model.Customer;
 
 
-/**
- * The persistent class for the programm database table.
- * 
- */
 @Entity
 @Table(name="programm")
 @NamedQuery(name="Programm.findAll", query="SELECT p FROM Programm p")

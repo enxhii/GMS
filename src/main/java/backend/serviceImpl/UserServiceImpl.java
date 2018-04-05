@@ -14,7 +14,7 @@ import backend.model.Role;
 import backend.model.User;
 import backend.service.UserService;
 
-@Transactional(noRollbackFor = Exception.class)
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
@@ -54,11 +54,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void update(User entity) {
-
-	}
-
-	@Override
 	public Integer getUserIdByUsername(String username) {
 		return null;
 	}
@@ -76,9 +71,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void save(User entity, Address address, Customer customer, Role role) {
+	public void save(User entity, Address address, Role role) {
 		try {
-			userdao.addUser(entity, address, customer, role);
+			userdao.addUser(entity, address,role);
 			logger.info("User succesfully added");
 		} catch (Exception e) {
 			logger.info(e.getMessage());
@@ -127,22 +122,32 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void add(User entity) {
-		// TODO Auto-generated method stub
-		
+	public void updatePassword(User user, String password) {
+		try {
+			logger.debug("Updating password");
+			userdao.updatePassword(user, password);
+			logger.debug("Password updated ");
+
+		} catch (Exception e) {
+			logger.debug("An error happened " + e);
+		}
+
 	}
 
 	@Override
-	public void delete(User entity) {
-		// TODO Auto-generated method stub
-		
+	public void updateProfile(User user, Address address) {
+		try {
+userdao.updateProfile(user, address);
+		} catch (Exception e) {
+			logger.debug(e);
+		}
 	}
 
 	@Override
-	public void deleteById(int entityId) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void updateUsers(User user, Address address) {
+try {
+userdao.updateUser(user, address);	
+} catch (Exception e) {
+logger.debug(e);}	}
 
 }

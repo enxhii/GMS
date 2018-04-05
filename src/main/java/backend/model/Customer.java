@@ -2,10 +2,6 @@ package backend.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.sun.faces.context.flash.FlashELResolver;
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
-
 import java.util.List;
 
 /**

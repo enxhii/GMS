@@ -1,20 +1,14 @@
 package frontend.beans;
+
 import java.io.IOException;
 import java.util.List;
-
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import backend.SessionUtils.SessionUtils;
 import backend.model.Role;
 import backend.model.User;
 import backend.service.UserService;
@@ -22,62 +16,58 @@ import backend.service.UserService;
 @ManagedBean(name = "login")
 @RequestScoped
 public class LoginManagedBean {
-	private String logout;
 	private String username;
 	private String password;
 	private String confirmPass;
+
 	@ManagedProperty(value = "#{userServiceImpl}")
 	private UserService userService;
-	
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
-	
+
 	private User user;
 	private Role role;
 	private List<User> userlist;
 	private List<Role> listRole;
 	final static Logger logger = LogManager.getLogger(LoginManagedBean.class);
-private UserType type;
-ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	private UserType type;
+	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 
-	public void submit() throws IOException {
+	public String submit() throws IOException {
 
 		try {
 			if (userService.doesExists(username)) {
 
 				logger.debug("Checking if user exists ");
 				user = userService.getUser(username, password);
-				//HttpSession session = SessionUtils.getSession();
-				//session.setAttribute("id", user.getId());
-				//session.setAttribute("username", user.getUsername());
-				logger.debug("User Found");	
+				logger.debug("User Found");
 				userProfileBean.setUser(user);
 
-			if(!user.getRoles().isEmpty()) {
-				externalContext.redirect(externalContext.getRequestContextPath() + "/admin/admin.xhtml");
-				logger.debug("User with username " + user.getUsername() + "logged in");
-			}
-			
+				if (!user.getRoles().isEmpty()) {
+					// externalContext.redirect(externalContext.getRequestContextPath() +
+					// "/admin/admin.xhtml");
+					logger.debug("User with username " + user.getUsername() + "logged in");
+					return "success";
+				}
+
 			} else {
-				
+
 				logger.debug("User doesn't exists");
-				externalContext.redirect(externalContext.getRequestContextPath() + "error/login_error.xhtml");
 
 			}
 
-			
 		} catch (Exception e) {
 			e.getMessage();
 
 		}
+		return "failure";
 	}
 
-	public void logout() throws IOException {
-		@SuppressWarnings("unused")
-		HttpSession session = SessionUtils.getSession();
-		session.invalidate();
-		//externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
-
+	public void  logout() throws IOException {
+		userProfileBean.removeUser();
+		 externalContext.redirect(externalContext.getRequestContextPath() +
+					 "/login.xhtml");
+		//return "logout";
 	}
 
 	public String getPassword() {
@@ -135,10 +125,11 @@ ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalC
 	public void setListRole(List<Role> listRole) {
 		this.listRole = listRole;
 	}
+
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean hasRole(UserType type) {
-        return listRole.contains(type);
-    }
+		return listRole.contains(type);
+	}
 
 	public UserType getType() {
 		return type;
@@ -159,29 +150,7 @@ ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalC
 	public void setConfirmPass(String confirmPass) {
 		this.confirmPass = confirmPass;
 	}
-	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-
-		String password = value.toString();
-
-		UIInput uiInputConfirmPassword = (UIInput) component.getAttributes().get("passwordConfirmation");
-		String passwordConfirmation = uiInputConfirmPassword.getSubmittedValue().toString();
-
-		if (password == null || password.isEmpty() || passwordConfirmation == null || passwordConfirmation.isEmpty()) {
-			return;
-		}
-
-		if (!password.equals(passwordConfirmation)) {
-			uiInputConfirmPassword.setValid(false);
-			throw new ValidatorException(
-					new FacesMessage("Fjalekalimi duhet te perputhet me konfirmimin e fjalekalimit!"));
-		}
-
-	}
-
-	public void setLogout(String logout) {
-		this.logout = logout;
-	}
-
+	
 	public UserProfileBean getUserProfileBean() {
 		return userProfileBean;
 	}
@@ -189,10 +158,4 @@ ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalC
 	public void setUserProfileBean(UserProfileBean userProfileBean) {
 		this.userProfileBean = userProfileBean;
 	}
-	
-	
-	
-	
-	
-	
 }

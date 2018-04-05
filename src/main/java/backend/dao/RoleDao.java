@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import backend.model.Role;
 import backend.model.User;
-import backend.service.RoleService;
 
 @Repository
 public class RoleDao {

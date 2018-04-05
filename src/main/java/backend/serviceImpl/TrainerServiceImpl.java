@@ -10,46 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 import backend.dao.TrainerDao;
 import backend.model.Programm;
 import backend.model.User;
-import backend.service.GenericService;
 import backend.service.TrainerService;
 
 @Transactional
 @Service
-public class TrainerServiceImpl implements GenericService<Programm>, TrainerService {
+public class TrainerServiceImpl implements  TrainerService {
 	@Autowired
 	private TrainerDao trainerDao;
-
+private List<Programm> programms;
 	final static Logger logger = LogManager.getLogger(TrainerServiceImpl.class);
 
+	
 	@Override
-	public void update(Programm entity) {
-		// TODO Auto-generated method stub
-
+	public List<Programm> list() {
+		programms=trainerDao.list();
+		return programms;
 	}
 
-	@Override
-	public void delete(Programm entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Programm getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Programm> listAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteById(int entityId) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	public void addProgramm(Programm programm, User user) {
@@ -60,18 +38,21 @@ public class TrainerServiceImpl implements GenericService<Programm>, TrainerServ
 		}
 	}
 
-	@Override
-	public void add(Programm entity) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	public TrainerDao getTrainerDao() {
 		return trainerDao;
 	}
 
 	public void setTrainerDao(TrainerDao trainerDao) {
 		this.trainerDao = trainerDao;
+	}
+
+	public List<Programm> getProgramms() {
+		return programms;
+	}
+
+	public void setProgramms(List<Programm> programms) {
+		this.programms = programms;
 	}
 
 }

@@ -57,51 +57,46 @@ public class UserDao {
 		}
 	}
 
-	public List<Role> findByUser(int id) {
-		try {
-			logger.info("Trying to get roles");
-			List<Role> roles = entityManager.createQuery("select r from Role r  join fetch r.users u where u.id=:id")
-					.setParameter("id", id).getResultList();
-			logger.info("Roles retrieved ");
-			return roles;
-		} catch (Exception e) {
-			logger.debug(e.getMessage());
-			return null;
-		}
-	}
-
 	public User getUserById(Integer id) {
 		String query = "select u.id from User u where u.id=?1";
 		return entityManager.createQuery(query, User.class).setParameter(1, id).getSingleResult();
 	}
 
-	public Role getRoleById() {
-		String query = "select r from Role r where r.name='Member'";
-		Role role = entityManager.createQuery(query, Role.class).getSingleResult();
-		return role;
-	}
-
-	public void addUser(User user, Address address,Role role) {
+	public void addUser(User user, Address address, Role role) {
 		try {
 			Customer customer = new Customer();
-			List<Role> roles = roleDao.listAll();
+			List<Role> roles = listAllRoles();
 			entityManager.persist(address);
 			logger.info("Address inserted");
 			user.setAddress(address);
-			user.setStatus(0);
 			user.setRoles(roles);
+			user.setStatus(1);
 			entityManager.persist(user);
 			logger.info("Role Inserted");
-			//if(roles.)
 			customer.setUser(user);
 			entityManager.persist(customer);
 			logger.info("Customer Inserted");
 			logger.info("User succesfully registered");
 		} catch (Exception e) {
-			e.getMessage();
+			e.printStackTrace();
+			logger.debug(e);
 		}
 	}
 
+	public List<Role> listAllRoles() {
+		try {
+			logger.debug("Getting result from roles");
+			String sql = "SELECT r FROM Role r";
+			logger.debug("Fetching result from roles");
+			List<Role> list = entityManager.createQuery(sql).getResultList();
+			return list;
+		} catch (Exception e) {
+			logger.info(e);
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 	public List<User> listAll() {
 		try {
 			logger.info("Getting result from user");
@@ -137,7 +132,7 @@ public class UserDao {
 		Role role = new Role();
 		Customer customer = new Customer();
 		List<Role> roles = new ArrayList<Role>();
-		role = getRoleById();
+		role = roleDao.getRoleById();
 		roles.add(role);
 		entityManager.persist(address);
 		logger.info("Address inserted");
@@ -159,18 +154,6 @@ public class UserDao {
 
 	public void updateProfile(User user, Address address) {
 		logger.debug("Inserting new values for user");
-		user.setEmail(user.getEmail());
-		logger.debug("Email Inserted");
-		user.setName(user.getName());
-		logger.debug("FirstName Inserted");
-		user.setSurname(user.getSurname());
-		logger.debug("Lastname Inserted");
-		user.setPhone(user.getPhone());
-		logger.debug("Mobile  Inserted");
-		address.setCity(address.getCity());
-		logger.debug("City Inserted");
-		address.setCountry(address.getCountry());
-		logger.debug("Country  Inserted");
 		user.setAddress(address);
 		logger.debug("Address Done");
 		entityManager.merge(user);

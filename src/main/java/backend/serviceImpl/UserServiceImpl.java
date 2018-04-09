@@ -76,18 +76,13 @@ public class UserServiceImpl implements UserService {
 			userdao.addUser(entity, address,role);
 			logger.info("User succesfully added");
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.info(e);
 			e.printStackTrace();
 			logger.info("Something went wrong");
 		}
 	}
 
-	@Override
-	public List<Role> findByUser(int id) {
-		logger.info("succedd");
-		return userdao.findByUser(id);
-	}
-
+	
 	@Override
 	public void customerReg(User user, Address address) {
 		try {

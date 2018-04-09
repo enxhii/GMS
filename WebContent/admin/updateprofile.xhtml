@@ -36,6 +36,9 @@
 				<h:outputLabel value="Address:City :" />
 				<p:inputText value="#{userbean.userProfileBean.user.address.city}"
 					label="City" />
+					<h:outputLabel value="Address:ZipCode :" />
+				<p:inputText value="#{userbean.userProfileBean.user.address.zipcode}"
+					label="ZipCode" />
 
 				<p:commandButton ajax="false" value="Edit Profile"
 					icon="ui-icon-disk" action="#{userbean.updateProfile}" />

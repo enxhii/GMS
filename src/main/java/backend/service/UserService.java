@@ -16,7 +16,6 @@ public interface UserService {
 
 	public void delete(Integer id);
 
-	public List<Role> findByUser(int id);
 
 	public void customerReg(User user, Address address);
 

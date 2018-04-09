@@ -7,33 +7,23 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>User Editor </title>
-	
+	<title>User Editor</title>
+
 </h:head>
 
 <h:body>
-
-
 	<div class="bgded overlay center">
-		<div class="headerStyle wrapper row1">
-		</div>
+		<div class="headerStyle wrapper row1"></div>
 		<div class="background">
 			<h1 class="inspace-80"></h1>
 		</div>
 	</div>
-
 	<div style="margin-bottom: 30px">
-
-		<p:dataGrid id="users" var="user"
-			value="#{userbean.users}" columns="3" layout="grid">
-
-
+		<p:dataGrid id="users" var="user" value="#{userbean.users}"
+			columns="3" layout="grid">
 			<h:form>
-
 				<p:panel header="#{user.email}">
-					
-					<p:commandLink 
-						oncomplete="PF('EditUserDialog').show()"
+					<p:commandLink oncomplete="PF('EditUserDialog').show()"
 						update=":users:editUserDialog">
 						<f:setPropertyActionListener value="#{user}"
 							target="#{userbean.update}" />
@@ -48,28 +38,21 @@
 
 			<p:dialog id="editUserDialog"
 				header="Edit User : #{userbean.update.name}"
-				widgetVar="EditMovieDialog" showEffect="fade" hideEffect="fade"
+				widgetVar="EditUserDialog" showEffect="fade" hideEffect="fade"
 				resizable="false">
 				<p:outputPanel id="editUserPanel" style="text-align:center;">
 					<h:form>
 						<p:panelGrid columns="2">
 							<h:outputText value="Surname: " />
-							<p:inputText id="editsurname"
-								value="#{userbean.update.surname}"
+							<p:inputText id="editsurname" value="#{userbean.update.surname}"
 								required="true" requiredMessage="Surname can't be empty "></p:inputText>
 						</p:panelGrid>
-						<p:commandButton value="Ndrysho"
-							action="#{userbean.updateUsers}" styleClass="login"   
-							 update=":users:editUserPanel"></p:commandButton>
+						<p:commandButton value="Ndrysho" action="#{userbean.updateUsers}"
+							styleClass="login" update=":users:editUserPanel"></p:commandButton>
 					</h:form>
 				</p:outputPanel>
 			</p:dialog>
-
-
 		</p:dataGrid>
-
-
 	</div>
-
 </h:body>
 </html>

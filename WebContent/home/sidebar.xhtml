@@ -1,35 +1,52 @@
+<!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<title>My portofolio</title>
-			<link href="resources/css/sidebarmenu.css" rel="stylesheet" />
-		
+		<title>SideBar</title>
 	</h:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 	<h:body>
-		<div id="sidebar">
-			<div id="sidebar-btn">
-				<span>  </span>
-				<span>  </span> 
-				<span>  </span>
-			</div>
-			<ul>
-				<li><a href="#">Options</a></li>
-				<li><a href="#">Change Password</a></li>
-				<li><a href="#">Update Profile</a></li>
-				<li><a href="#">Manage Users</a></li>
-			</ul>
+
+		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
+			style="display: none; background-color: 009966;" id="mySidebar">
+			<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
+				Sidebar</button>
+			<a href="#" class="w3-bar-item w3-button">Update Profile</a> <a
+				href="#" class="w3-bar-item w3-button">Update Password</a> <a
+				href="#" class="w3-bar-item w3-button">Manage Users</a> <a href="#"
+				class="w3-bar-item w3-button">Manage Programms</a>
+				  <a href="#" class="w3-bar-item w3-button">Give Access </a>
+				
 		</div>
-		<script
-			src="htpps://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-			
-		</script>
-		<script src="resources/js/sidebar.js">
-			
+
+		<div id="main">
+
+			<div class="w3-teal">
+				<button id="openNav" class="w3-button w3-teal w3-xlarge"
+					onclick="w3_open()">&#9776;</button>
+				<div class="w3-container">
+					<h1>Welcome To Fitness Daily</h1>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function w3_open() {
+				document.getElementById("main").style.marginLeft = "25%";
+				document.getElementById("mySidebar").style.width = "25%";
+				document.getElementById("mySidebar").style.display = "block";
+				document.getElementById("openNav").style.display = 'none';
+			}
+			function w3_close() {
+				document.getElementById("main").style.marginLeft = "0%";
+				document.getElementById("mySidebar").style.display = "none";
+				document.getElementById("openNav").style.display = "inline-block";
+			}
 		</script>
 
 	</h:body>
-
 </ui:composition>

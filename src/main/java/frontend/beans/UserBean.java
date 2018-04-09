@@ -23,6 +23,7 @@ public class UserBean {
 	public boolean logged;
 	private Address address;
 	private List<Role> list;
+	private List<Role>  selectedRole;
 	private List<User> users;
 	private Customer customer;
 	private User user;
@@ -53,6 +54,7 @@ public class UserBean {
 	public void deleteUser() {
 		users.remove(userDelete);
 		userService.delete(userDelete.getId());
+		users=userService.listAll();
 	}
 
 	public List<User> listAll() {
@@ -74,16 +76,32 @@ public class UserBean {
 	public void updatePassword() {
 		userService.updatePassword(userProfileBean.getUser(), password);
 	}
+	public void updateUsersPassword() {
+		userService.updatePassword(update, password);
+	}
 
 	public void updateProfile() {
 		userService.updateProfile(userProfileBean.getUser(), userProfileBean.getUser().getAddress());
 	}
 
 	public void updateUsers() {
-		userService.updateUsers(update, address);
+		userService.updateUsers(update, update.getAddress());
 		userService.listAll();
 	}
+public Role getRole(Integer id) {
+	if (id == null) {
+		throw new IllegalArgumentException("Id not null");
+	}
 
+	Optional<Role> optional = list.stream().filter(g -> id.equals(g.getId())).findFirst();
+
+	if (optional.isPresent()) {
+		return optional.get();
+	}
+
+	return null;	 
+	
+}
 	public User getUser() {
 		return user;
 	}
@@ -194,6 +212,14 @@ public class UserBean {
 
 	public void setUpdate(User update) {
 		this.update = update;
+	}
+
+	public List<Role> getSelectedRole() {
+		return selectedRole;
+	}
+
+	public void setSelectedRole(List<Role> selectedRole) {
+		this.selectedRole = selectedRole;
 	}
 
 }

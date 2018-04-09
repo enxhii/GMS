@@ -27,12 +27,17 @@ public class RoleDao {
 			List<Role> list = entityManager.createQuery(sql).getResultList();
 			return list;
 		} catch (Exception e) {
-			logger.info(e.getMessage());
-			return null;
+			logger.info(e);
+			e.printStackTrace();
 		}
+		return null;
 
 	}
-
+	public Role getRoleById() {
+		String query = "select r from Role r where r.name='Member'";
+		Role role = entityManager.createQuery(query, Role.class).getSingleResult();
+		return role;
+	}
 
 	public EntityManager getEntityManager() {
 		return entityManager;

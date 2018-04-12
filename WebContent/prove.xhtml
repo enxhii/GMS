@@ -8,27 +8,8 @@
 	<title>Add user</title>
 </h:head>
 
-<h:body>
-	<h:form>
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<h:messages showDetail="true" />	
-<br></br>
-				<h:outputText value="User Role : " />
-				<h:selectOneMenu value="#{userbean.role.id}"
-						required="true" requiredMessage="User Role is required">
-						<f:selectItems value="#{userbean.list}" var="roli"
-							itemLabel="#{roli.name}" itemValue="#{roli.name}" />
-					</h:selectOneMenu>
-
-
-<br></br>
-
-
-		</h:panelGrid>
-
-	</h:form>
-
-
-</h:body>
-
+<ui:composition template="/home/homepagetemplate.xhtml">
+	<ui:define name="body">
+	</ui:define>
+	</ui:composition>
 </html>

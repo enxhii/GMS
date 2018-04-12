@@ -15,6 +15,9 @@ public class User implements Serializable {
 	@Column(name="email")
 	private String email;
 
+	@Column(name="checked")
+	private Integer checked;
+	
 	@Column(name="gender")
 	private String gender;
 	
@@ -44,7 +47,7 @@ public class User implements Serializable {
 	@JoinColumn(name="adresa_id")
 	private Address address;
 	
-@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 @JoinTable(name="user_roles" , joinColumns=@JoinColumn(name="user_id" , referencedColumnName="id"),
 inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
 
@@ -257,6 +260,14 @@ private Collection<Programm> program ;
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	public Integer getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Integer checked) {
+		this.checked = checked;
 	}
 
 }

@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faces-config
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
      http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
-    version="2.2">
-<application>
-  <el-resolver>
-org.springframework.web.jsf.el.SpringBeanFacesELResolver
-   </el-resolver>
-   
-    </application>
-    <navigation-rule>
-  <from-view-id>login.xhtml</from-view-id>
-  <navigation-case>
-   <from-outcome>success</from-outcome>
-   <to-view-id>admin/admin.xhtml</to-view-id>
-   <redirect />
-     
-  </navigation-case>
-  
-    <navigation-case>
-        <from-outcome>failure</from-outcome>
-        <to-view-id>error/login_error.xhtml</to-view-id>
-    <redirect />
-    </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-      <from-view-id>admin/admin.xhtml</from-view-id>
-     <navigation-case>
-        <from-outcome>logout</from-outcome>
-        <to-view-id>login.xhtml</to-view-id>
-    <redirect />
-        
-        
-    </navigation-case>
-</navigation-rule>
+	version="2.2">
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+	
+	
+	
+	<navigation-rule>
+		<from-view-id>login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>admin/admin.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 
-<navigation-rule>
-      <from-view-id>error/login_error.xhtml</from-view-id>
-     <navigation-case>
-        <to-view-id>login.xhtml</to-view-id>
-    <redirect />
-        
-        
-    </navigation-case>
-</navigation-rule>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>error/login_error.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>admin/admin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>login.xhtml</to-view-id>
+			<redirect />
+
+
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>error/login_error.xhtml</from-view-id>
+		<navigation-case>
+			<to-view-id>login.xhtml</to-view-id>
+			<redirect />
+
+
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+  <from-view-id>/*</from-view-id>
+	 <navigation-case>
+   <from-outcome>user</from-outcome>
+   <to-view-id>/GMS/WebContent/admin/UserList.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+	</navigation-rule>
 </faces-config>

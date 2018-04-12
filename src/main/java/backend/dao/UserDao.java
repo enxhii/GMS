@@ -5,11 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
-
 import backend.model.Address;
 import backend.model.Customer;
 import backend.model.Role;
@@ -22,17 +20,19 @@ public class UserDao {
 	final static Logger logger = LogManager.getLogger(UserDao.class);
 	private static final int valid = 1;
 	private static final int invalid = 0;
-
+	private static final int checked = 1;
+	private static final int unchecked = 0;
 	private User user;
 	List<Role> list;
 	private RoleDao roleDao;
 
 	public User getUser(String username, String password) {
 		try {
-			String query1 = " select u  from User u  where u.username=:username and u.password=:password and u.status=:valid";
+			String query1 = " select u  from User u  where u.username=:username and u.password=:password and u.status=:valid and u.checked=:checked";
 			System.out.println("UserDao class");
 			User listuser = entityManager.createQuery(query1, User.class).setParameter("username", username)
-					.setParameter("password", password).setParameter("valid", valid).getSingleResult();
+					.setParameter("password", password).setParameter("valid", valid).setParameter("checked", checked)
+					.getSingleResult();
 			System.out.println("Get User method " + listuser);
 			return listuser;
 		} catch (Exception e) {
@@ -62,41 +62,32 @@ public class UserDao {
 		return entityManager.createQuery(query, User.class).setParameter(1, id).getSingleResult();
 	}
 
-	public void addUser(User user, Address address, Role role) {
+	public void addUser(User user, Address address, List<Role> roles) {
 		try {
 			Customer customer = new Customer();
-			List<Role> roles = listAllRoles();
 			entityManager.persist(address);
 			logger.info("Address inserted");
 			user.setAddress(address);
 			user.setRoles(roles);
-			user.setStatus(1);
+			user.setStatus(valid);
+			user.setChecked(checked);
 			entityManager.persist(user);
 			logger.info("Role Inserted");
-			customer.setUser(user);
-			entityManager.persist(customer);
-			logger.info("Customer Inserted");
-			logger.info("User succesfully registered");
+			if (roles == roleDao.getRolesById()) {
+				logger.debug(roleDao.getRolesById());
+				customer.setUser(user);
+				entityManager.persist(customer);
+				logger.info("Customer Inserted");
+				logger.info("User succesfully registered");
+			} else {
+				entityManager.persist(user);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.debug(e);
 		}
 	}
 
-	public List<Role> listAllRoles() {
-		try {
-			logger.debug("Getting result from roles");
-			String sql = "SELECT r FROM Role r";
-			logger.debug("Fetching result from roles");
-			List<Role> list = entityManager.createQuery(sql).getResultList();
-			return list;
-		} catch (Exception e) {
-			logger.info(e);
-			e.printStackTrace();
-		}
-		return null;
-
-	}
 	public List<User> listAll() {
 		try {
 			logger.info("Getting result from user");
@@ -116,7 +107,7 @@ public class UserDao {
 
 	public void deleteUser(Integer id) {
 		try {
-			String query = "update User set status=?1 where id=?2";
+			String query = "update Programm set status=?1 where id=?2";
 			Query query2 = entityManager.createQuery(query).setParameter(1, invalid).setParameter(2, id);
 			query2.executeUpdate();
 		} catch (Exception e) {
@@ -137,7 +128,8 @@ public class UserDao {
 		entityManager.persist(address);
 		logger.info("Address inserted");
 		user.setAddress(address);
-		user.setStatus(0);
+		user.setStatus(valid);
+		user.setChecked(unchecked);
 		logger.debug(role);
 		logger.debug(role.getName());
 		logger.debug(role.getId());
@@ -161,6 +153,52 @@ public class UserDao {
 
 	}
 
+	public List<User> getDisabledUser() {
+		try {
+			logger.info("Getting result from disabled user");
+			String sql = "select u from User u where u.status=?1";
+			List<User> lista = entityManager.createQuery(sql, User.class).setParameter(1, invalid).getResultList();
+			logger.info("Fetching result from user");
+			return lista;
+		} catch (Exception exception) {
+			logger.debug(exception);
+			exception.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<User> getDisabledCustomer() {
+		try {
+			logger.info("Getting result from disabled customers");
+			String sql = "select u from User u where u.checked=?1";
+			List<User> lista = entityManager.createQuery(sql, User.class).setParameter(1, unchecked).getResultList();
+			logger.info("Fetching result from user");
+			return lista;
+		} catch (Exception exception) {
+			logger.debug(exception);
+			exception.printStackTrace();
+		}
+		return null;
+	}
+
+	public void giveAccess(Integer id) {
+		try {
+			logger.debug("Giving access to user ");
+			String query = "update  User set checked=?1 where id=?2";
+			Query query2 = entityManager.createQuery(query).setParameter(1, checked).setParameter(2, id);
+			query2.executeUpdate();
+			logger.debug("Access Given");
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+	}
+
+	public void enableUsers(Integer id) {
+		String query = "update User set status=:valid where id=:id";
+		Query query2 = entityManager.createQuery(query).setParameter("status", valid).setParameter("id", id);
+		query2.executeUpdate();
+	}
+
 	public void updatePassword(User user, String password) {
 		try {
 			logger.debug("Setting new password");
@@ -172,6 +210,21 @@ public class UserDao {
 			logger.debug("Error from UserDao class" + e);
 		}
 
+	}
+
+	public List<User> getUserRoles() {
+		try {
+			logger.info("Getting result from users and roles ");
+			String query = "SELECT u from User u ";
+			List<User> lista = entityManager.createQuery(query).getResultList();
+			logger.info("Fetching result from user");
+			logger.debug(lista);
+			return lista;
+		} catch (Exception exception) {
+			logger.debug(exception);
+			exception.printStackTrace();
+		}
+		return null;
 	}
 
 	public User getUser() {

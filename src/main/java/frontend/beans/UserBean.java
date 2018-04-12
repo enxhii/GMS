@@ -1,4 +1,5 @@
 package frontend.beans;
+
 import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
@@ -23,13 +24,17 @@ public class UserBean {
 	public boolean logged;
 	private Address address;
 	private List<Role> list;
-	private List<Role>  selectedRole;
+	private List<Role> selectedRole;
 	private List<User> users;
 	private Customer customer;
 	private User user;
 	private Role role;
 	private User userDelete;
 	private User update;
+	private List<User> disabledUsers;
+	private List<User> disabledCustomers;
+	private List<User> userRoles;
+	private User checked;
 
 	@PostConstruct
 	public void init() {
@@ -40,11 +45,17 @@ public class UserBean {
 		role = new Role();
 		users = userService.listAll();
 		update = new User();
-
+		disabledCustomers = userService.getDisabledCustomer();
+		disabledUsers = userService.getDisabledUser();
+		userRoles = userService.getUserRoles();
+		checked = new User();
+		selectedRole =roleService.listRoles();
 	}
 
 	public void addUser() {
-		userService.save(user, address, role);
+		logger.debug(selectedRole);
+		userService.save(user, address, selectedRole);
+
 	}
 
 	public void addCustomer() {
@@ -54,7 +65,7 @@ public class UserBean {
 	public void deleteUser() {
 		users.remove(userDelete);
 		userService.delete(userDelete.getId());
-		users=userService.listAll();
+		users = userService.listAll();
 	}
 
 	public List<User> listAll() {
@@ -76,6 +87,7 @@ public class UserBean {
 	public void updatePassword() {
 		userService.updatePassword(userProfileBean.getUser(), password);
 	}
+
 	public void updateUsersPassword() {
 		userService.updatePassword(update, password);
 	}
@@ -88,20 +100,45 @@ public class UserBean {
 		userService.updateUsers(update, update.getAddress());
 		userService.listAll();
 	}
-public Role getRole(Integer id) {
-	if (id == null) {
-		throw new IllegalArgumentException("Id not null");
+
+	public Role getRole(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Id not null");
+		}
+		Optional<Role> optional = list.stream().filter(role -> id.equals(role.getId())).findFirst();
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
 	}
 
-	Optional<Role> optional = list.stream().filter(g -> id.equals(g.getId())).findFirst();
-
-	if (optional.isPresent()) {
-		return optional.get();
+	public void enableUser() {
+		userService.enableUsers(update.getId());
 	}
 
-	return null;	 
-	
-}
+	public void giveAccess() {
+		disabledCustomers.remove(checked);
+		userService.giveAccess(checked.getId());
+		logger.debug(checked.getId());
+		disabledCustomers = userService.getDisabledCustomer();
+
+	}
+
+	public List<User> getDisabledCustomer() {
+		return disabledCustomers;
+
+	}
+
+	public List<User> getDisUsers() {
+		return disabledUsers;
+
+	}
+
+	public List<User> getUserRoles() {
+		return userRoles;
+
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -222,4 +259,31 @@ public Role getRole(Integer id) {
 		this.selectedRole = selectedRole;
 	}
 
+	public List<User> getDisabledCustomers() {
+		return disabledCustomers;
+	}
+
+	public void setDisabledCustomers(List<User> disabledCustomers) {
+		this.disabledCustomers = disabledCustomers;
+	}
+
+	public List<User> getDisabledUsers() {
+		return disabledUsers;
+	}
+
+	public void setDisabledUsers(List<User> disabledUsers) {
+		this.disabledUsers = disabledUsers;
+	}
+
+	public void setUserRoles(List<User> userRoles) {
+		this.userRoles = userRoles;
+	}
+
+	public User getChecked() {
+		return checked;
+	}
+
+	public void setChecked(User checked) {
+		this.checked = checked;
+	}
 }

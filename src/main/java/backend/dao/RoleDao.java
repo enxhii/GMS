@@ -38,6 +38,11 @@ public class RoleDao {
 		Role role = entityManager.createQuery(query, Role.class).getSingleResult();
 		return role;
 	}
+	public List<Role> getRolesById() {
+		String query = "select r from Role r where r.name='Member'";
+		List<Role> role = entityManager.createQuery(query, Role.class).getResultList();
+		return role;
+	}
 
 	public EntityManager getEntityManager() {
 		return entityManager;

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>User Roles Information</title>
+</h:head>
+
+<ui:composition template="/home/homepagetemplate.xhtml">
+	<h:outputStylesheet library="css" name="datatable.css" />
+
+	<ui:define name="body">
+		<h:form id="form">
+			<p:dataTable var="u" value="#{userbean.userRoles}" paginator="true"
+				style="margin-bottom:20px" id="userss" rows="10"
+				emptyMessage="No records found !" styleClass="user-table"
+				headerClass="user-table-header"
+				rowClasses="user-table-odd-row,user-table-even-row">
+				<p:column headerText="Username">
+					<h:outputText value="#{u}" />
+
+				</p:column>
+
+				<p:column headerText="Roles">
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

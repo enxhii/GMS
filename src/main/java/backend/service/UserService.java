@@ -12,10 +12,17 @@ public interface UserService {
 
 	Integer getUserIdByUsername(String username);
 
-	public void save(User entity, Address address, Role role);
+	public void save(User entity, Address address, List<Role> role);
 
 	public void delete(Integer id);
 
+	public List<User> getUserRoles();
+
+	public void enableUsers(Integer id);
+
+	public void giveAccess(Integer id);
+	public List<User> getDisabledCustomer() ;
+	public List<User> getDisabledUser() ;
 
 	public void customerReg(User user, Address address);
 

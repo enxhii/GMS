@@ -1,7 +1,6 @@
 package backend.serviceImpl;
 
 import java.util.List;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import backend.dao.UserDao;
 import backend.model.Address;
-import backend.model.Customer;
 import backend.model.Role;
 import backend.model.User;
 import backend.service.UserService;
@@ -71,9 +69,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void save(User entity, Address address, Role role) {
+	public void save(User entity, Address address, List<Role> role) {
 		try {
-			userdao.addUser(entity, address,role);
+			userdao.addUser(entity, address, role);
 			logger.info("User succesfully added");
 		} catch (Exception e) {
 			logger.info(e);
@@ -82,7 +80,6 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	
 	@Override
 	public void customerReg(User user, Address address) {
 		try {
@@ -132,7 +129,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateProfile(User user, Address address) {
 		try {
-userdao.updateProfile(user, address);
+			userdao.updateProfile(user, address);
 		} catch (Exception e) {
 			logger.debug(e);
 		}
@@ -140,9 +137,56 @@ userdao.updateProfile(user, address);
 
 	@Override
 	public void updateUsers(User user, Address address) {
-try {
-userdao.updateUser(user, address);	
-} catch (Exception e) {
-logger.debug(e);}	}
+		try {
+			userdao.updateUser(user, address);
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+	}
+
+	@Override
+	public List<User> getUserRoles() {
+		try {
+			return userdao.getUserRoles();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+		return users;
+	}
+
+	@Override
+	public void enableUsers(Integer id) {
+		userdao.enableUsers(id);
+		;
+	}
+
+	@Override
+	public void giveAccess(Integer id) {
+		try {
+			logger.debug("Giving access to user :" + id);
+		userdao.giveAccess(id);
+		}catch (Exception e) {
+logger.debug(e);		}
+	}
+
+	@Override
+	public List<User> getDisabledCustomer() {
+		try {
+			return userdao.getDisabledCustomer();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+		return null;
+	}
+
+	@Override
+	public List<User> getDisabledUser() {
+		try {
+			return userdao.getDisabledUser();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+		return null;
+	}
 
 }

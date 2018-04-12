@@ -1,0 +1,35 @@
+.user-table{
+	border-collapse:collapse;
+}
+
+.user-table-header{
+	text-align:center;
+	background:none repeat scroll 0 0 #339966;
+	border-bottom:1px solid #732626;
+	padding:16px;
+}
+.commandLink{
+background:#339966;
+color:#f9ecec;
+}
+.user-table-odd-row{
+	text-align:center;
+	background:none repeat scroll 0 0  #c6ecd9;
+	border-top:1px solid #e6b3b3;
+}
+
+.user-table-even-row{
+	text-align:center;
+	background:none repeat scroll 0 0  #9fdfbf;
+	border-top:1px solid #d98c8c;
+}
+ .commandButton{
+  border:none;
+  outline:none;
+  height:40px;
+  background:#d98c8c;
+  color:#fff;
+  font-size:18px;
+  border-radius:20px;
+  
+  }

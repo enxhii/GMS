@@ -3,54 +3,28 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
-
-	<h:form id="attend">
-		<h:dataTable value="#{trainerBean.lista}" var="p" id="program">
-
-			<h:column>
-
-				<f:facet name="header">Programm Number</f:facet>
-				<h:outputText value="#{p.id}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Category</f:facet>
-				<h:outputText value="#{p.header}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Programm Name</f:facet>
-				<h:outputText value="#{p.name}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Description</f:facet>
-				<h:outputText value="#{p.description}" />
-
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Level</f:facet>
-				<h:outputText value="#{p.level}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="Duration in minutes ">Level</f:facet>
-				<h:outputText value="#{p.duration}" />
-			</h:column>
-			<h:column>
-				<f:facet name="Burned Calory  ">Level</f:facet>
-				<h:outputText value="#{p.burnedCalory}" />
-			</h:column>
-						<h:column>
-			
-			            <h:commandButton value="Add" 
-			            action="#{customerbean.attendCourses}" />
-			
-			</h:column>
-		</h:dataTable>
-
-
-
-	</h:form>
+	<h:body>
+	<h:form>
+	<p:selectManyCheckbox id="progs" value="#{customerbean.selectedProg}" layout="pageDirection" 
+	converter="programmConverter"  columns="1">
+        <f:selectItems value="#{customerbean.list}" var="p" itemLabel="#{p.header}" itemValue="#{p}" />
+    </p:selectManyCheckbox>
+ 
+    <p:separator />
+ 
+    <p:commandButton value="Submit" update="display"  action="#{customerbean.attendCourses}" icon="ui-icon-check" />
+ 
+    <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
+        <p:outputPanel id="display">
+            <p:dataList value="#{customerbean.list}" var="console">
+                <f:facet name="header">
+                    Basic
+                </f:facet>
+                #{p}
+            </p:dataList>
+            
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+</h:body>
 </ui:composition>

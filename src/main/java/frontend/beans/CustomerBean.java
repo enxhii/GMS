@@ -1,48 +1,70 @@
 package frontend.beans;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 import backend.model.*;
 import backend.serviceImpl.*;
 import javax.faces.bean.ManagedProperty;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 @ManagedBean(name = "customerbean")
 @ViewScoped
 public class CustomerBean {
-	
+	final static Logger logger = LogManager.getLogger(CustomerBean.class);
+
 	@ManagedProperty(value = "#{customerServiceImpl}")
 	private CustomerServiceImpl customerService;
-	
+
 	@ManagedProperty(value = "#{trainerServiceImpl}")
 	private TrainerServiceImpl trainerService;
-	
+
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
-	
+
 	private Customer customer;
 	private List<Programm> list;
-private Programm programm;
+	private Programm programm;
+	private List<Programm> selectedProg;
+
 	@PostConstruct
 	public void init() {
 		customer = new Customer();
-		list = trainerService.list();
-		programm=new Programm();
-				
+		list = customerService.listProgramms();
+		programm = new Programm();
+		selectedProg = customerService.listProgramms();//new ArrayList<>();
+
 	}
 
 	public boolean attendCourses() {
+		try {
 		customer.setId(userProfileBean.getUser().getId());
-		customerService.add(customer,programm);
-		return true;
+			customerService.add(customer, selectedProg);
+			return true;
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+		return false;
 
 	}
 
 	public List<Programm> displayProgramm() {
-		list = trainerService.list();
+		list = customerService.listProgramms();
 		return list;
 	}
 
-	
+	public Programm getProgramm(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Id not null");
+		}
+		Optional<Programm> optional = list.stream().filter(programm -> id.equals(programm.getId())).findFirst();
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
+
 	public TrainerServiceImpl getTrainerService() {
 		return trainerService;
 	}
@@ -91,6 +113,12 @@ private Programm programm;
 		this.programm = programm;
 	}
 
+	public List<Programm> getSelectedProg() {
+		return selectedProg;
+	}
 
-	
+	public void setSelectedProg(List<Programm> selectedProg) {
+		this.selectedProg = selectedProg;
+	}
+
 }

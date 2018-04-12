@@ -22,8 +22,8 @@ private List<Programm> programms;
 
 	
 	@Override
-	public List<Programm> list() {
-		programms=trainerDao.list();
+	public List<Programm> list(int id) {
+		programms=trainerDao.list( id);
 		return programms;
 	}
 
@@ -53,6 +53,24 @@ private List<Programm> programms;
 
 	public void setProgramms(List<Programm> programms) {
 		this.programms = programms;
+	}
+
+
+
+	@Override
+	public void updateProgram(Programm p) {
+trainerDao.updateProgram(p);		
+	}
+
+
+
+	@Override
+	public void deleteProgramm(Integer id) {
+		try {
+			trainerDao.deleteProgramm(id);		
+
+		} catch (Exception e) {
+logger.debug(e);		}
 	}
 
 }

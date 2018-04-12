@@ -8,77 +8,24 @@
 	<title>Add programm</title>
 </h:head>
 <h:body>
-<h:form>
-<h:commandButton action="#{login.logout}" value="Logout "> </h:commandButton>
-
-</h:form>
-
-
- Welcome <h:outputText value="#{login.userProfileBean.user.username}"> </h:outputText>
 	<h:form>
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<h:messages showDetail="true" />
-			<h:outputText value=" Name : " />
-			<h:inputText value="#{trainerBean.programm.name}" required="true"
-				requiredMessage="Your Programm name must have 3 or more letters.">
-				<f:validateLength minimum="3" maximum="12" />
-			</h:inputText>
-			<h:outputText value=" header : " />
-			<h:inputText value="#{trainerBean.programm.header}" required="true"
-				requiredMessage="Your header must have 3 or more letters.">
-				<f:validateLength minimum="3" maximum="12" />
-			</h:inputText>
-			<br></br>
+		<h:commandButton action="#{login.logout}" value="Logout ">
+		</h:commandButton>
 
-			<h:outputText value="Description : " />
-			<h:inputText value="#{trainerBean.programm.description}"
-				required="true"
-				requiredMessage="Username is required!Your Last name must have 3 or more letters.">
-				<f:validateLength minimum="3" maximum="12" />
-			</h:inputText>
-			<br></br>
-
-			<h:outputText value="Duration in minutes : " />
-			<h:inputText id="password1" value="#{trainerBean.programm.duration}"
-				required="true" requiredMessage="Password is required">
-				<f:validateLength minimum="1" />
-			</h:inputText>
-			<br></br>
-			<h:outputText value=" Level: " />
-			<br></br>
-			<h:inputText value="#{trainerBean.programm.level}" required="true"
-				requiredMessage="Level is required">
-			</h:inputText>
-			<br></br>
-			<h:outputText value="Burned Calory " />
-			<h:inputText value="#{trainerBean.programm.burnedCalory}"
-				required="true" requiredMessage="burnedCalory is required">
-			</h:inputText>
-			<h:commandButton value="Insert" styleClass="commandButton"
-				action="#{trainerBean.addProgramm}" />
-		</h:panelGrid>
 	</h:form>
-	<div id="footer">
-		<ui:insert name="client">
-			<ui:include src="/client/attendprogramm.xhtml" />
+
+
+ Welcome <h:outputText value="#{login.userProfileBean.user.username}">
+	</h:outputText>
+		<p:growl id="messages" showDetail="true" />
+
+	<div id="programlist">
+		<ui:insert name="programlist">
+			<ui:include src="/trainer/programlist.xhtml" />
 		</ui:insert>
 	</div>
 	
 	
-	<div id="updatepassword">
-		<ui:insert name="update">
-			<ui:include src="updatepassword.xhtml" />
-		</ui:insert>
-	</div>
-	
-	<br/><br/>
-	
-	
-	<div id="updateprofile">
-		<ui:insert name="updateprofile">
-			<ui:include src="updateprofile.xhtml" />
-		</ui:insert>
-	</div>
 </h:body>
 
 </html>

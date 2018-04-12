@@ -7,6 +7,8 @@ import backend.model.User;
 
 public interface TrainerService {
 	public void addProgramm(Programm programm ,User user);
-	public List<Programm> list();
+	public List<Programm> list(int id);
+	public void updateProgram(Programm p);
+	public void deleteProgramm(Integer id);
 
 }

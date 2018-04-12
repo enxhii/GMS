@@ -15,7 +15,7 @@ public class Programm implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="burnedCalory")
 
@@ -35,23 +35,26 @@ public class Programm implements Serializable {
 
 	@Column(name="name")
 	private String name;
+	@Column(name="status")
+	private Integer status;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",referencedColumnName="id")  
 	private User user;
 
 	//bi-directional many-to-many association to Customer
-	@ManyToMany(mappedBy="programms", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="programms",cascade=CascadeType.ALL)
 	private List<Customer> customers;
 
 	public Programm() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -119,6 +122,14 @@ public class Programm implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

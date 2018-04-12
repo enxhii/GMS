@@ -2,7 +2,7 @@ package backend.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * The persistent class for the customer database table.
@@ -17,37 +17,37 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
-	
-		// bi-directional one-to-one association to User
+	private Integer id;
+
+	// bi-directional one-to-one association to User
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name ="customer_id" )
+	@JoinColumn(name = "customer_id")
 	private User user;
-	//private int customer_id;
-	
+	// private int customer_id;
 
 	// bi-directional many-to-many association to Programm
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "cust_attends_prog", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "program_id", referencedColumnName = "id", nullable = false))
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "cust_attends_prog", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), 
+	inverseJoinColumns = @JoinColumn(name = "program_id", referencedColumnName = "id"))
 
-	private List<Programm> programms;
+	private Collection<Programm> programms;
 
 	public Customer() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public List<Programm> getProgramms() {
+	public Collection<Programm> getProgramms() {
 		return this.programms;
 	}
 
-	public void setProgramms(List<Programm> programms) {
+	public void setProgramms(Collection<Programm> programms) {
 		this.programms = programms;
 	}
 
@@ -58,13 +58,5 @@ public class Customer implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-/*
-	public int getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
-	}
-*/
+	
 }

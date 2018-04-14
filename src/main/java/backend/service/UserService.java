@@ -16,8 +16,6 @@ public interface UserService {
 
 	public void delete(Integer id);
 
-	public List<User> getUserRoles();
-
 	public void enableUsers(Integer id);
 
 	public void giveAccess(Integer id);
@@ -32,5 +30,5 @@ public interface UserService {
 
 	public void updateProfile(User user, Address address);
 
-	public void updateUsers(User user, Address address);
+	public void updateUsers(User user, Address address,List<Role> roles);
 }

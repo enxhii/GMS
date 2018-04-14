@@ -7,26 +7,23 @@
 	<application>
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 	</application>
-	
-	
-	
 	<navigation-rule>
 		<from-view-id>login.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>success</from-outcome>
-			<to-view-id>admin/admin.xhtml</to-view-id>
+			<to-view-id>/home/home.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 
 		<navigation-case>
 			<from-outcome>failure</from-outcome>
-			<to-view-id>error/login_error.xhtml</to-view-id>
+			<to-view-id>/error/login_error.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>admin/admin.xhtml</from-view-id>
+		<from-view-id>/home/home.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>logout</from-outcome>
 			<to-view-id>login.xhtml</to-view-id>
@@ -42,15 +39,20 @@
 			<to-view-id>login.xhtml</to-view-id>
 			<redirect />
 
-
 		</navigation-case>
 	</navigation-rule>
+
 	<navigation-rule>
-  <from-view-id>/*</from-view-id>
-	 <navigation-case>
-   <from-outcome>user</from-outcome>
-   <to-view-id>/GMS/WebContent/admin/UserList.xhtml</to-view-id>
-   <redirect/>
-  </navigation-case>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>users</from-outcome>
+			<to-view-id>/admin/UserList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>updateprofile</from-outcome>
+			<to-view-id>/admin/updateprofile.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 </faces-config>

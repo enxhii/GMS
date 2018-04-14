@@ -33,8 +33,8 @@ public class UserBean {
 	private User update;
 	private List<User> disabledUsers;
 	private List<User> disabledCustomers;
-	private List<User> userRoles;
 	private User checked;
+	static final String updateprofile = "updateprofile";
 
 	@PostConstruct
 	public void init() {
@@ -46,10 +46,9 @@ public class UserBean {
 		users = userService.listAll();
 		update = new User();
 		disabledCustomers = userService.getDisabledCustomer();
-		disabledUsers = userService.getDisabledUser();
-		userRoles = userService.getUserRoles();
+		//disabledUsers = userService.getDisabledUser();
 		checked = new User();
-		selectedRole =roleService.listRoles();
+		selectedRole = roleService.listRoles();
 	}
 
 	public void addUser() {
@@ -92,12 +91,13 @@ public class UserBean {
 		userService.updatePassword(update, password);
 	}
 
-	public void updateProfile() {
+	public String updateProfile() {
 		userService.updateProfile(userProfileBean.getUser(), userProfileBean.getUser().getAddress());
+		return updateprofile;
 	}
 
 	public void updateUsers() {
-		userService.updateUsers(update, update.getAddress());
+userService.updateUsers(update, update.getAddress(),update.getRoles());
 		userService.listAll();
 	}
 
@@ -117,10 +117,14 @@ public class UserBean {
 	}
 
 	public void giveAccess() {
-		disabledCustomers.remove(checked);
-		userService.giveAccess(checked.getId());
-		logger.debug(checked.getId());
-		disabledCustomers = userService.getDisabledCustomer();
+		try {
+			disabledCustomers.remove(checked);
+			userService.giveAccess(checked.getId());
+			logger.debug(checked.getId());
+			disabledCustomers = userService.getDisabledCustomer();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
 
 	}
 
@@ -134,10 +138,7 @@ public class UserBean {
 
 	}
 
-	public List<User> getUserRoles() {
-		return userRoles;
-
-	}
+	
 
 	public User getUser() {
 		return user;
@@ -274,16 +275,15 @@ public class UserBean {
 	public void setDisabledUsers(List<User> disabledUsers) {
 		this.disabledUsers = disabledUsers;
 	}
-
-	public void setUserRoles(List<User> userRoles) {
-		this.userRoles = userRoles;
-	}
-
 	public User getChecked() {
 		return checked;
 	}
 
 	public void setChecked(User checked) {
 		this.checked = checked;
+	}
+
+	public static String getUpdateprofile() {
+		return updateprofile;
 	}
 }

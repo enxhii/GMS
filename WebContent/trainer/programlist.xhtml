@@ -5,15 +5,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-<ui:define name="title">
-	<h:outputText value="Programm List"></h:outputText>
-</ui:define>
-<ui:composition template="/home/homepagetemplate.xhtml">
+<ui:composition template="/components/homepagetemplate.xhtml">
+	<ui:define name="title">
+		<h:outputText value="Programm List"></h:outputText>
+	</ui:define>
 	<ui:define name="body">
 		<h:form id="form">
 			<p:dataTable id="datatable" var="p" value="#{trainerBean.lista}"
-				paginator="true" style="margin-bottom:20px">
+				paginator="true" style="background: #c43636" >
 				<p:column headerText="Id">
 					<h:outputText value="#{p.id}" />
 				</p:column>
@@ -36,6 +35,15 @@
 				</p:column>
 				<p:column headerText="Duration In Minutes">
 					<h:outputText value="#{p.duration}" />
+				</p:column>
+				<p:column headerText="Details about registered Customers">
+					<p:commandLink oncomplete="PF('ShowUserDialog').show()"
+						update=":showform:showUserDialog ">
+						<h:outputText class="fa fa-search w3-xlarge"
+							style="color: #c43636;" />
+						<f:setPropertyActionListener value="#{p}"
+							target="#{trainerBean.update}" />
+					</p:commandLink>
 				</p:column>
 				<p:column headerText="Delete Programm">
 					<p:commandLink action="#{trainerBean.deleteProgramm}"
@@ -61,18 +69,19 @@
 						update=":updateform:editProgrammDialog ">
 						<f:setPropertyActionListener value="#{p}"
 							target="#{trainerBean.update}" />
-						<h:outputText value="Edit User"
-							styleClass="ui-icon ui-icon-wrench" style="margin:0 auto;" />
+						<i class="fa fa-edit w3-xlarge" style="color: #c43636;"></i>
 					</p:commandLink>
 				</p:column>
 			</p:dataTable>
 			<p:commandButton id="createButton" icon="ui-icon-plus"
 				value="Add Programm" update=":program:addProgrammDialog"
-				oncomplete="PF('AddProgrammDialog').show()" />
+				oncomplete="PF('AddProgrammDialog').show()"
+				styleClass="w3-button w3-section"
+				style="background: #c43636; color: white;" />
 		</h:form>
 		<ui:include src="updateprogramm.xhtml"></ui:include>
 		<ui:include src="addprogramm.xhtml"></ui:include>
-
+		<ui:include src="custprog.xhtml"></ui:include>
 	</ui:define>
 </ui:composition>
 </html>

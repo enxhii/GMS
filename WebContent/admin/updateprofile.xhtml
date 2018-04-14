@@ -1,9 +1,10 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
-
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/components/homepagetemplate.xhtml">
+	<ui:define name="body">
 	<h:form>
 		<p:panel id="projectLabel" header="Edit your profile"
 			style="margin-bottom:10px;">
@@ -46,4 +47,6 @@
 		</p:panel>
 
 	</h:form>
+</ui:define>
 </ui:composition>
+</html>

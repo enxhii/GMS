@@ -1,6 +1,8 @@
 package backend.model;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+
 import javax.persistence.*;
 @Entity
 @Table(name="user")
@@ -42,16 +44,16 @@ public class User implements Serializable {
 	//@OneToOne(mappedBy="user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	//private Customer customer;
 
-	//bi-directional many-to-one association to Address
+	//bi-drectional many-to-one association to Address
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="adresa_id")
 	private Address address;
 	
-@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+@ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.MERGE,CascadeType.REFRESH})
 @JoinTable(name="user_roles" , joinColumns=@JoinColumn(name="user_id" , referencedColumnName="id"),
 inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
 
-	private Collection<Role> roles;
+	private List<Role> roles;
 
 
 @OneToMany(
@@ -155,11 +157,11 @@ private Collection<Programm> program ;
 		return serialVersionUID;
 	}
 
-	public Collection<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 

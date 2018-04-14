@@ -1,0 +1,43 @@
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<h:form id="showform" appendTo="@(body)">
+		<p:dialog id="showUserDialog" 
+			header="Program: #{trainerBean.update.name}"
+			widgetVar="ShowUserDialog"  showEffect="explode" hideEffect="fade"
+			resizable="false">
+			<p:growl id="editmsg" life="2000" />
+			<p:outputPanel id="showUserPanel" style="text-align:center;">
+				<p:panelGrid columns="1">
+					<p:column headerText="Customers Registered ">
+						<p:column>
+							<ui:repeat value="#{trainerBean.update.customers}" var="c">
+								<f:attribute name="collectionType" value="java.util.ArrayList" />
+								<h:outputText value="FirstName: #{c.user.name}" />
+								<br />
+								<h:outputText value=" Username: #{c.user.username}" />
+								<br />
+								<h:outputText value="LastName:#{c.user.surname}" />
+								<h:outputText value=" Email: #{c.user.email}" />
+								<br />
+								<h:outputText value=" Phone: #{c.user.phone}" />
+								<br />
+							</ui:repeat>
+							</p:column>
+					</p:column>
+				</p:panelGrid>
+
+				<p:commandButton value="Close " styleClass="commandButton"
+					onclick="PF('ShowUserDialog').hide()">
+				</p:commandButton>
+
+			</p:outputPanel>
+
+		</p:dialog>
+
+	</h:form>
+</ui:composition>
+</html>

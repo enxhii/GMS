@@ -10,22 +10,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 	<h:body>
-		<h:form>
-			<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
-				style="display: none; background-color:#c6ecd9;" id="mySidebar">
-				<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
-					Sidebar</button>
-				<h:commandLink value="Manage Users"
-					outcome="user"></h:commandLink>
-					<h:commandLink value="View Customers "
-					outcome="user"></h:commandLink>
-				<a href="#" class="w3-bar-item w3-button">Update Profile</a> <a
-					href="#" class="w3-bar-item w3-button">Update Password</a> <a
-					href="#" class="w3-bar-item w3-button">Manage Programms</a> <a
-					href="#" class="w3-bar-item w3-button">Give Access </a>
 
-			</div>
-		</h:form>
+		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
+			style="display: none; background-color: #c6ecd9;" id="mySidebar">
+			<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
+				Sidebar</button>
+
+			<h:link value="Update Profile" outcome="/admin/updateprofile" />
+			<br /> <br />
+			<h:link value="Update Password" outcome="/admin/updatepassword" />
+						<br /> <br />
+			
+			<h:link value="Manage Users" outcome="/admin/UserList" />
+			
+									<br /> <br />
+			<h:link value="Manage Programms" outcome="/trainer/programlist"></h:link>
+										<br /> <br />
+			<h:link value="Give Access" outcome="/admin/giveaccess"></h:link>
+			
+
+
+
+		</div>
+
 		<div id="main">
 
 			<div class="w3-teal">

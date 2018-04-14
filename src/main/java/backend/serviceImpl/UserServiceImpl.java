@@ -136,24 +136,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUsers(User user, Address address) {
+	public void updateUsers(User user, Address address,List<Role> roles) {
 		try {
-			userdao.updateUser(user, address);
+			userdao.updateUser(user, address,roles);
 		} catch (Exception e) {
 			logger.debug(e);
 		}
 	}
-
-	@Override
-	public List<User> getUserRoles() {
-		try {
-			return userdao.getUserRoles();
-		} catch (Exception e) {
-			logger.debug(e);
-		}
-		return users;
-	}
-
 	@Override
 	public void enableUsers(Integer id) {
 		userdao.enableUsers(id);

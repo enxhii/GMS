@@ -43,6 +43,20 @@ public class RoleDao {
 		List<Role> role = entityManager.createQuery(query, Role.class).getResultList();
 		return role;
 	}
+	public List<Role> getUserRoles(int id) {
+		try {
+			logger.info("Getting result from users and roles ");
+			String query = "SELECT r from Role r join r.users u where u.id=:id ";
+			List<Role> lista = entityManager.createQuery(query).setParameter("id", id).getResultList();
+			logger.info("Fetching result from user");
+			logger.debug(lista);
+			return lista;
+		} catch (Exception exception) {
+			logger.debug(exception);
+			exception.printStackTrace();
+		}
+		return null;
+	}
 
 	public EntityManager getEntityManager() {
 		return entityManager;

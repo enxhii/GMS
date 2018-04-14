@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,7 +16,7 @@ import backend.model.User;
 
 @Repository
 public class UserDao {
-	@PersistenceContext
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager entityManager;
 	final static Logger logger = LogManager.getLogger(UserDao.class);
 	private static final int valid = 1;
@@ -107,16 +108,24 @@ public class UserDao {
 
 	public void deleteUser(Integer id) {
 		try {
-			String query = "update Programm set status=?1 where id=?2";
+			String query = "update User set status=?1 where id=?2";
 			Query query2 = entityManager.createQuery(query).setParameter(1, invalid).setParameter(2, id);
 			query2.executeUpdate();
 		} catch (Exception e) {
 		}
 	}
 
-	public void updateUser(User user, Address address) {
+	public void updateUser(User user, Address address, List<Role> roles) {
+		logger.debug("Address updated");
 		user.setAddress(address);
+		logger.debug("Roles updated");
+		user.setRoles(roles);
+		entityManager.refresh(roles);
 		entityManager.merge(user);
+		entityManager.refresh(user);
+
+		logger.debug("User succesfully  updated");
+
 	}
 
 	public void customerReg(User user, Address address) {
@@ -172,7 +181,7 @@ public class UserDao {
 			logger.info("Getting result from disabled customers");
 			String sql = "select u from User u where u.checked=?1";
 			List<User> lista = entityManager.createQuery(sql, User.class).setParameter(1, unchecked).getResultList();
-			logger.info("Fetching result from user");
+			logger.info("Fetching result from disabled customer");
 			return lista;
 		} catch (Exception exception) {
 			logger.debug(exception);
@@ -210,21 +219,6 @@ public class UserDao {
 			logger.debug("Error from UserDao class" + e);
 		}
 
-	}
-
-	public List<User> getUserRoles() {
-		try {
-			logger.info("Getting result from users and roles ");
-			String query = "SELECT u from User u ";
-			List<User> lista = entityManager.createQuery(query).getResultList();
-			logger.info("Fetching result from user");
-			logger.debug(lista);
-			return lista;
-		} catch (Exception exception) {
-			logger.debug(exception);
-			exception.printStackTrace();
-		}
-		return null;
 	}
 
 	public User getUser() {

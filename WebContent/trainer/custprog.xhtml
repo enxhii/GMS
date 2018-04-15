@@ -5,9 +5,9 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition>
 	<h:form id="showform" appendTo="@(body)">
-		<p:dialog id="showUserDialog" 
+		<p:dialog id="showUserDialog"
 			header="Program: #{trainerBean.update.name}"
-			widgetVar="ShowUserDialog"  showEffect="explode" hideEffect="fade"
+			widgetVar="ShowUserDialog" showEffect="explode" hideEffect="fade"
 			resizable="false">
 			<p:growl id="editmsg" life="2000" />
 			<p:outputPanel id="showUserPanel" style="text-align:center;">
@@ -16,26 +16,48 @@
 						<p:column>
 							<ui:repeat value="#{trainerBean.update.customers}" var="c">
 								<f:attribute name="collectionType" value="java.util.ArrayList" />
-								<h:outputText value="FirstName: #{c.user.name}" />
 								<br />
 								<h:outputText value=" Username: #{c.user.username}" />
 								<br />
-								<h:outputText value="LastName:#{c.user.surname}" />
-								<h:outputText value=" Email: #{c.user.email}" />
-								<br />
-								<h:outputText value=" Phone: #{c.user.phone}" />
-								<br />
+								<p:commandLink oncomplete="PF('userDialog').show()"
+									title="View Detail" styleClass="ui-icon ui-icon-search"
+									style="float:left;margin-right:10px"
+									update=":showform:userDetail">
+									<f:setPropertyActionListener value="#{c}" target="#{c}" />
+								</p:commandLink>
 							</ui:repeat>
-							</p:column>
+						</p:column>
+
 					</p:column>
 				</p:panelGrid>
-
 				<p:commandButton value="Close " styleClass="commandButton"
-					onclick="PF('ShowUserDialog').hide()">
+					onclick="PF('ShowUserDialog').hide()" style="background: #c43636; color: white;">
 				</p:commandButton>
 
 			</p:outputPanel>
 
+		</p:dialog>
+		<p:dialog header="User Details" widgetVar="userDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="userDetail" style="text-align:center;">
+				<p:panelGrid columns="2" columnClasses="label,value">
+					<f:facet name="header">
+					</f:facet>
+					<p:column>
+						<h:outputText value=" Username: #{c.user.username}" />
+						<br />
+						<h:outputText value=" FirstName: #{c.user.name}" />
+						<br />
+						<h:outputText value=" LastName: #{c.user.surname}" />
+						<br />
+						<h:outputText value=" Email: #{c.user.email}" />
+						<br />
+						<h:outputText value=" Mobile: #{c.user.phone}" />
+
+
+					</p:column>
+				</p:panelGrid>
+			</p:outputPanel>
 		</p:dialog>
 
 	</h:form>

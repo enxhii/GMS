@@ -4,27 +4,20 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 	<h:body>
-	<h:form>
-	<p:selectManyCheckbox id="progs" value="#{customerbean.selectedProg}" layout="pageDirection" 
-	converter="programmConverter"  columns="1">
-        <f:selectItems value="#{customerbean.list}" var="p" itemLabel="#{p.header}" itemValue="#{p}" />
-    </p:selectManyCheckbox>
- 
-    <p:separator />
- 
-    <p:commandButton value="Submit" update="display"  action="#{customerbean.attendCourses}" icon="ui-icon-check" />
- 
-    <p:dialog header="Values" modal="true" showEffect="clip" widgetVar="dlg" resizable="false">
-        <p:outputPanel id="display">
-            <p:dataList value="#{customerbean.list}" var="console">
-                <f:facet name="header">
-                    Basic
-                </f:facet>
-                #{p}
-            </p:dataList>
-            
-        </p:outputPanel>
-    </p:dialog>
-</h:form>
-</h:body>
+		<p:layout style="min-width:400px;min-height:200px;">
+			<h:form>
+				<p:layoutUnit position="south">
+					<p:selectManyCheckbox id="progs"
+						value="#{customerbean.selectedProg}" layout="pageDirection"
+						converter="programmConverter" columns="1">
+						<f:selectItems value="#{customerbean.list}" var="p"
+							itemLabel="#{p.header} "  itemValue="#{p}" />
+					</p:selectManyCheckbox>
+
+				</p:layoutUnit>
+				<p:commandButton value="Submit"
+					action="#{customerbean.attendCourses}" icon="ui-icon-check" />
+			</h:form>
+		</p:layout>
+	</h:body>
 </ui:composition>

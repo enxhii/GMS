@@ -12,24 +12,23 @@
 	<h:body>
 
 		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
-			style="display: none; background-color: #c6ecd9;" id="mySidebar">
+			style="display: none; background-color:#ffffcc;" id="mySidebar">
 			<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
 				Sidebar</button>
 
 			<h:link value="Update Profile" outcome="/admin/updateprofile" />
 			<br /> <br />
 			<h:link value="Update Password" outcome="/admin/updatepassword" />
-						<br /> <br />
-			
+			<br /> <br />
+
 			<h:link value="Manage Users" outcome="/admin/UserList" />
-			
-									<br /> <br />
+
+			<br /> <br />
 			<h:link value="Manage Programms" outcome="/trainer/programlist"></h:link>
-										<br /> <br />
+			<br /> <br />
 			<h:link value="Give Access" outcome="/admin/giveaccess"></h:link>
-			
-
-
+			<br/>
+			<h:commandButton value="Logout" actionListener="#{login.logout}"></h:commandButton>
 
 		</div>
 
@@ -46,13 +45,13 @@
 
 		<script>
 			function w3_open() {
-				document.getElementById("main").style.marginLeft = "12%";
-				document.getElementById("mySidebar").style.width = "12%";
+				document.getElementById("main").style.marginLeft = "19%";
+				document.getElementById("mySidebar").style.width = "19%";
 				document.getElementById("mySidebar").style.display = "block";
 				document.getElementById("openNav").style.display = 'none';
 			}
 			function w3_close() {
-				document.getElementById("main").style.marginLeft = "5%";
+				document.getElementById("main").style.marginLeft = "0%";
 				document.getElementById("mySidebar").style.display = "none";
 				document.getElementById("openNav").style.display = "inline-block";
 			}

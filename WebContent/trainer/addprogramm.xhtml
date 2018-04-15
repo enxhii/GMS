@@ -47,9 +47,11 @@
 					</p:inputNumber>
 
 					<p:commandButton value="Add " styleClass="commandButton"
-						action="#{trainerBean.addProgramm}" update=":form:datatable"></p:commandButton>
+						action="#{trainerBean.addProgramm}" update=":form:datatable"
+						style="background: #c43636; color: white;"></p:commandButton>
 					<p:commandButton value="Cancel " styleClass="commandButton"
-						onclick="PF('AddProgrammDialog').hide()">
+						onclick="PF('AddProgrammDialog').hide()"
+						style="background: #c43636; color: white;">
 					</p:commandButton>
 
 				</h:panelGrid>

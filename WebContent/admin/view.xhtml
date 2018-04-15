@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="detail" appendTo="@(body)">
+		<p:dialog id="detailDialog"
+			header="User Details : #{userbean.update.username}"
+			widgetVar="DetailDialog" showEffect="fade" hideEffect="fade"
+			resizable="false">
+			<p:growl id="editmsg" life="2000" />
+			<p:outputPanel id="detailPanel" style="text-align:center;">
+				<p:panelGrid columns="2">
+					<h:outputText value="FirstName: " />
+					<h:outputText id="editfname" value="#{userbean.update.name}" />
+					<h:outputText value="Surname: " />
+					<h:outputText id="editsurname" value="#{userbean.update.surname}" />
+					<h:outputText value="Email: " />
+					<h:outputText id="editemail" value="#{userbean.update.email}" />
+					<h:outputText value="Gender: " />
+					<h:outputText id="editgender" value="#{userbean.update.gender}" />
+					<h:outputText value="Phone: " />
+					<h:outputText id="editphone" value="#{userbean.update.phone}" />
+					<h:outputText value="Country: " />
+					<h:outputText id="editcountry"
+						value="#{userbean.update.address.country}" />
+
+					<h:outputText value="City: " />
+					<h:outputText id="editcity" value="#{userbean.update.address.city}" />
+				</p:panelGrid>
+				<p:commandButton value="Close " styleClass="commandButton"
+					onclick="PF('DetailDialog').hide()"
+					style="background: #c43636; color: white;">
+				</p:commandButton>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</ui:composition>
+</html>

@@ -3,96 +3,82 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<h:form id="add" appendTo="(@body)">
+		<p:dialog id="addUserDialog" header="Add User"
+			widgetVar="AddUserDialog" showEffect="fade" hideEffect="fade">
 
-<h:head>
-	<title>Add user</title>
-</h:head>
+			<p:outputPanel id="addUserPanel" style="text-align:center;">
 
-<h:body>
-	<h:form>
-		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			<h:messages showDetail="true" />
-			<h:outputText value=" Name : " />
-			<h:inputText value="#{userbean.user.name}" required="true"
-				requiredMessage="Your First name must have 3 or more letters.">
-				<f:validateLength minimum="3" maximum="12" />
-			</h:inputText>
-			<h:outputText value=" Surname : " />
-			<h:inputText value="#{userbean.user.surname}" required="true"
-				requiredMessage="Your Surname must have 3 or more letters.">
-				<f:validateLength minimum="3" maximum="12" />
-			</h:inputText>
-			<br></br>
+				<p:panelGrid columns="2">
 
-			<h:outputText value="Username : " />
-			<h:inputText value="#{userbean.user.username}" required="true"
-				requiredMessage="Username is required!Your Last name must have 3 or more letters.">
-				<f:validateLength minimum="3" maximum="12" />
-			</h:inputText>
-			<br></br>
+					<h:outputText value=" FirstName : " />
+					<p:inputText id="fname" value="#{userbean.user.name}"
+						required="true"
+						requiredMessage="Your First name must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
+					<h:outputText value=" LastName : " />
+					<p:inputText id="lname" value="#{userbean.user.surname}"
+						required="true"
+						requiredMessage="Your Surname must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
+					<h:outputText value="Username : " />
+					<p:inputText id="username" value="#{userbean.user.username}"
+						required="true"
+						requiredMessage="Username is required!Your Last name must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
 
-			<h:outputText value="Password : " />
-			<h:inputSecret id="password1" value="#{userbean.user.password}"
-				required="true" requiredMessage="Password is required">
-				<f:validateLength minimum="8" />
-			</h:inputSecret>
-			<br></br>
+					<h:outputText value="Password : " />
+					<p:password id="password1" value="#{userbean.user.password}"
+						required="true" requiredMessage="Password is required">
+						<f:validateLength minimum="8" />
+					</p:password>
 
+					<h:outputText value=" Email: " />
+					<p:inputText id="email" value="#{userbean.user.email}"
+						required="true" requiredMessage="Email is required">
+						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+					</p:inputText>
+					<h:outputText value=" Gender: " />
 
-			<h:outputText value=" Email: " />
-			<br></br>
+					<h:selectOneRadio value="#{userbean.user.gender}">
+						<f:selectItem itemValue="female" itemLabel="Female" />
+						<f:selectItem itemValue="male" itemLabel="Male" />
+					</h:selectOneRadio>
+					<h:outputText value="Country " />
+					<p:inputText id="country" value="#{userbean.address.country}"
+						required="true" requiredMessage="Country is required">
+					</p:inputText>
+					<h:outputText value="Mobile " />
+					<p:inputText id="mobile" value="#{userbean.user.phone}"
+						required="true" requiredMessage="phone is required">
+					</p:inputText>
+					<h:outputText value=" City " />
+					<p:inputText id="cityadd" value="#{userbean.address.city}"
+						required="true" requiredMessage="City is required">
+					</p:inputText>
+					<h:outputText value="Zip code" />
+					<p:inputText id="zipadd" value="#{userbean.address.zipcode}"
+						required="true" requiredMessage="ZipCode  is required">
+					</p:inputText>
+					<p:selectCheckboxMenu id="multiple"
+						value="#{userbean.selectedRole}" showCheckbox="true"
+						multiple="true" converter="roleConverter" filter="true"
+						filterMatchMode="startsWith" panelStyle="width:250px">
+						<f:selectItems value="#{userbean.list}" var="role"
+							itemLabel="#{role.name}" itemValue="#{role}" />
+					</p:selectCheckboxMenu>
+				</p:panelGrid>
+				<p:commandButton value="Add" action="#{userbean.addUser}"
+					update=":form:userss"></p:commandButton>
 
-			<h:inputText value="#{userbean.user.email}" required="true"
-				requiredMessage="Email is required">
-				<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
-			</h:inputText>
-			<br></br>
-
-			<h:selectOneRadio value="#{userbean.user.gender}">
-				<f:selectItem itemValue="female" itemLabel="Female" />
-				<f:selectItem itemValue="male" itemLabel="Male" />
-			</h:selectOneRadio>
-			<br></br>
-
-			<h:outputText value="Country " />
-			<h:inputText value="#{userbean.address.country}" required="true"
-				requiredMessage="Country is required">
-			</h:inputText>
-
-			<br></br>
-			<h:outputText value="Phone " />
-			<h:inputText value="#{userbean.user.phone}" required="true"
-				requiredMessage="phone is required">
-			</h:inputText>
-
-			<br></br>
-			<h:outputText value=" City " />
-			<h:inputText value="#{userbean.address.city}" required="true"
-				requiredMessage="City is required">
-			</h:inputText>
-			<br></br>
-
-			<h:outputText value="Zip code" />
-			<h:inputText value="#{userbean.address.zipcode}" required="true"
-				requiredMessage="ZipCode  is required">
-			</h:inputText>
-
-			<br></br>
-
-			<p:selectCheckboxMenu id="multiple" value="#{userbean.selectedRole}" showCheckbox="true"
-				 multiple="true" converter="roleConverter" 
-				filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-				<f:selectItems value="#{userbean.list}" var="role"
-					itemLabel="#{role.name}" itemValue="#{role}" />
-			</p:selectCheckboxMenu>
-			<h:commandButton value="Insert" styleClass="commandButton"
-				action="#{userbean.addUser}" />
-
-		</h:panelGrid>
-
+			</p:outputPanel>
+		</p:dialog>
 	</h:form>
 
 
-</h:body>
-
+</ui:composition>
 </html>

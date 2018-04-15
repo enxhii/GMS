@@ -6,82 +6,105 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="/components/homepagetemplate.xhtml">
+
 	<ui:define name="title">
 		<h:outputText value="Programm List"></h:outputText>
 	</ui:define>
+	<h:outputStylesheet library="cssc" name="style.css"></h:outputStylesheet>
+
 	<ui:define name="body">
-		<h:form id="form">
-			<p:dataTable id="datatable" var="p" value="#{trainerBean.lista}"
-				paginator="true" style="background: #c43636" >
-				<p:column headerText="Id">
-					<h:outputText value="#{p.id}" />
-				</p:column>
-				<p:column headerText="Header">
-					<h:outputText value="#{p.header}" />
-				</p:column>
-				<p:column headerText="Name">
-					<h:outputText value="#{p.name}" />
-				</p:column>
 
-				<p:column headerText="Level">
-					<h:outputText value="#{p.level}" />
-				</p:column>
+		<div class="w3-content w3-padding"
+			style="max-width: 1000px; margin-bottom: 50px;">
+			<div class="w3-container w3-padding-32" style="margin-top: 50px">
+				<h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Manage
+					Your Programms</h3>
+			</div>
 
-				<p:column headerText="Description">
-					<h:outputText value="#{p.description}" />
-				</p:column>
-				<p:column headerText="Burned Calory">
-					<h:outputText value="#{p.burnedCalory}" />
-				</p:column>
-				<p:column headerText="Duration In Minutes">
-					<h:outputText value="#{p.duration}" />
-				</p:column>
-				<p:column headerText="Details about registered Customers">
-					<p:commandLink oncomplete="PF('ShowUserDialog').show()"
-						update=":showform:showUserDialog ">
-						<h:outputText class="fa fa-search w3-xlarge"
-							style="color: #c43636;" />
-						<f:setPropertyActionListener value="#{p}"
-							target="#{trainerBean.update}" />
-					</p:commandLink>
-				</p:column>
-				<p:column headerText="Delete Programm">
-					<p:commandLink action="#{trainerBean.deleteProgramm}"
-						update="form:datatable">
-						<i class="fa fa-trash w3-xlarge" style="color: #c43636;"></i>
-						<f:setPropertyActionListener value="#{p}"
-							target="#{trainerBean.deletep}" />
-						<p:confirm header="Confirm"
-							message="Do you want to delete this programm?"
-							icon="ui-icon-alert" />
-					</p:commandLink>
-					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						<p:commandButton value="Confirm" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-							update="datatable" />
-						<p:commandButton value="Cancel" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-							update="datatable" />
-					</p:confirmDialog>
-				</p:column>
-				<p:column headerText="Update Programm">
-					<p:commandLink oncomplete="PF('EditProgrammDialog').show()"
-						update=":updateform:editProgrammDialog ">
-						<f:setPropertyActionListener value="#{p}"
-							target="#{trainerBean.update}" />
-						<i class="fa fa-edit w3-xlarge" style="color: #c43636;"></i>
-					</p:commandLink>
-				</p:column>
-			</p:dataTable>
-			<p:commandButton id="createButton" icon="ui-icon-plus"
-				value="Add Programm" update=":program:addProgrammDialog"
-				oncomplete="PF('AddProgrammDialog').show()"
-				styleClass="w3-button w3-section"
-				style="background: #c43636; color: white;" />
-		</h:form>
+			<h:form id="form">
+				<p:dataTable id="datatable" var="p" value="#{trainerBean.lista}"
+					paginator="true" style="background: #c43636">
+					<p:column headerText="Id">
+						<h:outputText value="#{p.id}" />
+					</p:column>
+					<p:column headerText="Header">
+						<h:outputText value="#{p.header}" />
+					</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{p.name}" />
+					</p:column>
+
+					<p:column headerText="Level">
+						<h:outputText value="#{p.level}" />
+					</p:column>
+
+					<p:column headerText="Description">
+						<h:outputText value="#{p.description}" />
+					</p:column>
+					<p:column headerText="Burned Calory">
+						<h:outputText value="#{p.burnedCalory}" />
+					</p:column>
+					<p:column headerText="Duration In Minutes">
+						<h:outputText value="#{p.duration}" />
+					</p:column>
+					<p:column headerText="Details about registered Customers">
+						<p:commandLink oncomplete="PF('ShowUserDialog').show()"
+							update=":showform:showUserDialog ">
+							<h:outputText class="fa fa-search w3-xlarge"
+								style="color: #c43636;" />
+							<f:setPropertyActionListener value="#{p}"
+								target="#{trainerBean.update}" />
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="Delete Programm">
+						<p:commandLink action="#{trainerBean.deleteProgramm}"
+							update="form:datatable">
+							<i class="fa fa-trash w3-xlarge" style="color: #c43636;"></i>
+							<f:setPropertyActionListener value="#{p}"
+								target="#{trainerBean.deletep}" />
+							<p:confirm header="Confirm"
+								message="Do you want to delete this programm?"
+								icon="ui-icon-alert" />
+						</p:commandLink>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Confirm" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+								update="datatable" />
+							<p:commandButton value="Cancel" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+								update="datatable" />
+						</p:confirmDialog>
+					</p:column>
+					<p:column headerText="Update Programm">
+						<p:commandLink oncomplete="PF('EditProgrammDialog').show()"
+							update=":updateform:editProgrammDialog ">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{trainerBean.update}" />
+							<i class="fa fa-edit w3-xlarge" style="color: #c43636;"></i>
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="View Details">
+						<p:commandLink oncomplete="PF('ProgrammDialog').show()"
+							update=":detailform:programmDialog ">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{trainerBean.update}" />
+							<h:outputText class="fa fa-search w3-xlarge"
+								style="color: #c43636;" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton id="createButton" icon="ui-icon-plus"
+					value="Add Programm" update=":program:addProgrammDialog"
+					oncomplete="PF('AddProgrammDialog').show()"
+					styleClass="w3-button w3-section"
+					style="background: #c43636; color: white;" />
+			</h:form>
+		</div>
 		<ui:include src="updateprogramm.xhtml"></ui:include>
 		<ui:include src="addprogramm.xhtml"></ui:include>
 		<ui:include src="custprog.xhtml"></ui:include>
+		<ui:include src="details.xhtml"></ui:include>
+
 	</ui:define>
 </ui:composition>
 </html>

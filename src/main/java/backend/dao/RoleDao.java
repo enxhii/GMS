@@ -1,10 +1,8 @@
 package backend.dao;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -19,6 +17,7 @@ public class RoleDao {
 	private User user;
 	private Role role;
 
+	@SuppressWarnings("unchecked")
 	public List<Role> listAll() {
 		try {
 			logger.debug("Getting result from roles");
@@ -33,29 +32,37 @@ public class RoleDao {
 		return null;
 
 	}
+
 	public Role getRoleById() {
 		String query = "select r from Role r where r.name='Member'";
 		Role role = entityManager.createQuery(query, Role.class).getSingleResult();
 		return role;
 	}
-	public List<Role> getRolesById() {
-		String query = "select r from Role r where r.name='Member'";
-		List<Role> role = entityManager.createQuery(query, Role.class).getResultList();
-		return role;
-	}
-	public List<Role> getUserRoles(int id) {
+
+	@SuppressWarnings("unchecked")
+	public List<Role> getRolesA(int id) {
 		try {
-			logger.info("Getting result from users and roles ");
-			String query = "SELECT r from Role r join r.users u where u.id=:id ";
-			List<Role> lista = entityManager.createQuery(query).setParameter("id", id).getResultList();
-			logger.info("Fetching result from user");
-			logger.debug(lista);
-			return lista;
-		} catch (Exception exception) {
-			logger.debug(exception);
-			exception.printStackTrace();
+			String query = "select r.name from Role r join r.users u where u.id=?1";
+			return getEntityManager().createQuery(query).setParameter(1, id).getResultList();
+		} catch (Exception e) {
+			logger.debug(e);
 		}
 		return null;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Role> getRolesCustomer() {
+		try {
+			String query = "select r from Role r  where  r.name='Member'";
+			logger.debug("roledao method problem here whats ");
+			logger.debug(getEntityManager().createQuery(query).getResultList());
+			return getEntityManager().createQuery(query).getResultList();
+		} catch (Exception e) {
+			logger.debug(e);
+		}
+		return null;
+
 	}
 
 	public EntityManager getEntityManager() {

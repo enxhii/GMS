@@ -7,39 +7,47 @@
 	<h:form id="add" appendTo="(@body)">
 		<p:dialog id="addUserDialog" header="Add User"
 			widgetVar="AddUserDialog" showEffect="fade" hideEffect="fade">
-
 			<p:outputPanel id="addUserPanel" style="text-align:center;">
-
 				<p:panelGrid columns="2">
-
 					<h:outputText value=" FirstName : " />
 					<p:inputText id="fname" value="#{userbean.user.name}"
 						required="true"
-						requiredMessage="Your First name must have 3 or more letters.">
+						requiredMessage="Your First name is required and must have 3 or more letters.">
 						<f:validateLength minimum="3" maximum="12" />
 					</p:inputText>
 					<h:outputText value=" LastName : " />
 					<p:inputText id="lname" value="#{userbean.user.surname}"
 						required="true"
-						requiredMessage="Your Surname must have 3 or more letters.">
+						requiredMessage="Your Surname is required and  must have 3 or more letters.">
 						<f:validateLength minimum="3" maximum="12" />
 					</p:inputText>
 					<h:outputText value="Username : " />
 					<p:inputText id="username" value="#{userbean.user.username}"
 						required="true"
-						requiredMessage="Username is required!Your Last name must have 3 or more letters.">
+						requiredMessage="Username is required!Your Username must have 3 or more letters.">
 						<f:validateLength minimum="3" maximum="12" />
 					</p:inputText>
 
 					<h:outputText value="Password : " />
-					<p:password id="password1" value="#{userbean.user.password}"
-						required="true" requiredMessage="Password is required">
+					<p:password id="password1" match="confirmpassword"
+						value="#{userbean.user.password}" required="true"
+						requiredMessage="Password is required should have at least 8 characters"
+						feedback="true" weakLabel="Weak" goodLabel="Good"
+						strongLabel="Strong">
+						<f:validateLength minimum="8" />
+					</p:password>
+					<h:outputText value="Confirm Password : " />
+					<p:password id="confirmpassword" value="#{userbean.confirmPass}"
+						required="true" requiredMessage="Password didn't match"
+						feedback="true" weakLabel="Weak" goodLabel="Good"
+						strongLabel="Strong">
 						<f:validateLength minimum="8" />
 					</p:password>
 
 					<h:outputText value=" Email: " />
 					<p:inputText id="email" value="#{userbean.user.email}"
-						required="true" requiredMessage="Email is required">
+						required="true"
+						requiredMessage="Email is required and must be example@gmail.com">
 						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
 					</p:inputText>
 					<h:outputText value=" Gender: " />
@@ -50,7 +58,10 @@
 					</h:selectOneRadio>
 					<h:outputText value="Country " />
 					<p:inputText id="country" value="#{userbean.address.country}"
-						required="true" requiredMessage="Country is required">
+						required="true"
+						requiredMessage="Country is required must have at least 8 characters! ">
+						<f:validateLength minimum="3" maximum="12" />
+
 					</p:inputText>
 					<h:outputText value="Mobile " />
 					<p:inputText id="mobile" value="#{userbean.user.phone}"
@@ -59,10 +70,12 @@
 					<h:outputText value=" City " />
 					<p:inputText id="cityadd" value="#{userbean.address.city}"
 						required="true" requiredMessage="City is required">
+						<f:validateLength minimum="3" maximum="12" />
 					</p:inputText>
 					<h:outputText value="Zip code" />
 					<p:inputText id="zipadd" value="#{userbean.address.zipcode}"
 						required="true" requiredMessage="ZipCode  is required">
+						<f:validateLength minimum="4" maximum="4" />
 					</p:inputText>
 					<p:selectCheckboxMenu id="multiple"
 						value="#{userbean.selectedRole}" showCheckbox="true"
@@ -73,7 +86,8 @@
 					</p:selectCheckboxMenu>
 				</p:panelGrid>
 				<p:commandButton value="Add" action="#{userbean.addUser}"
-					update=":form:userss"></p:commandButton>
+					update=":form:userss,:growl"
+					style="background: #c43636; color: white;"></p:commandButton>
 
 			</p:outputPanel>
 		</p:dialog>

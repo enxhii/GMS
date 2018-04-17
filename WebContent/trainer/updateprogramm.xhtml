@@ -9,49 +9,49 @@
 			header="Edit Programm : #{trainerBean.update.name}"
 			widgetVar="EditProgrammDialog" showEffect="fade" hideEffect="fade"
 			resizable="false">
-			<p:growl id="editmsg" life="2000" />
 			<p:outputPanel id="editProgrammPanel" style="text-align:center;">
 				<p:panelGrid columns="2">
-						<h:outputText value="Programm  Name : " />
-						<p:inputText value="#{trainerBean.update.name}" required="true"
-							requiredMessage="Your Programm name must have 3 or more letters.">
-							<f:validateLength minimum="3" maximum="12" />
-						</p:inputText>
+					<h:outputText value="Programm  Name : " />
+					<p:inputText value="#{trainerBean.update.name}" required="true"
+						requiredMessage="Your Programm name must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
 
-						<h:outputText value=" Category : " />
-						<p:inputText value="#{trainerBean.update.header}"
-							required="true"
-							requiredMessage="Your header must have 3 or more letters.">
-							<f:validateLength minimum="3" maximum="12" />
-						</p:inputText>
+					<h:outputText value=" Category : " />
+					<p:inputText value="#{trainerBean.update.header}" required="true"
+						requiredMessage="Your header must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
 
-						<h:outputText value="Description : " />
-						<p:inputTextarea value="#{trainerBean.update.description}"
-							required="true" rows="6" cols="33"
-							requiredMessage="Username is required!Your Last name must have 3 or more letters.">
-							<f:validateLength minimum="10" maximum="300" />
-						</p:inputTextarea>
+					<h:outputText value="Description : " />
+					<p:inputTextarea value="#{trainerBean.update.description}"
+						required="true" rows="6" cols="33"
+						requiredMessage="Username is required!Your Last name must have 3 or more letters.">
+						<f:validateLength minimum="10" maximum="300" />
+					</p:inputTextarea>
 
-						<h:outputText value="Duration in minutes : " />
-						<p:inputNumber id="duration"
-							value="#{trainerBean.update.duration}" required="true"
-							requiredMessage="Duration is required">
-						</p:inputNumber>
+					<h:outputText value="Duration in minutes : " />
+					<p:inputNumber id="duration" value="#{trainerBean.update.duration}"
+						required="true" requiredMessage="Duration is required">
+					</p:inputNumber>
 
-						<h:outputText value=" Level: " />
-						<p:inputText id="level" value="#{trainerBean.update.level}"
-							required="true" requiredMessage="Level is required">
-						</p:inputText>
+					<h:outputText value=" Level: " />
+					<p:inputText id="level" value="#{trainerBean.update.level}"
+						required="true" requiredMessage="Level is required">
+					</p:inputText>
 
-						<h:outputText value="Burned Calory " />
-						<p:inputNumber value="#{trainerBean.update.burnedCalory}"
-							required="true" requiredMessage="burnedCalory is required">
-						</p:inputNumber>
+					<h:outputText value="Burned Calory " />
+					<p:inputNumber value="#{trainerBean.update.burnedCalory}"
+						required="true" requiredMessage="burnedCalory is required">
+					</p:inputNumber>
 				</p:panelGrid>
 				<p:commandButton value="Update Programm"
-					action="#{trainerBean.updateprogramm}" update=":form:datatable" style="background: #c43636; color: white;"></p:commandButton>
+					action="#{trainerBean.updateprogramm}"
+					update=":form:datatable,:growl"
+					style="background: #c43636; color: white;"></p:commandButton>
 				<p:commandButton value="Cancel " styleClass="commandButton"
-					onclick="PF('EditProgrammDialog').hide()" style="background: #c43636; color: white;">
+					onclick="PF('EditProgrammDialog').hide()"
+					style="background: #c43636; color: white;">
 				</p:commandButton>
 
 			</p:outputPanel>

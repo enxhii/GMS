@@ -10,6 +10,7 @@
 	</h:head>
 	<h:outputStylesheet library="css" name="datatable.css" />
 	<ui:define name="body" appendTo="@(body)">
+
 		<p:commandLink value="Add user"
 			oncomplete="PF('AddUserDialog').show()" update=":add:addUserDialog">
 			<h:outputText value="Add User" style="margin:0 auto;" />
@@ -17,9 +18,8 @@
 		<h:form id="form">
 			<p:dataTable var="u" value="#{userbean.users}" paginator="true"
 				style="margin-bottom:20px" id="userss" rows="10"
-				emptyMessage="No records found !" styleClass="user-table"
-				headerClass="user-table-header"
-				rowClasses="user-table-odd-row,user-table-even-row">
+				emptyMessage="No records found !" styleClass="mytable">
+				<p:messages id="messages" />				
 				<p:column headerText="Id">
 					<h:outputText value="#{u.id}" />
 				</p:column>
@@ -46,10 +46,10 @@
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 						<p:commandButton value="Confirm" type="button"
 							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-							update="userss" />
+							update="userss"  style="color: #c43636;"/>
 						<p:commandButton value="Cancel" type="button"
 							styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-							update="userss" />
+							update="userss" style="color: #c43636;"  />
 					</p:confirmDialog>
 				</p:column>
 				<p:column headerText="Update User">

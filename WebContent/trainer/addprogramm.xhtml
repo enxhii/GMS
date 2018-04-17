@@ -14,20 +14,20 @@
 					<h:outputText value="Programm  Name : " />
 					<p:inputText value="#{trainerBean.programm.name}" required="true"
 						requiredMessage="Your Programm name must have 3 or more letters.">
-						<f:validateLength minimum="3" maximum="12" />
+						<f:validateLength minimum="3" maximum="80" />
 					</p:inputText>
 
 					<h:outputText value=" Category : " />
 					<p:inputText value="#{trainerBean.programm.header}" required="true"
 						requiredMessage="Your header must have 3 or more letters.">
-						<f:validateLength minimum="3" maximum="12" />
+						<f:validateLength minimum="3" maximum="80" />
 					</p:inputText>
 
 					<h:outputText value="Description : " />
 					<p:inputTextarea value="#{trainerBean.programm.description}"
 						required="true" rows="6" cols="33"
 						requiredMessage="Username is required!Your Last name must have 3 or more letters.">
-						<f:validateLength minimum="12" maximum="200" />
+						<f:validateLength minimum="12" maximum="500" />
 					</p:inputTextarea>
 
 					<h:outputText value="Duration in minutes : " />
@@ -41,13 +41,14 @@
 						required="true" requiredMessage="Level is required">
 					</p:inputText>
 
-					<h:outputText value="Burned Calory " />
+					<h:outputText value="Burned Calory In percentage" />
 					<p:inputNumber value="#{trainerBean.programm.burnedCalory}"
 						required="true" requiredMessage="burnedCalory is required">
 					</p:inputNumber>
 
 					<p:commandButton value="Add " styleClass="commandButton"
-						action="#{trainerBean.addProgramm}" update=":form:datatable"
+						action="#{trainerBean.addProgramm}"
+						update=":form:datatable,:growl"
 						style="background: #c43636; color: white;"></p:commandButton>
 					<p:commandButton value="Cancel " styleClass="commandButton"
 						onclick="PF('AddProgrammDialog').hide()"

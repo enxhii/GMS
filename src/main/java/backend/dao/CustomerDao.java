@@ -1,4 +1,5 @@
 package backend.dao;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +17,7 @@ public class CustomerDao {
 	private EntityManager entityManager;
 
 	public List<Programm> listProgramms() {
-	
+
 		String query = "select p from Programm p";
 		logger.debug("Getting list of programms");
 		List<Programm> lista = entityManager.createQuery(query, Programm.class).getResultList();
@@ -27,16 +28,18 @@ public class CustomerDao {
 
 	public boolean chooseProgram(Customer customer, List<Programm> programm) {
 		try {
-		logger.debug("Getting programss");
-		customer.setProgramms(programm);
-		logger.debug("Inserting programs");
-		entityManager.merge(customer);
-		logger.debug("Inserting customers");
-		return true;
-	}catch (Exception e) {
-logger.debug(e);	}
+			logger.debug("Getting programss");
+			customer.setProgramms(programm);
+			logger.debug("Inserting programs");
+			entityManager.merge(customer);
+			logger.debug("Inserting customers");
+			return true;
+		} catch (Exception e) {
+			logger.debug(e);
+		}
 		return false;
 	}
+
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}

@@ -11,6 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import backend.model.Role;
 import backend.model.User;
+import backend.service.RoleService;
 import backend.service.UserService;
 
 @ManagedBean(name = "login")
@@ -24,50 +25,39 @@ public class LoginManagedBean {
 	private UserService userService;
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
-
+	@ManagedProperty(value = "#{roleServiceImpl}")
+	private RoleService roleService;
 	private User user;
 	private Role role;
 	private List<User> userlist;
 	private List<Role> listRole;
 	final static Logger logger = LogManager.getLogger(LoginManagedBean.class);
-	private UserType type;
+	private RoleEnum type;
 	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-
 	public String submit() throws IOException {
-
 		try {
 			if (userService.doesExists(username)) {
-
 				logger.debug("Checking if user exists ");
 				user = userService.getUser(username, password);
 				logger.debug("User Found");
 				userProfileBean.setUser(user);
-
 				if (!user.getRoles().isEmpty()) {
-					// externalContext.redirect(externalContext.getRequestContextPath() +
-					// "/admin/admin.xhtml");
 					logger.debug("User with username " + user.getUsername() + "logged in");
 					return "success";
 				}
-
 			} else {
-
 				logger.debug("User doesn't exists");
-
 			}
-
 		} catch (Exception e) {
 			e.getMessage();
-
 		}
 		return "failure";
 	}
 
-	public void  logout() throws IOException {
+	public String logout() throws IOException {
 		userProfileBean.removeUser();
-		 externalContext.redirect(externalContext.getRequestContextPath() +
-					 "/login.xhtml");
-		//return "logout";
+		externalContext.redirect(externalContext.getRequestContextPath() + "/login.xhtml");
+		 return "logout";
 	}
 
 	public String getPassword() {
@@ -126,19 +116,6 @@ public class LoginManagedBean {
 		this.listRole = listRole;
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
-	public boolean hasRole(UserType type) {
-		return listRole.contains(type);
-	}
-
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
-	}
-
 	public static Logger getLogger() {
 		return logger;
 	}
@@ -150,12 +127,20 @@ public class LoginManagedBean {
 	public void setConfirmPass(String confirmPass) {
 		this.confirmPass = confirmPass;
 	}
-	
+
 	public UserProfileBean getUserProfileBean() {
 		return userProfileBean;
 	}
 
 	public void setUserProfileBean(UserProfileBean userProfileBean) {
 		this.userProfileBean = userProfileBean;
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
 }

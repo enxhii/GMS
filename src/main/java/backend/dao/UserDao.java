@@ -13,6 +13,7 @@ import backend.model.Address;
 import backend.model.Customer;
 import backend.model.Role;
 import backend.model.User;
+import frontend.beans.RoleEnum;
 
 @Repository
 public class UserDao {
@@ -26,6 +27,7 @@ public class UserDao {
 	private User user;
 	List<Role> list;
 	private RoleDao roleDao;
+	private RoleEnum roleEnum;
 
 	public User getUser(String username, String password) {
 		try {
@@ -74,13 +76,13 @@ public class UserDao {
 			user.setChecked(checked);
 			entityManager.persist(user);
 			logger.info("Role Inserted");
-			if (roles == roleDao.getRolesById()) {
-				logger.debug(roleDao.getRolesById());
+			if (roles.contains(getRoleDao().getRolesCustomer())) {
 				customer.setUser(user);
 				entityManager.persist(customer);
 				logger.info("Customer Inserted");
 				logger.info("User succesfully registered");
-			} else {
+			} 
+			else {
 				entityManager.persist(user);
 			}
 		} catch (Exception e) {
@@ -116,16 +118,18 @@ public class UserDao {
 	}
 
 	public void updateUser(User user, Address address, List<Role> roles) {
-		logger.debug("Address updated");
-		user.setAddress(address);
-		logger.debug("Roles updated");
-		user.setRoles(roles);
-		entityManager.refresh(roles);
-		entityManager.merge(user);
-		entityManager.refresh(user);
-
-		logger.debug("User succesfully  updated");
-
+		try {
+			logger.debug("Address updated");
+			user.setAddress(address);
+			logger.debug("Roles updated");
+			entityManager.refresh(roles);
+			user.setRoles(roles);
+			entityManager.detach(user);
+			entityManager.merge(user);
+			logger.debug("User succesfully  updated");
+		} catch (Exception e) {
+			logger.debug(e);
+		}
 	}
 
 	public void customerReg(User user, Address address) {
@@ -237,20 +241,20 @@ public class UserDao {
 		return entityManager;
 	}
 
-	public List<Role> getList() {
-		return list;
-	}
-
-	public void setList(List<Role> list) {
-		this.list = list;
-	}
-
 	public RoleDao getRoleDao() {
 		return roleDao;
 	}
 
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
+	}
+
+	public RoleEnum getRoleEnum() {
+		return roleEnum;
+	}
+
+	public void setRoleEnum(RoleEnum roleEnum) {
+		this.roleEnum = roleEnum;
 	}
 
 }

@@ -1,4 +1,5 @@
 package backend.serviceImpl;
+
 import java.util.List;
 import org.apache.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,9 @@ import backend.service.RoleService;
 @Transactional
 @Service
 public class RoleServiceImpl implements RoleService {
-
 	@Autowired
 	private RoleDao roledao;
 	final static org.apache.log4j.Logger logger = LogManager.getLogger(RoleServiceImpl.class);
-
 	@Override
 	public List<Role> listRoles() {
 		try {
@@ -26,11 +25,9 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return null;
 	}
-
 	@Override
 	public Role getRoleById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return roledao.getRoleById();
 	}
 
 	public RoleDao getRoledao() {
@@ -40,7 +37,10 @@ public class RoleServiceImpl implements RoleService {
 	public void setRoledao(RoleDao roledao) {
 		this.roledao = roledao;
 	}
+	@Override
+	public List<Role> getRolesA(int id) {
+		return roledao.getRolesA(id);
+	}
 
 	
-
 }

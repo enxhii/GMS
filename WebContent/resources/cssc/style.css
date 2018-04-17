@@ -86,9 +86,9 @@
 }
 
 
-.datatable .ui-datatable thead th  {
+datatable.mytable thead th  {
     text-align: center;
-    background: #ffb3b3;
+    background: #c43636;
     font-family: Arial, Helvetica, sans-serif;
 	color: white;
 	text-decoration: none;

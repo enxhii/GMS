@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets" xml:lang="en">
 <f:view locale="en">
-	
+	<h:body>
 			<p:growl id="growl" life="3000" />
 			<div id="sidebar" style="height: 200px;">
 				<ui:insert name="sidebar">
@@ -17,7 +17,7 @@
 			</div>
 
 			<p:layoutUnit position="center" resizable="false"
-				style="height: 600px;">
+				style="height: 1000px;">
 				<ui:insert name="body" />
 			</p:layoutUnit>
 			<div id="footer">
@@ -25,5 +25,6 @@
 					<ui:include src="footer.xhtml" />
 				</ui:insert>
 			</div>
+			</h:body>
 </f:view>
 </html>

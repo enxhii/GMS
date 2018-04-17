@@ -12,26 +12,29 @@
 	<h:body>
 
 		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
-			style="display: none; background-color:#ffffcc;" id="mySidebar">
+			style="display: none; background-color: #c43636;" id="mySidebar">
 			<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
 				Sidebar</button>
 
-			<h:link value="Update Profile" outcome="/admin/updateprofile" />
+			<h:link value="Update Profile" outcome="/home/updateprofile" />
 			<br /> <br />
-			<h:link value="Update Password" outcome="/admin/updatepassword" />
+			<h:link value="Update Password" outcome="/home/updatepassword" />
+			<br /> <br />
+			<h:link value="Manage Users" outcome="/admin/UserList"
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}" />
+			<br /> <br />
+			<h:link value="Manage Programms" outcome="/trainer/programlist"
+				rendered="#{userProfileBean.hasRoleTrainer('TRAINER')}"></h:link>
+
+			<br /> <br />
+			<h:link value="Enroll /View Programms" outcome="/client/list"></h:link>
 			<br /> <br />
 
-			<h:link value="Manage Users" outcome="/admin/UserList" />
-
-			<br /> <br />
-			<h:link value="Manage Programms" outcome="/trainer/programlist"></h:link>
-			<br /> <br />
-			<h:link value="Give Access" outcome="/admin/giveaccess"></h:link>
-			<br/>
-			<h:commandButton value="Logout" actionListener="#{login.logout}"></h:commandButton>
-
+			<h:link value="Give Access" outcome="/admin/giveaccess"
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"></h:link>
+			<br />
+			<p:commandButton value="Logout" action="#{login.logout}"></p:commandButton>
 		</div>
-
 		<div id="main">
 
 			<div class="w3-teal">

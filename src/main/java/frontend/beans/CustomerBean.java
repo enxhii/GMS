@@ -26,14 +26,17 @@ public class CustomerBean {
 	private Customer customer;
 	private List<Programm> list;
 	private Programm programm;
+	private Programm selected;
+
 	private List<Programm> selectedProg;
 
 	@PostConstruct
 	public void init() {
+		selected=new Programm();
 		customer = new Customer();
 		list = customerService.listProgramms();
 		programm = new Programm();
-		selectedProg = customerService.listProgramms();//new ArrayList<>();
+		selectedProg = customerService.listProgramms();
 
 	}
 
@@ -119,6 +122,14 @@ public class CustomerBean {
 
 	public void setSelectedProg(List<Programm> selectedProg) {
 		this.selectedProg = selectedProg;
+	}
+
+	public Programm getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Programm selected) {
+		this.selected = selected;
 	}
 
 }

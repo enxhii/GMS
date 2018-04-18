@@ -4,14 +4,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/components/homepagetemplate.xhtml">
-
 	<ui:define name="body" appendTo="@(body)">
-		<div class="w3-content w3-padding"
-			style="max-width: 2000px; margin-bottom: 20px;">
-			<div class="w3-container w3-padding-32" style="margin-top: 0px">
-				<h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Be
-					part of us! Enroll now!</h3>
-			</div>
+
 			<h:form id="form">
 				<p:dataGrid var="p" value="#{customerbean.list}" columns="4"
 					width="400" layout="grid" rows="5" paginator="true" id="prog">
@@ -91,12 +85,10 @@
 				</p:dialog>
 			</h:form>
 			<p:commandButton value="Enroll*** " styleClass="commandButton"
-				onclick="PF('ADialog').show()" update=":enroll:aDialog"
+				oncomplete="PF('ADialog').show()" update=":enroll:aDialog"
 				style="background: #c43636; color: white;">
 			</p:commandButton>
 			<ui:include src="attendprogramm.xhtml"></ui:include>
-		</div>
-	</ui:define>
-
+			</ui:define>
 </ui:composition>
 </html>

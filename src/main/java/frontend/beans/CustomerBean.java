@@ -1,4 +1,5 @@
 package frontend.beans;
+
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
@@ -10,10 +11,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 @ManagedBean(name = "customerbean")
-@ViewScoped
+@SessionScoped
 public class CustomerBean {
 	final static Logger logger = LogManager.getLogger(CustomerBean.class);
-
 	@ManagedProperty(value = "#{customerServiceImpl}")
 	private CustomerServiceImpl customerService;
 
@@ -27,12 +27,12 @@ public class CustomerBean {
 	private List<Programm> list;
 	private Programm programm;
 	private Programm selected;
-
+	private User user;
 	private List<Programm> selectedProg;
 
 	@PostConstruct
 	public void init() {
-		selected=new Programm();
+		selected = new Programm();
 		customer = new Customer();
 		list = customerService.listProgramms();
 		programm = new Programm();
@@ -42,10 +42,12 @@ public class CustomerBean {
 
 	public boolean attendCourses() {
 		try {
-		customer.setId(userProfileBean.getUser().getId());
+			customer.setId((userProfileBean.getUser().getId()));
 			customerService.add(customer, selectedProg);
+			logger.debug("Bean Customer " + customer.getId());
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.debug(e);
 		}
 		return false;
@@ -130,6 +132,14 @@ public class CustomerBean {
 
 	public void setSelected(Programm selected) {
 		this.selected = selected;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

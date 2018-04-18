@@ -20,15 +20,13 @@ public class Customer implements Serializable {
 	private Integer id;
 
 	// bi-directional one-to-one association to User
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = {CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_id")
 	private User user;
-	// private int customer_id;
 
 	// bi-directional many-to-many association to Programm
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinTable(name = "cust_attends_prog", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), 
-	inverseJoinColumns = @JoinColumn(name = "program_id", referencedColumnName = "id"))
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@JoinTable(name = "cust_attends_prog", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "program_id", referencedColumnName = "id"))
 
 	private Collection<Programm> programms;
 
@@ -58,5 +56,5 @@ public class Customer implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 }

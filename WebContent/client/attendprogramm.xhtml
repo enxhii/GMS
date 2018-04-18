@@ -15,15 +15,25 @@
 						<f:selectItems value="#{customerbean.list}" var="p"
 							itemLabel="#{p.name}" itemValue="#{p}" />
 					</p:selectManyCheckbox>
-					<p:commandButton value="Submit"
+					<p:commandLink value="Submit"
 						action="#{customerbean.attendCourses}" icon="ui-icon-check"
-						update=":form:prog,:growl" />
+						update=":form:prog,:growl"
+						oncomplete="PF('programmDialog').show()"
+						style="margin-top:5px;  background: #c43636; color: white;" />
 				</p:panelGrid>
 				<p:commandButton value="Close " styleClass="commandButton"
 					onclick="PF('ADialog').hide()"
 					style="background: #c43636; color: white;">
 				</p:commandButton>
 			</p:outputPanel>
+		</p:dialog>
+		<p:dialog modal="true" showEffect="fade" hideEffect="fade"
+			widgetVar="programmDialog">
+			<h:panelGrid id="displayProgramms" columns="2">
+				<h:outputText value="Programm: " style="font-weight:bold" />
+				<h:outputText value="#{p.name}" style="font-weight:bold" />
+
+			</h:panelGrid>
 		</p:dialog>
 	</h:form>
 </ui:composition>

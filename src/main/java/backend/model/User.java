@@ -1,65 +1,63 @@
 package backend.model;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
+
 @Entity
-@Table(name="user")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@Table(name = "user")
+@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
-	@Column(name="id")
+	@Column(name = "id")
 	private Integer id;
-	@Column(name="email")
+	@Column(name = "email")
 	private String email;
 
-	@Column(name="checked")
+	@Column(name = "checked")
 	private Integer checked;
-	
-	@Column(name="gender")
+
+	@Column(name = "gender")
 	private String gender;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="phone")
+
+	@Column(name = "phone")
 	private String phone;
-	
-	@Column(name="surname")
+
+	@Column(name = "surname")
 	private String surname;
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="status")
-    private Integer status ;
-	//bi-directional one-to-one association to Customer
-	//@OneToOne(mappedBy="user",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+	@Column(name = "status")
+	private Integer status;
+	// bi-directional one-to-one association to Customer
+	//@OneToOne(mappedBy = "user")
 	//private Customer customer;
 
-	//bi-drectional many-to-one association to Address
+	// bi-drectional many-to-one association to Address
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="adresa_id")
+	@JoinColumn(name = "adresa_id")
 	private Address address;
-	
-@ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.MERGE,CascadeType.REFRESH})
-@JoinTable(name="user_roles" , joinColumns=@JoinColumn(name="user_id" , referencedColumnName="id"),
-inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 
 	private List<Role> roles;
 
-
-@OneToMany(
-    mappedBy = "user", 
-    cascade = CascadeType.ALL)
-private Collection<Programm> program ;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Collection<Programm> program;
 
 	public User() {
 	}
@@ -127,16 +125,6 @@ private Collection<Programm> program ;
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-//	public Customer getCustomer() {
-//		return this.customer;
-//	}
-//
-//	public void setCustomer(Customer customer) {
-//		this.customer = customer;
-//	}
-
-
 	public Address getAddress() {
 		return this.address;
 	}

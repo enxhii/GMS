@@ -1,5 +1,4 @@
 package backend.dao;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -13,8 +12,6 @@ import backend.model.Address;
 import backend.model.Customer;
 import backend.model.Role;
 import backend.model.User;
-import frontend.beans.RoleEnum;
-
 @Repository
 public class UserDao {
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
@@ -27,7 +24,6 @@ public class UserDao {
 	private User user;
 	List<Role> list;
 	private RoleDao roleDao;
-	private RoleEnum roleEnum;
 
 	public User getUser(String username, String password) {
 		try {
@@ -67,7 +63,6 @@ public class UserDao {
 
 	public void addUser(User user, Address address, List<Role> roles) {
 		try {
-			Customer customer = new Customer();
 			entityManager.persist(address);
 			logger.info("Address inserted");
 			user.setAddress(address);
@@ -75,19 +70,12 @@ public class UserDao {
 			user.setStatus(valid);
 			user.setChecked(checked);
 			entityManager.persist(user);
-			logger.info("Role Inserted");
-			if (roles.contains(getRoleDao().getRolesCustomer())) {
-				customer.setUser(user);
-				entityManager.persist(customer);
-				logger.info("Customer Inserted");
-				logger.info("User succesfully registered");
-			} 
-			else {
-				entityManager.persist(user);
-			}
+			logger.info("Customer Inserted");
+			logger.info("User succesfully registered");
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.debug(e);
+			logger.debug(e + "AddUser dao class problem ");
 		}
 	}
 
@@ -119,12 +107,11 @@ public class UserDao {
 
 	public void updateUser(User user, Address address, List<Role> roles) {
 		try {
+			roles = roleDao.listAll();
 			logger.debug("Address updated");
 			user.setAddress(address);
 			logger.debug("Roles updated");
-			entityManager.refresh(roles);
 			user.setRoles(roles);
-			entityManager.detach(user);
 			entityManager.merge(user);
 			logger.debug("User succesfully  updated");
 		} catch (Exception e) {
@@ -222,7 +209,6 @@ public class UserDao {
 		} catch (Exception e) {
 			logger.debug("Error from UserDao class" + e);
 		}
-
 	}
 
 	public User getUser() {
@@ -248,13 +234,4 @@ public class UserDao {
 	public void setRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
 	}
-
-	public RoleEnum getRoleEnum() {
-		return roleEnum;
-	}
-
-	public void setRoleEnum(RoleEnum roleEnum) {
-		this.roleEnum = roleEnum;
-	}
-
 }

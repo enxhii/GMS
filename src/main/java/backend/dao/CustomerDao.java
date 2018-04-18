@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import backend.model.Customer;
 import backend.model.Programm;
+import backend.model.User;
 
 @Repository
 public class CustomerDao {
@@ -15,26 +16,37 @@ public class CustomerDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+	private User user;
 
 	public List<Programm> listProgramms() {
+		try {
+			String query = "select p from Programm p";
+			logger.debug("Getting list of programms");
+			List<Programm> lista = entityManager.createQuery(query, Programm.class).getResultList();
+			System.out.println(lista);
+			logger.debug(lista);
+			return lista;
 
-		String query = "select p from Programm p";
-		logger.debug("Getting list of programms");
-		List<Programm> lista = entityManager.createQuery(query, Programm.class).getResultList();
-		System.out.println(lista);
-		logger.debug(lista);
-		return lista;
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug(e);
+		}
+		return null;
+
 	}
 
 	public boolean chooseProgram(Customer customer, List<Programm> programm) {
 		try {
 			logger.debug("Getting programss");
 			customer.setProgramms(programm);
+			logger.debug("DaoMethod" + customer.getId());
 			logger.debug("Inserting programs");
 			entityManager.merge(customer);
+			logger.debug("DaoMethod" + customer.getId());
 			logger.debug("Inserting customers");
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.debug(e);
 		}
 		return false;
@@ -46,6 +58,14 @@ public class CustomerDao {
 
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

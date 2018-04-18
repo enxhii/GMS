@@ -32,15 +32,19 @@ public class ClientFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest reqt = (HttpServletRequest) request;
-		HttpServletResponse resp = (HttpServletResponse) response;
-		UserProfileBean userProfileBean = (UserProfileBean) reqt.getSession().getAttribute("userProfileBean");
+		try {
+			HttpServletRequest reqt = (HttpServletRequest) request;
+			HttpServletResponse resp = (HttpServletResponse) response;
+			UserProfileBean userProfileBean = (UserProfileBean) reqt.getSession().getAttribute("userProfileBean");
+			if ((userProfileBean.getUser().getId() != null) && (userProfileBean.hasRoleMember(roleEnum.MEMBER))) {
+				chain.doFilter(reqt, resp);
+			} else {
+				resp.sendRedirect(reqt.getContextPath() + USER_PAGES);
+			}
 
-		if ((userProfileBean.getUser().getId() != null) && (userProfileBean.hasRoleMember(roleEnum.MEMBER))) {
-			chain.doFilter(reqt, resp);
-
-		} else {
-			resp.sendRedirect(reqt.getContextPath() + USER_PAGES);
+		} catch (Exception e) {
+			logger.debug(e);
+			e.printStackTrace();
 		}
 
 	}

@@ -19,21 +19,16 @@ public class Role implements Serializable {
 	private String description;
 	@Column(name = "name")
 	private String name;
-
-	@ManyToMany(mappedBy="roles"  ,fetch=FetchType.EAGER ,cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
 	private List<User> users;
-
 	public Role() {
 	}
-
 	public Integer getId() {
 		return this.id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getDescription() {
 		return this.description;
 	}

@@ -51,20 +51,6 @@ public class RoleDao {
 
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Role> getRolesCustomer() {
-		try {
-			String query = "select r from Role r  where  r.name='Member'";
-			logger.debug("roledao method problem here whats ");
-			logger.debug(getEntityManager().createQuery(query).getResultList());
-			return getEntityManager().createQuery(query).getResultList();
-		} catch (Exception e) {
-			logger.debug(e);
-		}
-		return null;
-
-	}
-
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}

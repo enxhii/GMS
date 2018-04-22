@@ -5,13 +5,14 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/components/homepagetemplate.xhtml">
 	<ui:define name="body">
+		<h:outputStylesheet library="css" name="datatable.css"></h:outputStylesheet>
 		<div class="w3-content w3-padding"
 			style="max-width: 600px; margin-bottom: 0px;">
 			<div class="w3-container w3-padding-32" style="margin-top: 0px">
 				<h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Update
 					Profile</h3>
 			</div>
-			<h:form>
+			<h:form id="updateprofile">
 				<p:panel id="projectLabel" header="Edit your profile"
 					style="margin-bottom:10px;">
 					<h:panelGrid columns="2">
@@ -66,8 +67,9 @@
 							label="ZipCode">
 							<f:validateLength minimum="4" maximum="4" />
 						</p:inputText>
-						<p:commandButton ajax="false" value="Edit Profile" update=":growl"
-							icon="ui-icon-disk" action="#{userbean.updateProfile}"
+						<p:commandButton value="Edit Profile"
+							update="updateprofile,:growl" icon="ui-icon-disk"
+							action="#{userbean.updateProfile}"
 							style="background: #c43636; color: white;" />
 					</h:panelGrid>
 				</p:panel>

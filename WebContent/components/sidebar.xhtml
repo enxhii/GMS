@@ -5,35 +5,39 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	<h:head>
-		<title>SideBar</title>
+		<title>Home</title>
 	</h:head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+	<link href="resources/css/stylerl.css" rel="stylesheet" type="text/css" />
+
 	<h:body>
 
 		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
-			style="display: none; background-color: #c43636;" id="mySidebar">
-			<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close
-				Sidebar</button>
+			style="display: none;  color: #c43636; background-color: white;"
+			id="mySidebar">
+			<button class="w3-bar-item w3-button w3-large"  onclick="w3_close()">X</button>
 
-			<h:link value="Update Profile" outcome="/home/updateprofile" />
+			<h:link value="Update Profile" outcome="/home/updateprofile"
+				style="text-decoration: none;" />
 			<br /> <br />
-			<h:link value="Update Password" outcome="/home/updatepassword" />
+			<h:link value="Update Password" outcome="/home/updatepassword" style="text-decoration: none;" />
 			<br /> <br />
 			<h:link value="Manage Users" outcome="/admin/UserList"
-				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}" />
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"  style="text-decoration: none;"/>
 			<br /> <br />
 			<h:link value="Manage Programms" outcome="/trainer/programlist"
-				rendered="#{userProfileBean.hasRoleTrainer('TRAINER')}"></h:link>
+				rendered="#{userProfileBean.hasRoleTrainer('TRAINER')}" style="text-decoration: none;"></h:link>
 
 			<br /> <br />
-			<h:link value="Enroll /View Programms" outcome="/client/list"></h:link>
+			<h:link value="Enroll /View Programms" outcome="/client/list" style="text-decoration: none;" ></h:link>
 			<br /> <br />
 
 			<h:link value="Give Access" outcome="/admin/giveaccess"
-				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"></h:link>
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}" style="text-decoration: none;"></h:link>
 			<br />
-			<p:commandButton value="Logout" action="#{login.logout}"></p:commandButton>
+			<p:commandButton value="Logout" action="#{login.logout}"
+				style="background: #c43636;color: white; border-radius: 20px;"></p:commandButton>
 		</div>
 		<div id="main">
 

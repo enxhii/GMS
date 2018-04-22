@@ -120,10 +120,11 @@ public class UserDao {
 	}
 
 	public void customerReg(User user, Address address) {
+		try {
 		Role role = new Role();
 		Customer customer = new Customer();
 		List<Role> roles = new ArrayList<Role>();
-		role = roleDao.getRoleById();
+		role =getRoleById();
 		roles.add(role);
 		entityManager.persist(address);
 		logger.info("Address inserted");
@@ -134,13 +135,26 @@ public class UserDao {
 		logger.debug(role.getName());
 		logger.debug(role.getId());
 		user.setRoles(roles);
-
 		entityManager.persist(user);
 		logger.info("Role Inserted");
 		customer.setUser(user);
 		entityManager.persist(customer);
 		logger.info("Customer Inserted");
 		logger.info("User succesfully registered");
+		}catch (Exception e) {
+logger.debug("UserDAo problem customereg" + e);
+		}
+
+	}
+	public Role getRoleById() {
+		try {
+			String query = "select r from Role r where r.name='Member'";
+			Role role = entityManager.createQuery(query, Role.class).getSingleResult();
+			return role;
+		} catch (Exception e) {
+			logger.debug("RoleDao problem getROleById" + e);
+			return null;
+		}
 
 	}
 

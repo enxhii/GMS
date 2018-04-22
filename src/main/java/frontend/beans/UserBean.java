@@ -2,9 +2,12 @@ package frontend.beans;
 
 import java.util.*;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import backend.service.RoleService;
 import backend.service.*;
 import backend.model.*;
@@ -18,6 +21,7 @@ public class UserBean {
 	private RoleService roleService;
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
+	private String databasePassword ;
 	final static Logger logger = LogManager.getLogger(UserBean.class);
 	private String password;
 	private String confirmPass;
@@ -35,6 +39,9 @@ public class UserBean {
 	private List<User> disabledCustomers;
 	private User checked;
 	static final String updateprofile = "updateprofile";
+	private static final String PF_ADDUSER_DIALOG_HIDE = "PF('AddUserDialog').hide()";
+	private static final String PF_EditPasswordDialog_HIDE = "PF('EditPasswordDialog').hide()";
+	private static final String PF_EditUserDialog_HIDE = "PF('EditUserDialog').hide()";
 
 	@PostConstruct
 	public void init() {
@@ -46,19 +53,21 @@ public class UserBean {
 		users = userService.listAll();
 		update = new User();
 		disabledCustomers = userService.getDisabledCustomer();
-		//disabledUsers = userService.getDisabledUser();
+		// disabledUsers = userService.getDisabledUser();
 		checked = new User();
 		selectedRole = roleService.listRoles();
+		databasePassword= userProfileBean.getUser().getPassword();
 	}
 
 	public void addUser() {
-		logger.debug(selectedRole);
-		userService.save(user, address, selectedRole);
-
-	}
-
-	public void addCustomer() {
-		userService.customerReg(user, address);
+		if (!userService.doesExists(user.getUsername())) {
+			logger.debug(selectedRole);
+			userService.save(user, address, selectedRole);
+			addMessage("User succesfully registered");
+			executeScript(PF_ADDUSER_DIALOG_HIDE);
+		} else {
+			addMessage("This username is taken.Please try another one !");
+		}
 	}
 
 	public void deleteUser() {
@@ -84,21 +93,37 @@ public class UserBean {
 	}
 
 	public void updatePassword() {
-		userService.updatePassword(userProfileBean.getUser(), password);
+		if (!userProfileBean.getUser().getPassword().equals(databasePassword)) {
+			addMessage("Wrong Password  ");
+		} else if (userProfileBean.getUser().getPassword().equals(databasePassword)) {
+			userService.updatePassword(userProfileBean.getUser(), password);
+			addMessage("Password Succesfully updated ");
+		}
+
 	}
 
 	public void updateUsersPassword() {
-		userService.updatePassword(update, password);
+		if (password.equals(confirmPass)) {
+			userService.updatePassword(update, password);
+			addMessage("Password Succesfully updated");
+			executeScript(PF_EditPasswordDialog_HIDE);
+		} else {
+			addMessage("Passwords didnt matched.Try again!");
+
+		}
 	}
 
-	public String updateProfile() {
+	public void updateProfile() {
 		userService.updateProfile(userProfileBean.getUser(), userProfileBean.getUser().getAddress());
-		return updateprofile;
+		addMessage("Profile Succesfully updated");
+
 	}
 
 	public void updateUsers() {
-userService.updateUsers(update, update.getAddress(),update.getRoles());
+		userService.updateUsers(update, update.getAddress(), update.getRoles());
 		userService.listAll();
+		addMessage("User Succesfully updated");
+		executeScript(PF_EditUserDialog_HIDE);
 	}
 
 	public Role getRole(Integer id) {
@@ -122,10 +147,23 @@ userService.updateUsers(update, update.getAddress(),update.getRoles());
 			userService.giveAccess(checked.getId());
 			logger.debug(checked.getId());
 			disabledCustomers = userService.getDisabledCustomer();
+			addMessage("Access given Succesully");
 		} catch (Exception e) {
 			logger.debug(e);
 		}
+	}
 
+	public void addMessage(String summary) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+		requestFacesContext().addMessage(null, message);
+	}
+
+	private FacesContext requestFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	private RequestContext requestContext() {
+		return RequestContext.getCurrentInstance();
 	}
 
 	public List<User> getDisabledCustomer() {
@@ -133,12 +171,14 @@ userService.updateUsers(update, update.getAddress(),update.getRoles());
 
 	}
 
+	private void executeScript(String script) {
+		requestContext().execute(script);
+	}
+
 	public List<User> getDisUsers() {
 		return disabledUsers;
 
 	}
-
-	
 
 	public User getUser() {
 		return user;
@@ -275,6 +315,7 @@ userService.updateUsers(update, update.getAddress(),update.getRoles());
 	public void setDisabledUsers(List<User> disabledUsers) {
 		this.disabledUsers = disabledUsers;
 	}
+
 	public User getChecked() {
 		return checked;
 	}
@@ -286,4 +327,13 @@ userService.updateUsers(update, update.getAddress(),update.getRoles());
 	public static String getUpdateprofile() {
 		return updateprofile;
 	}
+
+	public String getDatabasePassword() {
+		return databasePassword;
+	}
+
+	public void setDatabasePassword(String databasePassword) {
+		this.databasePassword = databasePassword;
+	}
+
 }

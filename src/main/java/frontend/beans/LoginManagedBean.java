@@ -32,7 +32,6 @@ public class LoginManagedBean {
 	private List<User> userlist;
 	private List<Role> listRole;
 	final static Logger logger = LogManager.getLogger(LoginManagedBean.class);
-	private RoleEnum type;
 	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 	public String submit() throws IOException {
 		try {
@@ -56,7 +55,7 @@ public class LoginManagedBean {
 
 	public String logout() throws IOException {
 		userProfileBean.removeUser();
-		externalContext.redirect(externalContext.getRequestContextPath() + "/login.xhtml");
+		externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
 		 return "logout";
 	}
 
@@ -143,4 +142,5 @@ public class LoginManagedBean {
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
 	}
+
 }

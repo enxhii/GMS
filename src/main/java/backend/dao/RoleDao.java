@@ -34,9 +34,15 @@ public class RoleDao {
 	}
 
 	public Role getRoleById() {
-		String query = "select r from Role r where r.name='Member'";
-		Role role = entityManager.createQuery(query, Role.class).getSingleResult();
-		return role;
+		try {
+			String query = "select r from Role r where r.name='Member'";
+			Role role = entityManager.createQuery(query, Role.class).getSingleResult();
+			return role;
+		} catch (Exception e) {
+			logger.debug("RoleDao problem getROleById" + e);
+			return null;
+		}
+
 	}
 
 	@SuppressWarnings("unchecked")

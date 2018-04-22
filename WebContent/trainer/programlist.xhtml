@@ -10,10 +10,8 @@
 	<ui:define name="title">
 		<h:outputText value="Programm List"></h:outputText>
 	</ui:define>
-	<h:outputStylesheet library="cssc" name="style.css"></h:outputStylesheet>
-
 	<ui:define name="body">
-
+		<h:outputStylesheet library="css" name="datatable.css"></h:outputStylesheet>
 		<div class="w3-content w3-padding"
 			style="max-width: 1000px; margin-bottom: 50px;">
 			<div class="w3-container w3-padding-32" style="margin-top: 50px">
@@ -44,7 +42,7 @@
 					<p:column headerText="Duration In Minutes">
 						<h:outputText value="#{p.duration}" />
 					</p:column>
-					<p:column headerText="Details about registered Customers">
+					<p:column headerText="Customers">
 						<p:commandLink oncomplete="PF('ShowUserDialog').show()"
 							update=":showform:showUserDialog ">
 							<h:outputText class="fa fa-search w3-xlarge"

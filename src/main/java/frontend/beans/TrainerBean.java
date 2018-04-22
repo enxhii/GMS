@@ -1,11 +1,16 @@
 package frontend.beans;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import backend.dao.TrainerDao;
 import backend.model.Programm;
@@ -17,6 +22,8 @@ import backend.service.TrainerService;
 @ViewScoped
 public class TrainerBean {
 	final static Logger logger = LogManager.getLogger(TrainerBean.class);
+	private static final String PF_AddProgrammDialog_HIDE = "PF('AddProgrammDialog').hide()";
+	private static final String PF_EditProgrammDialog_HIDE = "PF('EditProgrammDialog').hide()";
 
 	@ManagedProperty(value = "#{trainerServiceImpl}")
 	private TrainerService trainerService;
@@ -40,7 +47,7 @@ public class TrainerBean {
 	public void init() {
 		user = new User();
 		programm = new Programm();
-		update=new Programm();
+		update = new Programm();
 		lista = trainerService.list(userProfileBean.getUser().getId());
 	}
 
@@ -48,6 +55,8 @@ public class TrainerBean {
 		try {
 			user.setId(userProfileBean.getUser().getId());
 			trainerService.addProgramm(programm, user);
+			addMessage("Programm added succesfully");
+			executeScript(PF_AddProgrammDialog_HIDE);
 		} catch (Exception e) {
 			logger.debug(e);
 		}
@@ -55,12 +64,22 @@ public class TrainerBean {
 	}
 
 	public void deleteProgramm() {
-		lista.remove(deletep);
-		trainerService.deleteProgramm(deletep.getId());
+		logger.debug(trainerService.customerExists(deletep.getId()));
+		if (trainerService.customerExists(deletep.getId())) {
+			lista.remove(deletep);
+			trainerService.deleteProgramm(deletep.getId());
+			addMessage("Programm deleted succesfully");
+		} else {
+			addMessage("Programm failed to delete .Customers are still registered !");
+
+		}
+
 	}
 
 	public String updateprogramm() {
 		trainerService.updateProgram(update);
+		addMessage("Programm updated succesfully");
+		executeScript(PF_EditProgrammDialog_HIDE);
 		return "";
 	}
 
@@ -141,4 +160,20 @@ public class TrainerBean {
 		this.update = update;
 	}
 
+	public void addMessage(String summary) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+		requestFacesContext().addMessage(null, message);
+	}
+
+	private FacesContext requestFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	private RequestContext requestContext() {
+		return RequestContext.getCurrentInstance();
+	}
+
+	private void executeScript(String script) {
+		requestContext().execute(script);
+	}
 }

@@ -46,8 +46,8 @@ public class CustomerDao {
 			logger.debug("Inserting customers");
 			return true;
 		} catch (Exception e) {
+			logger.debug("Choose Program failed" +e);
 			e.printStackTrace();
-			logger.debug(e);
 		}
 		return false;
 	}

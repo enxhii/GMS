@@ -73,4 +73,11 @@ trainerDao.updateProgram(p);
 logger.debug(e);		}
 	}
 
+
+
+	@Override
+	public boolean customerExists(Integer id) {
+		return trainerDao.customerExists(id);
+	}
+
 }

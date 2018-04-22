@@ -44,7 +44,7 @@ public class Programm implements Serializable {
 	private User user;
 
 	//bi-directional many-to-many association to Customer
-	@ManyToMany(mappedBy="programms",fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy="programms", fetch = FetchType.EAGER)
 	private List<Customer> customers;
 
 	public Programm() {

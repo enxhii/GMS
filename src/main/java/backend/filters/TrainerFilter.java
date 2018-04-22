@@ -1,6 +1,8 @@
 package backend.filters;
 
 import java.io.IOException;
+
+import javax.faces.application.ResourceHandler;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,6 +22,11 @@ public class TrainerFilter implements Filter {
 	private static final String USER_PAGES = "/home/home.xhtml";
 	private UserProfileBean userProfileBean;
 	private RoleEnum roleEnum;
+	private static final String EXPIRES = "Expires";
+	private static final String NO_CACHE = "no-cache";
+	private static final String PRAGMA = "Pragma";
+	private static final String NO_CACHE_NO_STORE_MUST_REVALIDATE = "no-cache, no-store, must-revalidate";
+	private static final String CACHE_CONTROL = "Cache-Control";
 	final static Logger logger = LogManager.getLogger(AdminFilter.class);
 
 	public TrainerFilter() {
@@ -37,6 +44,16 @@ public class TrainerFilter implements Filter {
 		UserProfileBean userProfileBean = (UserProfileBean) reqt.getSession().getAttribute("userProfileBean");
 
 		if ((userProfileBean.getUser().getId() != null) && (userProfileBean.hasRoleTrainer(roleEnum.TRAINER))) {
+			if (!reqt.getRequestURI().startsWith(reqt.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip
+				// JSF
+				// resources
+				// (CSS/JS/Images/etc)
+				resp.setHeader(CACHE_CONTROL, NO_CACHE_NO_STORE_MUST_REVALIDATE); // HTTP 1.1.
+				resp.setHeader(PRAGMA, NO_CACHE); // HTTP 1.0.
+				resp.setDateHeader(EXPIRES, 0); // Proxies.
+			}
+			
+			
 			chain.doFilter(reqt, resp);
 
 		} else {

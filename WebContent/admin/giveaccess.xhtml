@@ -9,11 +9,13 @@
 		<title>Disabled Customer</title>
 	</h:head>
 	<ui:define name="body">
-	<h:form id="form">
+		<h:outputStylesheet library="css" name="datatable.css"></h:outputStylesheet>
+		<h:form id="form">
 			<p:dataGrid id="customers" var="c"
-				value="#{userbean.disabledCustomers}" columns="3" layout="grid" width="400">
+				value="#{userbean.disabledCustomers}" columns="3" layout="grid"
+				width="400">
 				<p:panel header="#{c.username}">
-				<p:graphicImage value="/resources/images/user.jpg"
+					<p:graphicImage value="/resources/images/user.jpg"
 						style="align:center" width="100" height="100" />
 					<p:commandLink value="Give Access" update="form:customers"
 						action="#{userbean.giveAccess}">
@@ -33,7 +35,7 @@
 					</p:confirmDialog>
 				</p:panel>
 			</p:dataGrid>
-			</h:form>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

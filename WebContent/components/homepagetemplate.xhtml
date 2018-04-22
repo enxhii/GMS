@@ -7,24 +7,28 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" xml:lang="en">
 <f:view locale="en">
 	<h:body>
-			<p:growl id="growl" life="3000" />
-			<div id="sidebar" style="height: 200px;">
-				<ui:insert name="sidebar">
-					<ui:include src="sidebar.xhtml" />
-					<ui:include src="header.xhtml" />
+		<p:growl id="growl" life="3000" />
+		<div id="sidebar" style="height: 200px;">
+			<ui:insert name="sidebar">
+				<ui:include src="sidebar.xhtml" />
+				<ui:include src="header.xhtml" />
 
-				</ui:insert>
-			</div>
+			</ui:insert>
+		</div>
 
-			<p:layoutUnit position="center" resizable="false"
-				style="height: 1000px;">
-				<ui:insert name="body" />
-			</p:layoutUnit>
-			<div id="footer">
-				<ui:insert name="footer">
-					<ui:include src="footer.xhtml" />
-				</ui:insert>
-			</div>
-			</h:body>
+		<p:layoutUnit position="center" resizable="false"
+			style="height: 800px;">
+			<ui:insert name="body" >
+			<ui:include src="/home/content.xhtml" />
+			</ui:insert>
+
+
+		</p:layoutUnit>
+		<div id="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</h:body>
 </f:view>
 </html>

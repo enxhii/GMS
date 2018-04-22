@@ -1,11 +1,9 @@
 package backend.dao;
 
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.springframework.stereotype.Repository;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -30,6 +28,19 @@ public class TrainerDao {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean customerExists(Integer id ) {
+		String query = "select c.id from Customer c join c.programms p where p.id=?1 ";
+		logger.debug("Checking if any customer exists");
+		if (entityManager.createQuery(query).setParameter(1, id).getFirstResult()!=0) {
+			logger.debug(entityManager.createQuery(query).getFirstResult());
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public void deleteProgramm(Integer id) {
 		try {
 			String query = "update Programm set status=?1 where id=?2";
@@ -38,6 +49,7 @@ public class TrainerDao {
 		} catch (Exception e) {
 		}
 	}
+
 	public void updateProgram(Programm p) {
 		try {
 			entityManager.merge(p);
@@ -48,7 +60,8 @@ public class TrainerDao {
 
 	public List<Programm> list(int id) {
 		String query = "select p from Programm p   where p.user.id=?1 and p.status=?2";
-		List<Programm> lista = entityManager.createQuery(query, Programm.class).setParameter(1, id).setParameter(2, 1).getResultList();
+		List<Programm> lista = entityManager.createQuery(query, Programm.class).setParameter(1, id).setParameter(2, 1)
+				.getResultList();
 		return lista;
 	}
 

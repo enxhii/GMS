@@ -1,12 +1,9 @@
 package frontend.beans;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import backend.model.User;
 import backend.service.RoleService;
 
@@ -17,29 +14,15 @@ public class UserProfileBean {
 	@ManagedProperty(value = "#{roleServiceImpl}")
 	private RoleService roleService;
 	private User user;
-	private boolean logged;
 	final static Logger logger = LogManager.getLogger(UserProfileBean.class);
-
 	public void removeUser() {
 		user = null;
-
-		logged = false;
 	}
-
 	public User getUser() {
 		return user;
 	}
-
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public boolean isLogged() {
-		return logged;
-	}
-
-	public void setLogged(boolean logged) {
-		this.logged = logged;
 	}
 
 	public boolean hasRoleAdmin(RoleEnum role) {

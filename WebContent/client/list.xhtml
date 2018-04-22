@@ -5,90 +5,90 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/components/homepagetemplate.xhtml">
 	<ui:define name="body" appendTo="@(body)">
+		<h:outputStylesheet library="css" name="datatable.css"></h:outputStylesheet>
 
-			<h:form id="form">
-				<p:dataGrid var="p" value="#{customerbean.list}" columns="4"
-					width="400" layout="grid" rows="5" paginator="true" id="prog">
+		<h:form id="form">
+			<p:dataGrid var="p" value="#{customerbean.list}" columns="4"
+				width="400" layout="grid" rows="5" paginator="true" id="prog">
 
-					<f:facet name="header">
+				<f:facet name="header">
            Programms To Enroll
         </f:facet>
 
-					<p:panel header="#{p.header}" style="text-align:center">
-						<p:graphicImage
-							value="/resources/images/prettyPhoto/programm/#{p.name}.jpg"
-							style="width:180px;height:100px;" />
+				<p:panel header="#{p.header}" style="text-align:center">
+					<p:graphicImage
+						value="/resources/images/prettyPhoto/programm/#{p.name}.jpg"
+						style="width:180px;height:100px;" />
 
-						<h:panelGrid columns="1" style="width:100%">
-							<h:outputText value="#{p.name}" />
+					<h:panelGrid columns="1" style="width:100%">
+						<h:outputText value="#{p.name}" />
 
-							<p:commandLink update=":form:pDetail"
-								oncomplete="PF('pDialog').show()" title="View Detail">
-								<h:outputText styleClass="ui-icon ui-icon-search"
-									style="margin:0 auto;" />
-								<f:setPropertyActionListener value="#{p}"
-									target="#{customerbean.programm}" />
-							</p:commandLink>
-							<p:commandLink action="#{customerbean.attendCourses}"
-								value="Enroll">
+						<p:commandLink update=":form:pDetail"
+							oncomplete="PF('pDialog').show()" title="View Detail">
+							<h:outputText styleClass="ui-icon ui-icon-search"
+								style="margin:0 auto;" />
+							<f:setPropertyActionListener value="#{p}"
+								target="#{customerbean.programm}" />
+						</p:commandLink>
+						<p:commandLink action="#{customerbean.attendCourses}"
+							value="Enroll">
 
-								<f:setPropertyActionListener value="#{p}"
-									target="#{customerbean.selected}" />
-								<p:confirm header="Confirm!"
-									message="Do you want to enroll to this course?"
-									icon="ui-icon-alert" />
+							<f:setPropertyActionListener value="#{p}"
+								target="#{customerbean.selected}" />
+							<p:confirm header="Confirm!"
+								message="Do you want to enroll to this course?"
+								icon="ui-icon-alert" />
 
-							</p:commandLink>
-							<p:confirmDialog global="true" showEffect="fade"
-								hideEffect="fade">
-								<p:commandButton value="Confirm" type="button"
-									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-									update="list" />
-								<p:commandButton value="Cancel" type="button"
-									styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-									update="list" />
-							</p:confirmDialog>
-						</h:panelGrid>
-					</p:panel>
+						</p:commandLink>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Confirm" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+								update="list" />
+							<p:commandButton value="Cancel" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+								update="list" />
+						</p:confirmDialog>
+					</h:panelGrid>
+				</p:panel>
 
-				</p:dataGrid>
+			</p:dataGrid>
 
-				<p:dialog header="Programm Info" widgetVar="pDialog"
-					showEffect="fade" hideEffect="fade" resizable="false">
-					<p:outputPanel id="pDetail" style="text-align:center;">
-						<p:panelGrid columns="2" columnClasses="label,value">
-							<f:facet name="header">
-							</f:facet>
+			<p:dialog header="Programm Info" widgetVar="pDialog"
+				showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="pDetail" style="text-align:center;">
+					<p:panelGrid columns="2" columnClasses="label,value">
+						<f:facet name="header">
+						</f:facet>
 
-							<h:outputText value="Name:" />
-							<h:outputText value="#{customerbean.programm.name}" />
+						<h:outputText value="Name:" />
+						<h:outputText value="#{customerbean.programm.name}" />
 
-							<h:outputText value="Category" />
-							<h:outputText value="#{customerbean.programm.header}" />
+						<h:outputText value="Category" />
+						<h:outputText value="#{customerbean.programm.header}" />
 
-							<h:outputText value="Burned Calory:" />
-							<h:outputText value="#{customerbean.programm.burnedCalory}" />
+						<h:outputText value="Burned Calory:" />
+						<h:outputText value="#{customerbean.programm.burnedCalory}" />
 
-							<h:outputText value="Duration in minutes" />
-							<h:outputText value="#{customerbean.programm.duration}" />
+						<h:outputText value="Duration in minutes" />
+						<h:outputText value="#{customerbean.programm.duration}" />
 
-							<h:outputText value="What are you going to do in this class?" />
+						<h:outputText value="What are you going to do in this class?" />
 
-							<p:inputTextarea value="#{customerbean.programm.description}"
-								readonly="true"></p:inputTextarea>
-							<p:commandButton value="Close " styleClass="commandButton"
-								onclick="PF('pDialog').hide()"
-								style="background: #c43636; color: white;">
-							</p:commandButton>
-						</p:panelGrid>
-					</p:outputPanel>
-				</p:dialog>
-			</h:form>
-			<p:commandButton value="Enroll*** " styleClass="commandButton"
-				oncomplete="PF('ADialog').show()" update=":enroll:aDialog"
-				style="background: #c43636; color: white;">
-			</p:commandButton>
-			<ui:include src="attendprogramm.xhtml"></ui:include>
-			</ui:define>
+						<p:inputTextarea value="#{customerbean.programm.description}"
+							readonly="true"></p:inputTextarea>
+						<p:commandButton value="Close " styleClass="commandButton"
+							onclick="PF('pDialog').hide()"
+							style="background: #c43636; color: white;">
+						</p:commandButton>
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<p:commandButton value="Enroll*** " styleClass="commandButton"
+			oncomplete="PF('ADialog').show()" update=":enroll:aDialog"
+			style="background: #c43636; color: white;">
+		</p:commandButton>
+		<ui:include src="attendprogramm.xhtml"></ui:include>
+	</ui:define>
 </ui:composition>
 </html>

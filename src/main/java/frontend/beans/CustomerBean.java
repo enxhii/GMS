@@ -11,7 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 @ManagedBean(name = "customerbean")
-@SessionScoped
+@ViewScoped
 public class CustomerBean {
 	final static Logger logger = LogManager.getLogger(CustomerBean.class);
 	@ManagedProperty(value = "#{customerServiceImpl}")
@@ -42,7 +42,7 @@ public class CustomerBean {
 
 	public boolean attendCourses() {
 		try {
-			customer.setId((userProfileBean.getUser().getId()));
+			customer.setId(userProfileBean.getUser().getId());
 			customerService.add(customer, selectedProg);
 			logger.debug("Bean Customer " + customer.getId());
 			return true;

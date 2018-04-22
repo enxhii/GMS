@@ -1,35 +1,72 @@
-.user-table{
-	border-collapse:collapse;
+.ui-datatable-header .ui-datatable {
+	background: #c43636 !important;
+	text-align: center;
+	padding: 4px 10px;
+	color:black !important;
 }
 
-.user-table-header{
-	text-align:center;
-	background:none repeat scroll 0 0 #339966;
-	border-bottom:1px solid #732626;
-	padding:16px;
-}
-.commandLink{
-background:#339966;
-color:#f9ecec;
-}
-.user-table-odd-row{
-	text-align:center;
-	background:none repeat scroll 0 0  #c6ecd9;
-	border-top:1px solid #e6b3b3;
+.ui-datatable th {
+	color: black !important;
+	background: #c43636 !important;
 }
 
-.user-table-even-row{
-	text-align:center;
-	background:none repeat scroll 0 0  #9fdfbf;
-	border-top:1px solid #d98c8c;
+.ui-datatable .ui-paginator {
+	background: #c43636 !important;
+	color:black !important;
 }
- .commandButton{
-  border:none;
-  outline:none;
-  height:40px;
-  background:#d98c8c;
-  color:#fff;
-  font-size:18px;
-  border-radius:20px;
-  
-  }
+.ui-datagrid .ui-paginator {
+	background: #c43636 !important;
+	color: black !important;
+}
+.ui-datagrid-header {
+	background: #c43636 !important;
+	color:white !important;
+}
+.ui-dialog-titlebar {
+	color: black!important;
+	background: #c43636 !important;
+}
+
+.ui-datatable .ui-datatable-odd {
+	background:white  !important;
+	color: black !important;
+}
+
+.ui-panel-titlebar {
+	background: #c43636 !important;
+	font-family: Arial, Helvetica, sans-serif;
+	color:white !important;
+}
+
+
+.ui-widget {
+	font-size: 100% !important;
+	color: black !important;
+}
+.ui-datatable .ui-datatable-even.ui-state-hover {
+	background: #F4E7C1 !important;
+}
+
+.ui-datatable .ui-datatable-even.ui-state-highlight {
+	background: #fff9e5 !important;
+}
+
+.ui-datatable .ui-datatable-odd.ui-state-highlight {
+	background: #fff9e5;
+}
+
+.ui-datatable .ui-datatable-data-empty td {
+	color: red;
+	font-weight: bold;
+}
+
+.ui-datatable th {
+	background: EAAB00;
+	font-family: verdana;
+	font-size: 1em;
+	color:black !important;
+}
+
+.ui-datatable .ui-expanded-row-content {
+	background: black !important;
+}

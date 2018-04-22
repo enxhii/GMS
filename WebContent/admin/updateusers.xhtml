@@ -54,9 +54,11 @@
 					<p:selectCheckboxMenu id="multiple"
 						value="#{userbean.update.roles}" showCheckbox="true"
 						multiple="true" converter="roleConverter" filter="true"
-						filterMatchMode="startsWith" panelStyle="width:250px">
+						filterMatchMode="startsWith" panelStyle="width:250px"
+						style="color:black;background: #c43636;">
 						<f:selectItems value="#{userbean.list}" var="role"
-							itemLabel="#{role.name}" itemValue="#{role}" />
+							itemLabel="#{role.name}" itemValue="#{role}"
+							style="color:black;background: #c43636;" />
 						<f:attribute name="collectionType" value="java.util.ArrayList" />
 
 					</p:selectCheckboxMenu>

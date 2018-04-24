@@ -1,0 +1,41 @@
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<h:form id="detailform" appendTo="@(body)">
+		<p:dialog id="programmDialog"
+			header="Details about : #{trainerBean.update.name}"
+			widgetVar="ProgrammDialog" showEffect="fade" hideEffect="fade"
+			resizable="false">
+			<p:growl id="editmsg" life="2000" />
+			<p:outputPanel id="programmPanel" style="text-align:center;">
+				<p:panelGrid columns="2">
+					<h:outputText value="Programm  Name : " />
+					<h:outputText value="#{trainerBean.update.name}" />
+					<h:outputText value=" Category : " />
+					<h:outputText value="#{trainerBean.update.header}" />
+					<h:outputText value="Description : " />
+					<p:inputTextarea value="#{trainerBean.update.description}"  readonly="true" />
+					<h:outputText value="Duration in minutes : " />
+					<h:outputText value="#{trainerBean.update.duration}" />
+					<h:outputText value=" Level: " />
+					<h:outputText id="level" value="#{trainerBean.update.level}" />
+					<h:outputText value="Burned Calory " />
+					<h:outputText value="#{trainerBean.update.burnedCalory}" />
+
+				</p:panelGrid>
+
+				<p:commandButton value="Close " styleClass="commandButton"
+					onclick="PF('ProgrammDialog').hide()"
+					style="background: #c43636; color: white;">
+				</p:commandButton>
+
+			</p:outputPanel>
+
+		</p:dialog>
+
+	</h:form>
+</ui:composition>
+</html>

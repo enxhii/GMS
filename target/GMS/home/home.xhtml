@@ -1,0 +1,31 @@
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/components/homepagetemplate.xhtml">
+
+<ui:define name="title">
+		<h:outputText value="Your Homepage"></h:outputText>
+
+</ui:define>
+	<h:form>
+		<h:commandButton action="#{login.logout}" value="Logout ">
+		</h:commandButton>
+
+	</h:form>
+
+
+ Welcome <h:outputText value="#{login.userProfileBean.user.username}">
+	</h:outputText>
+		<p:growl id="messages" showDetail="true" />
+
+	<div id="photo">
+		<ui:insert name="photo">
+			<ui:include src="content.xhtml" />
+		</ui:insert>
+	</div>
+	
+	
+</ui:composition>
+</html>

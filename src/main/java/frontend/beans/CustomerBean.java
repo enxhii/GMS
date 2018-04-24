@@ -42,7 +42,7 @@ public class CustomerBean {
 
 	public boolean attendCourses() {
 		try {
-			customer.setId(userProfileBean.getUser().getId());
+			customer.setUser(userProfileBean.getUser());
 			customerService.add(customer, selectedProg);
 			logger.debug("Bean Customer " + customer.getId());
 			return true;

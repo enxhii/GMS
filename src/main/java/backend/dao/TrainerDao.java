@@ -7,6 +7,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import backend.model.Customer;
 import backend.model.Programm;
 import backend.model.User;
 
@@ -29,15 +31,20 @@ public class TrainerDao {
 		}
 	}
 
-	public boolean customerExists(Integer id ) {
-		String query = "select c.id from Customer c join c.programms p where p.id=?1 ";
+	public boolean customerExists(Integer id) {
+		String query = "select c from Customer c join c.programms p where p.id=?1 ";
 		logger.debug("Checking if any customer exists");
-		if (entityManager.createQuery(query).setParameter(1, id).getFirstResult()!=0) {
-			logger.debug(entityManager.createQuery(query).getFirstResult());
+		List<Customer> list = entityManager.createQuery(query).setParameter(1, id).getResultList();
+		logger.debug(entityManager.createQuery(query).setParameter(1, id).getResultList());
+		if (!list.isEmpty()) {
+			logger.debug("List is not empty");
+			logger.debug(list.isEmpty());
 			return true;
-		} else {
+		} else if (list.isEmpty()) {
+			logger.debug("List is empty");
 			return false;
 		}
+		return false;
 
 	}
 

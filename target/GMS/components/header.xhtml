@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<title>My portofolio</title>
+
+
+		<link rel="stylesheet" type="text/css" href="resources/css/navbar.css"></link>
+
+	</h:head>
+	<h:body>
+		<ul class="nav">
+			<div class="logo">
+			Welcome  #{login.userProfileBean.user.username}
+			</div>
+		</ul>
+		<div class="banner">
+		</div>
+	</h:body>
+
+</ui:composition>

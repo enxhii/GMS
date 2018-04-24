@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Login/Register</title>
+	<link href="resources/css/stylerl.css" rel="stylesheet" type="text/css" />
+	<link
+		href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800"
+		rel="stylesheet" type="text.css" />
+</h:head>
+<h:body>
+	<h:outputStylesheet library="css" name="input.css"></h:outputStylesheet>
+
+	<div class="main">
+		<p:growl id="growl" life="4000" />
+		<h:form id="register">
+			<h:panelGrid id="grid" columns="2" style="margin-bottom:10px"
+				cellpadding="5">
+				<p:inputText id="name" value="#{registerBean.user.name}"
+					required="true"
+					requiredMessage="Your First name must have 3 or more letters.">
+					<f:validateLength minimum="3" maximum="10" />
+					<p:watermark for="name" value="FirstName" />
+				</p:inputText>
+
+				<p:inputText id="surname" value="#{registerBean.user.surname}"
+					required="true"
+					requiredMessage="Your Surname must have 3 or more letters.">
+					<f:validateLength minimum="3" maximum="12" />
+					<p:watermark for="surname" value="LastName" />
+				</p:inputText>
+
+				<p:inputText id="username" value="#{registerBean.user.username}"
+					required="true"
+					requiredMessage="Username is required!Your Last name must have 3 or more letters.">
+					<f:validateLength minimum="3" maximum="12" />
+					<p:watermark for="username" value="Username" />
+				</p:inputText>
+				<p:password id="password1" value="#{registerBean.user.password}"
+					required="true" requiredMessage="Password is required"
+					match="password">
+					<f:validateLength minimum="8" />
+					<p:watermark for="password1" value=" Password" />
+				</p:password>
+				<p:password id="password" value="#{registerBean.confirmPass}"
+					required="true" requiredMessage="Password is required">
+					<f:validateLength minimum="8" />
+					<p:watermark for="password" value=" Confirm Password" />
+				</p:password>
+				<p:inputText id="email" value="#{registerBean.user.email}"
+					required="true" requiredMessage="Email is required">
+					<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+					<p:watermark for="email" value="Email" />
+				</p:inputText>
+				<h:selectOneRadio value="#{registerBean.user.gender}">
+					<f:selectItem itemValue="female" itemLabel="Female" />
+					<f:selectItem itemValue="male" itemLabel="Male" />
+				</h:selectOneRadio>
+				
+				<p:inputText id="country" value="#{registerBean.address.country}"
+					required="true" requiredMessage="Country is required">
+					<f:validateLength minimum="3" />
+					<p:watermark for="country" value="Country" />
+				</p:inputText>
+				
+				<p:inputText id="phone" value="#{registerBean.user.phone}"
+					required="true" requiredMessage="phone is required">
+					<f:validateLength minimum="10" />
+					<p:watermark for="phone" value="Mobile Number " />
+				</p:inputText>
+				
+				<p:inputText id="city" value="#{registerBean.address.city}"
+					required="true" requiredMessage="City is required">
+					<f:validateLength minimum="8" />
+					<p:watermark for="city" value="City" />
+				</p:inputText>
+				
+				<p:inputText id="zip" value="#{registerBean.address.zipcode}"
+					required="true" requiredMessage="ZipCode  is required">
+					<f:validateLength minimum="4" maximum="4" />
+					<p:watermark for="zip" value=" ZipCode" />
+				</p:inputText>
+				<br></br>
+				<br></br>
+				<p:commandButton value="Register "
+					action="#{registerBean.addCustomer}"
+					style="background: #c43636; color: white; border-radius: 20px;"
+					update="register,:growl" />
+
+			</h:panelGrid>
+		</h:form>
+	</div>
+
+</h:body>
+</html>

@@ -21,7 +21,7 @@ public class UserBean {
 	private RoleService roleService;
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
-	private String databasePassword ;
+	private String databasePassword;
 	final static Logger logger = LogManager.getLogger(UserBean.class);
 	private String password;
 	private String confirmPass;
@@ -56,7 +56,7 @@ public class UserBean {
 		// disabledUsers = userService.getDisabledUser();
 		checked = new User();
 		selectedRole = roleService.listRoles();
-		databasePassword= userProfileBean.getUser().getPassword();
+		databasePassword = userProfileBean.getUser().getPassword();
 	}
 
 	public void addUser() {
@@ -71,9 +71,14 @@ public class UserBean {
 	}
 
 	public void deleteUser() {
-		users.remove(userDelete);
-		userService.delete(userDelete.getId());
-		users = userService.listAll();
+		if (userProfileBean.getUser().getId() == userDelete.getId()) {
+			addMessage("You can't delete your self!");
+		} else {
+			users.remove(userDelete);
+			userService.delete(userDelete.getId());
+			users = userService.listAll();
+			addMessage("User deleted succesfully");
+		}
 	}
 
 	public List<User> listAll() {

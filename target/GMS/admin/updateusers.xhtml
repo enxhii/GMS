@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="form2" appendTo="@(body)">
+		<p:dialog id="editUserDialog"
+			header="Edit User : #{userbean.update.username}"
+			widgetVar="EditUserDialog" showEffect="fade" hideEffect="fade"
+			resizable="false">
+			<p:messages id="messages" />
+			<p:outputPanel id="editUserPanel" style="text-align:center;">
+				<p:panelGrid columns="2">
+					<h:outputText value="FirstName: " />
+					<p:inputText id="editfname" value="#{userbean.update.name}"
+						required="true"
+						requiredMessage="FirstName can't be empty and should have at least 3 characters ">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
+					<h:outputText value="Surname: " />
+					<p:inputText id="editsurname" value="#{userbean.update.surname}"
+						required="true"
+						requiredMessage="Surname can't be empty  and should have at least 3 characters">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
+					<h:outputText value="Email: " />
+					<p:inputText id="editemail" value="#{userbean.update.email}"
+						required="true" requiredMessage="Email can't be empty ">
+						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+					</p:inputText>
+					<h:outputText value="Gender: " />
+					<p:inputText id="editgender" value="#{userbean.update.gender}"
+						required="true" requiredMessage="Gender can't be empty "></p:inputText>
+					<h:outputText value="Phone: " />
+					<p:inputText id="editphone" value="#{userbean.update.phone}"
+						required="true" requiredMessage="Phone can't be empty "></p:inputText>
+					<h:outputText value="Country: " />
+					<p:inputText id="editcountry"
+						value="#{userbean.update.address.country}" required="true"
+						requiredMessage="Country can't be empty and must have at least 3 characters ">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
+					<h:outputText value="City: " />
+					<p:inputText id="editcity" value="#{userbean.update.address.city}"
+						required="true"
+						requiredMessage="City can't be empty and must have at least 3 characters ">
+						<f:validateLength minimum="3" maximum="12" />
+					</p:inputText>
+
+					<p:selectCheckboxMenu id="multiple"
+						value="#{userbean.update.roles}" showCheckbox="true"
+						multiple="true" converter="roleConverter" filter="true"
+						filterMatchMode="startsWith" panelStyle="width:250px"
+						style="color:black;background: #c43636;">
+						<f:selectItems value="#{userbean.list}" var="role"
+							itemLabel="#{role.name}" itemValue="#{role}"
+							style="color:black;background: #c43636;" />
+						<f:attribute name="collectionType" value="java.util.ArrayList" />
+
+					</p:selectCheckboxMenu>
+
+				</p:panelGrid>
+				<p:commandButton value="Update" action="#{userbean.updateUsers}"
+					update=":form:userss,:growl"
+					style="background: #c43636; color: white;"></p:commandButton>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</ui:composition>
+</html>

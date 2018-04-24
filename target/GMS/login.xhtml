@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:outputStylesheet library="css" name="input.css"></h:outputStylesheet>
+<h:body>
+	<h:form>
+
+		<p:messages id="messages" />
+		<p:inputText id="username" value="#{login.username}" required="true"
+			requiredMessage="Username is mandatory">
+			<p:watermark for="username" value="Username" />
+		</p:inputText>
+		<br></br>
+		<br></br>
+		<p:password id="password" value="#{login.password}" required="true"
+			requiredMessage="Password is mandatory">
+			<p:watermark for="password" value="Password"/>
+		</p:password>
+		<br></br>
+		<br></br>
+		<p:commandButton value="Login" icon="ui-icon-star"
+			action="#{login.submit}" ajax="false"
+			style="background: #c43636;color: white; border-radius: 20px;">
+		</p:commandButton>
+	</h:form>
+</h:body>
+</html>

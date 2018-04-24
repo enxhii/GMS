@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<link href="resources/css/stylerl.css" rel="stylesheet" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link
+		href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800"
+		rel="stylesheet" type="text.css" />
+</h:head>
+<h:body>
+	<div class="main">
+		<div class="header">
+
+			<h1>Login or Create Account!</h1>
+		</div>
+		<form>
+			<ul class="left-form">
+				<p>New Account</p>
+				<ui:include src="client/addUser.xhtml"></ui:include>
+
+				<div class="clear"></div>
+			</ul>
+			<ul class="right-form">
+				<h3>Login</h3>
+				<div>
+					<ui:include src="login.xhtml"></ui:include>
+				</div>
+				<div class="clear"></div>
+			</ul>
+			<div class="clear"></div>
+		</form>
+	</div>
+	<div class="copy-right"></div>
+
+</h:body>
+</html>

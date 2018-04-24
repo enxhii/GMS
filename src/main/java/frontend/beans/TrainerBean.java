@@ -1,5 +1,6 @@
 package frontend.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -42,6 +43,7 @@ public class TrainerBean {
 	private List<Programm> lista;
 	private Programm deletep;
 	private Programm update;
+	private List<String> levels;
 
 	@PostConstruct
 	public void init() {
@@ -49,6 +51,10 @@ public class TrainerBean {
 		programm = new Programm();
 		update = new Programm();
 		lista = trainerService.list(userProfileBean.getUser().getId());
+		levels = new ArrayList<>();
+		levels.add("Easy");
+		levels.add("Medium");
+		levels.add("Advanced ");
 	}
 
 	public void addProgramm() {
@@ -65,7 +71,8 @@ public class TrainerBean {
 
 	public void deleteProgramm() {
 		logger.debug(trainerService.customerExists(deletep.getId()));
-		if (trainerService.customerExists(deletep.getId())) {
+		if (trainerService.customerExists(deletep.getId()) == false) {
+			logger.debug(deletep.getId());
 			lista.remove(deletep);
 			trainerService.deleteProgramm(deletep.getId());
 			addMessage("Programm deleted succesfully");
@@ -175,5 +182,13 @@ public class TrainerBean {
 
 	private void executeScript(String script) {
 		requestContext().execute(script);
+	}
+
+	public List<String> getLevels() {
+		return levels;
+	}
+
+	public void setLevels(List<String> levels) {
+		this.levels = levels;
 	}
 }

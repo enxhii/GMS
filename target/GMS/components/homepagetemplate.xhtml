@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xml:lang="en">
+<f:view locale="en">
+	<h:body>
+		<p:growl id="growl" life="3000" />
+		<div id="sidebar" style="height: 200px;">
+			<ui:insert name="sidebar">
+				<ui:include src="sidebar.xhtml" />
+				<ui:include src="header.xhtml" />
+
+			</ui:insert>
+		</div>
+
+		<p:layoutUnit position="center" resizable="false"
+			style="height: 800px;">
+			<ui:insert name="body" >
+			<ui:include src="/home/content.xhtml" />
+			</ui:insert>
+
+
+		</p:layoutUnit>
+		<div id="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</h:body>
+</f:view>
+</html>

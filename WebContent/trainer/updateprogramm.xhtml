@@ -36,9 +36,10 @@
 					</p:inputNumber>
 
 					<h:outputText value=" Level: " />
-					<p:inputText id="level" value="#{trainerBean.update.level}"
-						required="true" requiredMessage="Level is required">
-					</p:inputText>
+					<p:selectOneMenu id="level" value="#{trainerBean.update.level}" style="width:150px">
+                <f:selectItem itemLabel="Select Level" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{trainerBean.levels}" />
+            </p:selectOneMenu>
 
 					<h:outputText value="Burned Calory " />
 					<p:inputNumber value="#{trainerBean.update.burnedCalory}"

@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/components/homepagetemplate.xhtml">
+	<ui:define name="body">
+		<h:outputStylesheet library="css" name="datatable.css"></h:outputStylesheet>
+		<div class="w3-content w3-padding"
+			style="max-width: 600px; margin-bottom: 0px;">
+			<div class="w3-container w3-padding-32" style="margin-top: 0px">
+				<h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Update
+					Profile</h3>
+			</div>
+			<h:form id="updateprofile">
+				<p:panel id="projectLabel" header="Edit your profile"
+					style="margin-bottom:10px;">
+					<h:panelGrid columns="2">
+						<h:outputLabel value=" First Name :" />
+						<p:inputText required="true"
+							requiredMessage="FirstName is required!Your Last name must have 3 or more letters. "
+							value="#{userbean.userProfileBean.user.name}" label="FirstName">
+							<f:validateLength minimum="3" maximum="12" />
+						</p:inputText>
+
+						<h:outputLabel value="LastName :" />
+						<p:inputText required="true"
+							requiredMessage=" LastName is required!Your Last name must have 3 or more letters."
+							value="#{userbean.userProfileBean.user.surname}" label="LastName">
+							<f:validateLength minimum="3" maximum="12" />
+						</p:inputText>
+
+						<h:outputLabel value="Email :" />
+						<p:inputText required="true"
+							requiredMessage=" Email should be: example@gmail.com"
+							value="#{userbean.userProfileBean.user.email}" label="Email">
+							<f:validateRegex
+								pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+
+						</p:inputText>
+
+						<h:outputLabel value="Mobile :" />
+						<p:inputMask required="true"
+							value="#{userbean.userProfileBean.user.phone}" label="Mobile"
+							mask="(00355) 999-999999" />
+
+						<h:outputLabel value="Address:Country :" />
+						<p:inputText required="true"
+							requiredMessage="LastName is required!Your Last name must have 3
+							 or more letters(12 maximum)."
+							value="#{userbean.userProfileBean.user.address.country}"
+							label="Country">
+							<f:validateLength minimum="3" maximum="12" />
+						</p:inputText>
+						<h:outputLabel value="Address:City :" />
+						<p:inputText value="#{userbean.userProfileBean.user.address.city}"
+							required="true"
+							requiredMessage="LastName is required!Your Last name must
+							 have 3 or more letters(12 maximum)"
+							label="City">
+							<f:validateLength minimum="3" maximum="12" />
+						</p:inputText>
+						<h:outputLabel value="Address:ZipCode :" />
+						<p:inputText required="true"
+							requiredMessage="Zip code should have minimum/maximum 4 number"
+							value="#{userbean.userProfileBean.user.address.zipcode}"
+							label="ZipCode">
+							<f:validateLength minimum="4" maximum="4" />
+						</p:inputText>
+						<p:commandButton value="Edit Profile"
+							update="updateprofile,:growl" icon="ui-icon-disk"
+							action="#{userbean.updateProfile}"
+							style="background: #c43636; color: white;" />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

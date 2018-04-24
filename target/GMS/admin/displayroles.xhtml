@@ -1,0 +1,55 @@
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<h:form id="roleform" appendTo="@(body)">
+		<p:dialog id="roleDialog" header="Role: #{userbean.update.name}"
+			widgetVar="RoleDialog" showEffect="explode" hideEffect="fade"
+			resizable="false">
+			<p:growl id="editmsg" life="2000" />
+			<p:outputPanel id="showUserPanel" style="text-align:center;">
+				<p:panelGrid columns="1">
+					<p:column headerText="Roles  ">
+						<ui:repeat value="#{userbean.update.roles}" var="r">
+							<h:outputText value="#{r.name}" />
+							<br />
+							<p:commandLink oncomplete="PF('rolesDialog').show()"
+								title="View Detail" styleClass="ui-icon ui-icon-search"
+								style="float:left;margin-right:10px"
+								update=":roleform:roleDetail">
+								<f:setPropertyActionListener value="#{r}" target="#{r}" />
+							</p:commandLink>
+						</ui:repeat>
+					</p:column>
+				</p:panelGrid>
+				<p:commandButton value="Close " styleClass="commandButton"
+					onclick="PF('RoleDialog').hide()"
+					style="background: #c43636; color: white;">
+				</p:commandButton>
+
+			</p:outputPanel>
+
+		</p:dialog>
+		<p:dialog header="Role Details" widgetVar="rolesDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="roleDetail" style="text-align:center;">
+				<p:panelGrid columns="2" columnClasses="label,value">
+					<f:facet name="header">
+					</f:facet>
+					<p:column>
+						<h:outputText value=" Role Id: #{r.id}" />
+						<br />
+						<h:outputText value=" Role Name: #{r.name}" />
+						<br />
+						<h:outputText value=" Role Description: #{r.description}" />
+
+					</p:column>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+
+	</h:form>
+</ui:composition>
+</html>

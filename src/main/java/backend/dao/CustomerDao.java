@@ -40,6 +40,8 @@ public class CustomerDao {
 			logger.debug("Getting programss");
 			customer.setProgramms(programm);
 			logger.debug("DaoMethod" + customer.getId());
+			logger.debug(customer.toString());
+			logger.debug(customer);
 			logger.debug("Inserting programs");
 			entityManager.merge(customer);
 			logger.debug("DaoMethod" + customer.getId());

@@ -1,0 +1,33 @@
+<html lang="" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form id="category" appendTo="@(body)">
+		<p:dialog id="addCategoryDialog" header="Add Category"
+			widgetVar="AddCategoryDialog">
+			<p:outputPanel id="addCategoryPanel" style="text-align:center;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+					<h:outputText value="Category  Name : " />
+					<p:inputText value="#{trainerBean.categoryAdd.name}"
+						required="true"
+						requiredMessage="Your Category name must have 3 or more letters.">
+						<f:validateLength minimum="3" maximum="80" />
+					</p:inputText>
+
+					<p:commandButton value="Add Category" styleClass="commandButton"
+						action="#{trainerBean.addCategory}"
+						update=":form:datatable,:growl"
+						style="background: #c43636; color: white;"></p:commandButton>
+					<p:commandButton value="Cancel " styleClass="commandButton"
+						onclick="PF('AddCategoryDialog').hide()"
+						style="background: #c43636; color: white;">
+					</p:commandButton>
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</ui:composition>
+</html>

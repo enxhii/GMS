@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<h:form id="detail">
+		<p:outputPanel id="programmPanel" style="text-align:center;">
+			<p:panelGrid columns="2">
+				<h:outputText value="Programm  Name : " />
+				<h:outputText value="#{trainerBean.update.name}" />
+				<h:outputText value=" Category : " />
+				<h:outputText value="#{trainerBean.update.category}" />
+				<h:outputText value="Description : " />
+				<p:inputTextarea value="#{trainerBean.update.description}"
+					readonly="true" />
+				<h:outputText value="Duration in minutes : " />
+				<h:outputText value="#{trainerBean.update.duration}" />
+				<h:outputText value=" Level: " />
+				<h:outputText id="level" value="#{trainerBean.update.level}" />
+				<h:outputText value="Burned Calory " />
+				<h:outputText value="#{trainerBean.update.burnedCalory}" />
+			</p:panelGrid>
+		</p:outputPanel>
+	</h:form>
+</h:body>
+</html>

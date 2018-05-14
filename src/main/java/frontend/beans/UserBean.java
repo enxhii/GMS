@@ -1,28 +1,41 @@
 package frontend.beans;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.*;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+
+import backend.encryption.PasswordEncryptor;
+import backend.model.Address;
+import backend.model.Customer;
+import backend.model.Role;
+import backend.model.User;
 import backend.service.RoleService;
-import backend.service.*;
-import backend.model.*;
+import backend.service.UserService;
 
 @ManagedBean(name = "userbean")
 @ViewScoped
 public class UserBean {
 	@ManagedProperty(value = "#{userServiceImpl}")
 	private UserService userService;
+
 	@ManagedProperty(value = "#{roleServiceImpl}")
 	private RoleService roleService;
+
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
+
 	private String databasePassword;
-	final static Logger logger = LogManager.getLogger(UserBean.class);
+	final static Logger LOGGER = LogManager.getLogger(UserBean.class);
 	private String password;
 	private String confirmPass;
 	public boolean logged;
@@ -35,10 +48,11 @@ public class UserBean {
 	private Role role;
 	private User userDelete;
 	private User update;
+	private User updatepass;
+
 	private List<User> disabledUsers;
 	private List<User> disabledCustomers;
 	private User checked;
-	static final String updateprofile = "updateprofile";
 	private static final String PF_ADDUSER_DIALOG_HIDE = "PF('AddUserDialog').hide()";
 	private static final String PF_EditPasswordDialog_HIDE = "PF('EditPasswordDialog').hide()";
 	private static final String PF_EditUserDialog_HIDE = "PF('EditUserDialog').hide()";
@@ -53,20 +67,21 @@ public class UserBean {
 		users = userService.listAll();
 		update = new User();
 		disabledCustomers = userService.getDisabledCustomer();
-		// disabledUsers = userService.getDisabledUser();
+		disabledUsers = userService.getDisabledUser();
 		checked = new User();
 		selectedRole = roleService.listRoles();
 		databasePassword = userProfileBean.getUser().getPassword();
+		updatepass = new User();
 	}
 
 	public void addUser() {
 		if (!userService.doesExists(user.getUsername())) {
-			logger.debug(selectedRole);
+			LOGGER.debug(selectedRole);
 			userService.save(user, address, selectedRole);
-			addMessage("User succesfully registered");
+			addMessage("User" + "" + user.getUsername() + "" + "succesfully registered");
 			executeScript(PF_ADDUSER_DIALOG_HIDE);
 		} else {
-			addMessage("This username is taken.Please try another one !");
+			addMessage("Username " + " " + user.getUsername() + "   " + "is taken.Please try another one !");
 		}
 	}
 
@@ -77,7 +92,7 @@ public class UserBean {
 			users.remove(userDelete);
 			userService.delete(userDelete.getId());
 			users = userService.listAll();
-			addMessage("User deleted succesfully");
+			addMessage("User " + "  " + userDelete.getUsername() + " " + "was  deleted succesfully");
 		}
 	}
 
@@ -86,7 +101,7 @@ public class UserBean {
 			users = userService.listAll();
 			return users;
 		} catch (Exception e) {
-			logger.debug(e);
+			LOGGER.debug(e);
 		}
 		return users;
 
@@ -97,10 +112,15 @@ public class UserBean {
 		return list;
 	}
 
-	public void updatePassword() {
-		if (!userProfileBean.getUser().getPassword().equals(databasePassword)) {
+	public void updatePassword() throws Exception {
+		LOGGER.debug("Database PAssword" + databasePassword);
+		LOGGER.debug("Comparing" + PasswordEncryptor.encrypt(userProfileBean.getUser().getPassword()));
+
+		if (!PasswordEncryptor.encrypt(userProfileBean.getUser().getPassword()).equals(databasePassword)) {
+			LOGGER.debug((!userProfileBean.getUser().getPassword().equals(databasePassword)));
+			LOGGER.debug(userProfileBean.getUser().getPassword());
 			addMessage("Wrong Password  ");
-		} else if (userProfileBean.getUser().getPassword().equals(databasePassword)) {
+		} else if (PasswordEncryptor.encrypt(userProfileBean.getUser().getPassword()).equals(databasePassword)) {
 			userService.updatePassword(userProfileBean.getUser(), password);
 			addMessage("Password Succesfully updated ");
 		}
@@ -109,8 +129,10 @@ public class UserBean {
 
 	public void updateUsersPassword() {
 		if (password.equals(confirmPass)) {
-			userService.updatePassword(update, password);
-			addMessage("Password Succesfully updated");
+			LOGGER.debug("Passwordi" + password);
+			LOGGER.debug("Konfirmim pass" + confirmPass);
+			userService.updatePassword(updatepass, password);
+			addMessage(updatepass.getUsername() + "  " + "Password Succesfully updated");
 			executeScript(PF_EditPasswordDialog_HIDE);
 		} else {
 			addMessage("Passwords didnt matched.Try again!");
@@ -120,14 +142,14 @@ public class UserBean {
 
 	public void updateProfile() {
 		userService.updateProfile(userProfileBean.getUser(), userProfileBean.getUser().getAddress());
-		addMessage("Profile Succesfully updated");
+		addMessage("Your Profile Succesfully updated");
 
 	}
 
 	public void updateUsers() {
 		userService.updateUsers(update, update.getAddress(), update.getRoles());
 		userService.listAll();
-		addMessage("User Succesfully updated");
+		addMessage("User " + "  " + update.getUsername() + " " + " " + "Succesfully updated");
 		executeScript(PF_EditUserDialog_HIDE);
 	}
 
@@ -143,19 +165,20 @@ public class UserBean {
 	}
 
 	public void enableUser() {
-		userService.enableUsers(update.getId());
+		disabledUsers.remove(checked);
+		userService.enableUsers(checked.getId());
+		disabledUsers = userService.getDisabledUser();
+		addMessage("User " + checked.getUsername() + "" + "is now active ");
+
 	}
 
 	public void giveAccess() {
-		try {
-			disabledCustomers.remove(checked);
-			userService.giveAccess(checked.getId());
-			logger.debug(checked.getId());
-			disabledCustomers = userService.getDisabledCustomer();
-			addMessage("Access given Succesully");
-		} catch (Exception e) {
-			logger.debug(e);
-		}
+		disabledCustomers.remove(checked);
+		userService.giveAccess(checked.getId());
+		LOGGER.debug(checked.getId());
+		disabledCustomers = userService.getDisabledCustomer();
+		addMessage("Access given Succesully to:" + "" + checked.getUsername());
+
 	}
 
 	public void addMessage(String summary) {
@@ -329,16 +352,20 @@ public class UserBean {
 		this.checked = checked;
 	}
 
-	public static String getUpdateprofile() {
-		return updateprofile;
-	}
-
 	public String getDatabasePassword() {
 		return databasePassword;
 	}
 
 	public void setDatabasePassword(String databasePassword) {
 		this.databasePassword = databasePassword;
+	}
+
+	public User getUpdatepass() {
+		return updatepass;
+	}
+
+	public void setUpdatepass(User updatepass) {
+		this.updatepass = updatepass;
 	}
 
 }

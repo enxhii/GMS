@@ -36,7 +36,8 @@
 					<h:outputText value="#{u.email}" />
 				</p:column>
 				<p:column headerText="Delete User">
-					<p:commandLink action="#{userbean.deleteUser}" update="form:userss,:growl">
+					<p:commandLink action="#{userbean.deleteUser}"
+						update="form:userss,:growl">
 						<i class="fa fa-trash w3-xlarge" style="color: #c43636;"></i>
 						<f:setPropertyActionListener value="#{u}"
 							target="#{userbean.userDelete}" />
@@ -73,7 +74,7 @@
 					<p:commandLink oncomplete="PF('EditPasswordDialog').show()"
 						update=":form3:editPasswordDialog ">
 						<f:setPropertyActionListener value="#{u}"
-							target="#{userbean.update}" />
+							target="#{userbean.updatepass}" />
 						<i class="fa fa-edit w3-xlarge" style="color: #c43636;"></i>
 
 					</p:commandLink>

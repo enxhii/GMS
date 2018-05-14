@@ -2,18 +2,28 @@ package frontend.beans;
 
 import java.util.List;
 import java.util.Optional;
+
 import javax.annotation.PostConstruct;
-import javax.faces.bean.*;
-import backend.model.*;
-import backend.serviceImpl.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
+
+import backend.model.Customer;
+import backend.model.Programm;
+import backend.model.User;
+import backend.serviceImpl.CustomerServiceImpl;
+import backend.serviceImpl.TrainerServiceImpl;
 
 @ManagedBean(name = "customerbean")
 @ViewScoped
 public class CustomerBean {
-	final static Logger logger = LogManager.getLogger(CustomerBean.class);
+	final static Logger LOGGER = LogManager.getLogger(CustomerBean.class);
 	@ManagedProperty(value = "#{customerServiceImpl}")
 	private CustomerServiceImpl customerService;
 
@@ -22,6 +32,7 @@ public class CustomerBean {
 
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
+	private static final String PF_ADDP_DIALOG_HIDE = "PF('ADialog').hide()";
 
 	private Customer customer;
 	private List<Programm> list;
@@ -33,24 +44,23 @@ public class CustomerBean {
 	@PostConstruct
 	public void init() {
 		selected = new Programm();
-		customer = new Customer();
 		list = customerService.listProgramms();
 		programm = new Programm();
-		selectedProg = customerService.listProgramms();
-
+		customer = new Customer();
 	}
 
-	public boolean attendCourses() {
+	public void attendCourses() {
 		try {
-			customer.setUser(userProfileBean.getUser());
+			customer = customerService.getCustomer(userProfileBean.getUser().getId());
+			addMessage("You are now enrolled ");
+			executeScript(PF_ADDP_DIALOG_HIDE);
 			customerService.add(customer, selectedProg);
-			logger.debug("Bean Customer " + customer.getId());
-			return true;
+			LOGGER.debug("Bean Customer " + customer.getId());
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.debug(e);
+			LOGGER.debug(e);
 		}
-		return false;
 
 	}
 
@@ -68,6 +78,23 @@ public class CustomerBean {
 			return optional.get();
 		}
 		return null;
+	}
+
+	public void addMessage(String summary) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+		requestFacesContext().addMessage(null, message);
+	}
+
+	private FacesContext requestFacesContext() {
+		return FacesContext.getCurrentInstance();
+	}
+
+	private RequestContext requestContext() {
+		return RequestContext.getCurrentInstance();
+	}
+
+	private void executeScript(String script) {
+		requestContext().execute(script);
 	}
 
 	public TrainerServiceImpl getTrainerService() {

@@ -14,7 +14,7 @@
 	<h:outputStylesheet library="css" name="input.css"></h:outputStylesheet>
 
 	<div class="main">
-		<p:growl id="growl" life="4000" />
+		<p:growl id="growl" life="5000" />
 		<h:form id="register">
 			<h:panelGrid id="grid" columns="2" style="margin-bottom:10px"
 				cellpadding="5">
@@ -58,37 +58,36 @@
 					<f:selectItem itemValue="female" itemLabel="Female" />
 					<f:selectItem itemValue="male" itemLabel="Male" />
 				</h:selectOneRadio>
-				
+
 				<p:inputText id="country" value="#{registerBean.address.country}"
 					required="true" requiredMessage="Country is required">
 					<f:validateLength minimum="3" />
 					<p:watermark for="country" value="Country" />
 				</p:inputText>
-				
+
 				<p:inputText id="phone" value="#{registerBean.user.phone}"
 					required="true" requiredMessage="phone is required">
-					<f:validateLength minimum="10" />
+					<f:validateLength maximum="14" minimum="10" />
 					<p:watermark for="phone" value="Mobile Number " />
-				</p:inputText>
-				
-				<p:inputText id="city" value="#{registerBean.address.city}"
-					required="true" requiredMessage="City is required">
-					<f:validateLength minimum="8" />
-					<p:watermark for="city" value="City" />
-				</p:inputText>
-				
-				<p:inputText id="zip" value="#{registerBean.address.zipcode}"
-					required="true" requiredMessage="ZipCode  is required">
-					<f:validateLength minimum="4" maximum="4" />
-					<p:watermark for="zip" value=" ZipCode" />
-				</p:inputText>
-				<br></br>
-				<br></br>
-				<p:commandButton value="Register "
-					action="#{registerBean.addCustomer}"
-					style="background: #c43636; color: white; border-radius: 20px;"
-					update="register,:growl" />
+					</p:inputText>
 
+					<p:inputText id="city" value="#{registerBean.address.city}"
+						required="true" requiredMessage="City is required">
+						<f:validateLength minimum="3" />
+						<p:watermark for="city" value="City" />
+					</p:inputText>
+
+					<p:inputText id="zip" value="#{registerBean.address.zipcode}"
+						required="true" requiredMessage="ZipCode  is required">
+						<f:validateLength minimum="4" maximum="4" />
+						<p:watermark for="zip" value=" ZipCode" />
+					</p:inputText>
+					<br></br>
+					<br></br>
+					<p:commandButton value="Register "
+						action="#{registerBean.addCustomer}"
+						style="background: #c43636; color: white; border-radius: 20px;"
+						update="grid, :growl" />
 			</h:panelGrid>
 		</h:form>
 	</div>

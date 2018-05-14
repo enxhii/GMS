@@ -18,10 +18,12 @@
 					</p:inputText>
 
 					<h:outputText value=" Category : " />
-					<p:inputText value="#{trainerBean.update.header}" required="true"
-						requiredMessage="Your header must have 3 or more letters.">
-						<f:validateLength minimum="3" maximum="12" />
-					</p:inputText>
+					<p:selectOneMenu value="#{trainerBean.update.category}"
+						label="Select Category" converter="categoryConverter"
+						update="program">
+						<f:selectItems value="#{trainerBean.categories}" var="c"
+							itemLabel="#{c.name}" itemValue="#{c}" />
+					</p:selectOneMenu>
 
 					<h:outputText value="Description : " />
 					<p:inputTextarea value="#{trainerBean.update.description}"
@@ -36,10 +38,12 @@
 					</p:inputNumber>
 
 					<h:outputText value=" Level: " />
-					<p:selectOneMenu id="level" value="#{trainerBean.update.level}" style="width:150px">
-                <f:selectItem itemLabel="Select Level" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{trainerBean.levels}" />
-            </p:selectOneMenu>
+					<p:selectOneMenu id="level" value="#{trainerBean.update.level}"
+						style="width:150px">
+						<f:selectItem itemLabel="Select Level" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{trainerBean.levels}" />
+					</p:selectOneMenu>
 
 					<h:outputText value="Burned Calory " />
 					<p:inputNumber value="#{trainerBean.update.burnedCalory}"

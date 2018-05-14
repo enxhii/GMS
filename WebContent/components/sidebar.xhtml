@@ -14,30 +14,44 @@
 	<h:body>
 
 		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left"
-			style="display: none;  color: #c43636; background-color: white;"
+			style="display: none; color: #c43636; background-color: white;"
 			id="mySidebar">
-			<button class="w3-bar-item w3-button w3-large"  onclick="w3_close()">X</button>
+			<button class="w3-bar-item w3-button w3-large" onclick="w3_close()">X</button>
 
 			<h:link value="Update Profile" outcome="/home/updateprofile"
 				style="text-decoration: none;" />
 			<br /> <br />
-			<h:link value="Update Password" outcome="/home/updatepassword" style="text-decoration: none;" />
+			<h:link value="Update Password" outcome="/home/updatepassword"
+				style="text-decoration: none;" />
 			<br /> <br />
 			<h:link value="Manage Users" outcome="/admin/UserList"
-				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"  style="text-decoration: none;"/>
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"
+				style="text-decoration: none;" />
 			<br /> <br />
 			<h:link value="Manage Programms" outcome="/trainer/programlist"
-				rendered="#{userProfileBean.hasRoleTrainer('TRAINER')}" style="text-decoration: none;"></h:link>
+				rendered="#{userProfileBean.hasRoleTrainer('TRAINER')}"
+				style="text-decoration: none;"></h:link>
 
 			<br /> <br />
-			<h:link value="Enroll /View Programms" outcome="/client/list" style="text-decoration: none;" ></h:link>
+			<h:link value="Enroll /View Programms" outcome="/client/list"
+				style="text-decoration: none;"
+				rendered="#{userProfileBean.hasRoleMember('MEMBER')}"></h:link>
 			<br /> <br />
 
 			<h:link value="Give Access" outcome="/admin/giveaccess"
-				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}" style="text-decoration: none;"></h:link>
-			<br />
-			<p:commandButton value="Logout" action="#{login.logout}"
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"
+				style="text-decoration: none;"></h:link>
+			<br /> <br />
+
+			<h:link value="Enable User " outcome="/admin/enableusers"
+				rendered="#{userProfileBean.hasRoleAdmin('ADMIN')}"
+				style="text-decoration: none;"></h:link>
+			<br /> <br /> <br />
+
+			<p:commandButton value="Logout" actionListener="#{login.logout}"
 				style="background: #c43636;color: white; border-radius: 20px;"></p:commandButton>
+
+
 		</div>
 		<div id="main">
 

@@ -3,7 +3,15 @@ package backend.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
@@ -21,14 +29,18 @@ public class Role implements Serializable {
 	private String name;
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
 	private List<User> users;
+
 	public Role() {
 	}
+
 	public Integer getId() {
 		return this.id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getDescription() {
 		return this.description;
 	}

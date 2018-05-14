@@ -4,7 +4,20 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
@@ -43,8 +56,8 @@ public class User implements Serializable {
 	@Column(name = "status")
 	private Integer status;
 	// bi-directional one-to-one association to Customer
-	//@OneToOne(mappedBy = "user")
-	//private Customer customer;
+	// @OneToOne(mappedBy = "user")
+	// private Customer customer;
 
 	// bi-drectional many-to-one association to Address
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -52,8 +65,7 @@ public class User implements Serializable {
 	private Address address;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 
 	private List<Role> roles;
 
@@ -126,6 +138,7 @@ public class User implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public Address getAddress() {
 		return this.address;
 	}

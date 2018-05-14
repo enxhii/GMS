@@ -15,4 +15,6 @@ public interface TrainerService {
 	public void deleteProgramm(Integer id);
 
 	public boolean customerExists(Integer id);
+
+	public Programm getProgramm(Integer id);
 }

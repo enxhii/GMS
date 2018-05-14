@@ -32,9 +32,12 @@
 						required="true" requiredMessage="Email can't be empty ">
 						<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
 					</p:inputText>
-					<h:outputText value="Gender: " />
-					<p:inputText id="editgender" value="#{userbean.update.gender}"
-						required="true" requiredMessage="Gender can't be empty "></p:inputText>
+					<h:outputText value=" Gender: " />
+
+					<h:selectOneRadio value="#{userbean.update.gender}">
+						<f:selectItem itemValue="female" itemLabel="Female" />
+						<f:selectItem itemValue="male" itemLabel="Male" />
+					</h:selectOneRadio>
 					<h:outputText value="Phone: " />
 					<p:inputText id="editphone" value="#{userbean.update.phone}"
 						required="true" requiredMessage="Phone can't be empty "></p:inputText>
@@ -51,7 +54,7 @@
 						<f:validateLength minimum="3" maximum="12" />
 					</p:inputText>
 
-					<p:selectCheckboxMenu id="multiple"
+					<p:selectCheckboxMenu id="multiple" label="Select Role"
 						value="#{userbean.update.roles}" showCheckbox="true"
 						multiple="true" converter="roleConverter" filter="true"
 						filterMatchMode="startsWith" panelStyle="width:250px"

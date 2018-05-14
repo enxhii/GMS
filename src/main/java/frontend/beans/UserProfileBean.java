@@ -1,60 +1,57 @@
 package frontend.beans;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
 import backend.model.User;
 import backend.service.RoleService;
 
 @SessionScoped
 @ManagedBean
 public class UserProfileBean {
-	private RoleEnum roleEnum;
 	@ManagedProperty(value = "#{roleServiceImpl}")
 	private RoleService roleService;
 	private User user;
-	final static Logger logger = LogManager.getLogger(UserProfileBean.class);
+	final static Logger LOGGER = LogManager.getLogger(UserProfileBean.class);
+
 	public void removeUser() {
 		user = null;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
 
 	public boolean hasRoleAdmin(RoleEnum role) {
 		try {
-			logger.debug(user.getId());
-			logger.debug(roleService.getRolesA(user.getId()));
-			return roleService.getRolesA(user.getId()).contains(role.ADMIN.toString());
+			LOGGER.debug(user.getId());
+			LOGGER.debug(roleService.getRolesA(user.getId()));
+			return roleService.getRolesA(user.getId()).contains(RoleEnum.ADMIN.toString());
 		} catch (Exception e) {
-			logger.debug(e);
+			LOGGER.debug(e);
 		}
 		return false;
 
 	}
 
 	public boolean hasRoleTrainer(RoleEnum role) {
-		logger.debug(user.getId());
-		logger.debug(roleService.getRolesA(user.getId()));
-		return roleService.getRolesA(user.getId()).contains(role.TRAINER.toString());
+		LOGGER.debug(user.getId());
+		LOGGER.debug(roleService.getRolesA(user.getId()));
+		return roleService.getRolesA(user.getId()).contains(RoleEnum.TRAINER.toString());
 	}
 
 	public boolean hasRoleMember(RoleEnum role) {
-		logger.debug(user.getId());
-		logger.debug(roleService.getRolesA(user.getId()));
-		return roleService.getRolesA(user.getId()).contains(role.MEMBER.toString());
-	}
-
-	public RoleEnum getRoleEnum() {
-		return roleEnum;
-	}
-
-	public void setRoleEnum(RoleEnum roleEnum) {
-		this.roleEnum = roleEnum;
+		LOGGER.debug(user.getId());
+		LOGGER.debug(roleService.getRolesA(user.getId()));
+		return roleService.getRolesA(user.getId()).contains(RoleEnum.MEMBER.toString());
 	}
 
 	public RoleService getRoleService() {

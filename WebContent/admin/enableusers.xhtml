@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/components/homepagetemplate.xhtml">
+	<h:head>
+		<title>Disabled Customer</title>
+	</h:head>
+	<ui:define name="body">
+		<h:outputStylesheet library="css" name="datatable.css"></h:outputStylesheet>
+		<h:form id="form">
+			<p:dataGrid id="customers" var="c"
+				value="#{userbean.disabledUsers}" columns="3" layout="grid"
+				width="400">
+				<p:panel header="#{c.username}">
+					<p:graphicImage value="/resources/images/user.jpg"
+						style="align:center" width="100" height="100" />
+					<p:commandLink value="Enable User" update="form:customers,:growl"
+						action="#{userbean.enableUser}">
+						<f:setPropertyActionListener value="#{c}"
+							target="#{userbean.checked}" />
+						<p:confirm header="Confirm"
+							message="Do you want to give access to this user?"
+							icon="ui-icon-alert" />
+					</p:commandLink>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Confirm" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+							update="customers" />
+						<p:commandButton value="Cancel" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+							update="customers" />
+					</p:confirmDialog>
+				</p:panel>
+			</p:dataGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -17,12 +17,12 @@
 				<p:panel header="#{c.username}">
 					<p:graphicImage value="/resources/images/user.jpg"
 						style="align:center" width="100" height="100" />
-					<p:commandLink value="Give Access" update="form:customers"
+					<p:commandLink value="Give Access" update="form:customers,:growl"
 						action="#{userbean.giveAccess}">
 						<f:setPropertyActionListener value="#{c}"
 							target="#{userbean.checked}" />
 						<p:confirm header="Confirm"
-							message="Do you want to give access to this user?"
+							message="Do you want to give access to this customer ?"
 							icon="ui-icon-alert" />
 					</p:commandLink>
 					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

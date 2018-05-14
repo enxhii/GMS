@@ -77,7 +77,7 @@
 						required="true" requiredMessage="ZipCode  is required">
 						<f:validateLength minimum="4" maximum="4" />
 					</p:inputText>
-					<p:selectCheckboxMenu id="multiple"
+					<p:selectCheckboxMenu id="multiple" label="Select Role"
 						value="#{userbean.selectedRole}" showCheckbox="true"
 						multiple="true" converter="roleConverter" filter="true"
 						filterMatchMode="startsWith" panelStyle="width:250px">

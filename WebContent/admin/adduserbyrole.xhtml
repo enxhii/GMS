@@ -65,7 +65,10 @@
 					</p:inputText>
 					<h:outputText value="Mobile " />
 					<p:inputText id="mobile" value="#{userbean.user.phone}"
-						required="true" requiredMessage="phone is required">
+						required="true"
+						requiredMessage="Mobile is required with 14 numbers">
+						<f:validateLength maximum="14" minimum="10" />
+
 					</p:inputText>
 					<h:outputText value=" City " />
 					<p:inputText id="cityadd" value="#{userbean.address.city}"
@@ -77,7 +80,7 @@
 						required="true" requiredMessage="ZipCode  is required">
 						<f:validateLength minimum="4" maximum="4" />
 					</p:inputText>
-					<p:selectCheckboxMenu id="multiple"
+					<p:selectCheckboxMenu id="multiple" label="Select Role"
 						value="#{userbean.selectedRole}" showCheckbox="true"
 						multiple="true" converter="roleConverter" filter="true"
 						filterMatchMode="startsWith" panelStyle="width:250px">

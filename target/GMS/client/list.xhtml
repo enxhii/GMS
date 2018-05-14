@@ -15,9 +15,9 @@
            Programms To Enroll
         </f:facet>
 
-				<p:panel header="#{p.header}" style="text-align:center">
+				<p:panel header="#{p.name}" style="text-align:center">
 					<p:graphicImage
-						value="/resources/images/prettyPhoto/programm/#{p.name}.jpg"
+						value="/resources/images/fitness/fitness4.jpg"
 						style="width:180px;height:100px;" />
 
 					<h:panelGrid columns="1" style="width:100%">
@@ -30,24 +30,7 @@
 							<f:setPropertyActionListener value="#{p}"
 								target="#{customerbean.programm}" />
 						</p:commandLink>
-						<p:commandLink action="#{customerbean.attendCourses}"
-							value="Enroll">
 
-							<f:setPropertyActionListener value="#{p}"
-								target="#{customerbean.selected}" />
-							<p:confirm header="Confirm!"
-								message="Do you want to enroll to this course?"
-								icon="ui-icon-alert" />
-
-						</p:commandLink>
-						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-							<p:commandButton value="Confirm" type="button"
-								styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
-								update="list" />
-							<p:commandButton value="Cancel" type="button"
-								styleClass="ui-confirmdialog-no" icon="ui-icon-close"
-								update="list" />
-						</p:confirmDialog>
 					</h:panelGrid>
 				</p:panel>
 
@@ -64,7 +47,7 @@
 						<h:outputText value="#{customerbean.programm.name}" />
 
 						<h:outputText value="Category" />
-						<h:outputText value="#{customerbean.programm.header}" />
+						<h:outputText value="#{customerbean.programm.category.name}" />
 
 						<h:outputText value="Burned Calory:" />
 						<h:outputText value="#{customerbean.programm.burnedCalory}" />

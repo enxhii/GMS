@@ -1,42 +1,46 @@
 package frontend.beans;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import backend.dao.TrainerDao;
+
+import backend.model.Category;
 import backend.model.Programm;
 import backend.model.User;
-import backend.service.GenericService;
+import backend.service.CategoryService;
 import backend.service.TrainerService;
 
 @ManagedBean
 @ViewScoped
 public class TrainerBean {
-	final static Logger logger = LogManager.getLogger(TrainerBean.class);
+	final static Logger LOGGER = LogManager.getLogger(TrainerBean.class);
 	private static final String PF_AddProgrammDialog_HIDE = "PF('AddProgrammDialog').hide()";
 	private static final String PF_EditProgrammDialog_HIDE = "PF('EditProgrammDialog').hide()";
+	private static final String PF_AddCategoryDialog_HIDE = "PF('AddCategoryDialog').hide()";
+
+	private ExternalContext externalContext;
 
 	@ManagedProperty(value = "#{trainerServiceImpl}")
 	private TrainerService trainerService;
 
-	@ManagedProperty(value = "#{genericServiceImpl}")
-	private GenericService<Programm> genericService;
-
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
 
-	@Autowired
-	private TrainerDao trainerDao;
+	@ManagedProperty(value = "#{categoryServiceImpl}")
+	private CategoryService categoryService;
 
 	private Programm programm;
 	private User user;
@@ -44,6 +48,9 @@ public class TrainerBean {
 	private Programm deletep;
 	private Programm update;
 	private List<String> levels;
+	private List<Category> categories;
+	private Category category;
+	private Category categoryAdd;
 
 	@PostConstruct
 	public void init() {
@@ -55,27 +62,35 @@ public class TrainerBean {
 		levels.add("Easy");
 		levels.add("Medium");
 		levels.add("Advanced ");
+		categories = categoryService.getCategory();
+		categoryAdd = new Category();
 	}
 
 	public void addProgramm() {
 		try {
 			user.setId(userProfileBean.getUser().getId());
 			trainerService.addProgramm(programm, user);
-			addMessage("Programm added succesfully");
+			addMessage("Programm " + "  " + programm.getName() + "  " + " added succesfully");
 			executeScript(PF_AddProgrammDialog_HIDE);
 		} catch (Exception e) {
-			logger.debug(e);
+			LOGGER.debug(e);
 		}
 
 	}
 
+	public void addCategory() {
+		categoryService.addCategory(categoryAdd);
+		addMessage("Category  " + " " + categoryAdd.getName() + "   " + "Added  succesfully");
+		executeScript(PF_AddCategoryDialog_HIDE);
+	}
+
 	public void deleteProgramm() {
-		logger.debug(trainerService.customerExists(deletep.getId()));
+		LOGGER.debug(trainerService.customerExists(deletep.getId()));
 		if (trainerService.customerExists(deletep.getId()) == false) {
-			logger.debug(deletep.getId());
+			LOGGER.debug(deletep.getId());
 			lista.remove(deletep);
 			trainerService.deleteProgramm(deletep.getId());
-			addMessage("Programm deleted succesfully");
+			addMessage("Programm " + deletep.getName() + " " + " deleted succesfully");
 		} else {
 			addMessage("Programm failed to delete .Customers are still registered !");
 
@@ -83,11 +98,27 @@ public class TrainerBean {
 
 	}
 
-	public String updateprogramm() {
+	public void updateprogramm() {
 		trainerService.updateProgram(update);
 		addMessage("Programm updated succesfully");
 		executeScript(PF_EditProgrammDialog_HIDE);
-		return "";
+	}
+
+	public void displayProgram() throws IOException {
+		trainerService.getProgramm(update.getId());
+		RequestContext.getCurrentInstance().execute("window.open(href ='../trainer/programminfo.xhtml ')");
+
+	}
+
+	public Category getCategory(Integer id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Id not null");
+		}
+		Optional<Category> optional = categories.stream().filter(category -> id.equals(category.getId())).findFirst();
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
 	}
 
 	public List<Programm> getProgramms() {
@@ -101,22 +132,6 @@ public class TrainerBean {
 
 	public void setTrainerService(TrainerService trainerService) {
 		this.trainerService = trainerService;
-	}
-
-	public GenericService<Programm> getGenericService() {
-		return genericService;
-	}
-
-	public void setGenericService(GenericService<Programm> genericService) {
-		this.genericService = genericService;
-	}
-
-	public TrainerDao getTrainerDao() {
-		return trainerDao;
-	}
-
-	public void setTrainerDao(TrainerDao trainerDao) {
-		this.trainerDao = trainerDao;
 	}
 
 	public Programm getProgramm() {
@@ -191,4 +206,45 @@ public class TrainerBean {
 	public void setLevels(List<String> levels) {
 		this.levels = levels;
 	}
+
+	public ExternalContext getExternalContext() {
+		return externalContext;
+	}
+
+	public void setExternalContext(ExternalContext externalContext) {
+		this.externalContext = externalContext;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public CategoryService getCategoryService() {
+		return categoryService;
+	}
+
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
+	public Category getCategoryAdd() {
+		return categoryAdd;
+	}
+
+	public void setCategoryAdd(Category categoryAdd) {
+		this.categoryAdd = categoryAdd;
+	}
+
 }

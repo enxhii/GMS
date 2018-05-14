@@ -18,8 +18,7 @@
 					<p:commandLink value="Submit"
 						action="#{customerbean.attendCourses}" icon="ui-icon-check"
 						update=":form:prog,:growl"
-						oncomplete="PF('programmDialog').show()"
-						style="margin-top:5px;  background: #c43636; color: white;" />
+						oncomplete="PF('programmDialog').show()" style="margin-top:5px;" />
 				</p:panelGrid>
 				<p:commandButton value="Close " styleClass="commandButton"
 					onclick="PF('ADialog').hide()"
@@ -28,11 +27,11 @@
 			</p:outputPanel>
 		</p:dialog>
 		<p:dialog modal="true" showEffect="fade" hideEffect="fade"
-			widgetVar="programmDialog">
+			header="You are now enrolled in :" widgetVar="programmDialog">
 			<h:panelGrid id="displayProgramms" columns="2">
-				<h:outputText value="Programm: " style="font-weight:bold" />
-				<h:outputText value="#{p.name}" style="font-weight:bold" />
-
+				<p:dataList value="#{customerbean.selectedProg}" var="p">
+					<h:outputText value="#{p}" style="font-weight:bold" />
+				</p:dataList>
 			</h:panelGrid>
 		</p:dialog>
 	</h:form>

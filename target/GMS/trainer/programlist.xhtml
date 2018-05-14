@@ -21,13 +21,11 @@
 
 			<h:form id="form">
 				<p:dataTable id="datatable" var="p" value="#{trainerBean.lista}"
-					paginator="true" style="background: #c43636">
+					rows="10" paginator="true" style="background: #c43636">
 					<p:column headerText="Id">
 						<h:outputText value="#{p.id}" />
 					</p:column>
-					<p:column headerText="Header">
-						<h:outputText value="#{p.header}" />
-					</p:column>
+
 					<p:column headerText="Name">
 						<h:outputText value="#{p.name}" />
 					</p:column>
@@ -79,12 +77,20 @@
 						</p:commandLink>
 					</p:column>
 					<p:column headerText="View Details">
-						<p:commandLink oncomplete="PF('ProgrammDialog').show()"
-							update=":detailform:programmDialog ">
+						<p:commandLink update=":detailform:programmDialog"
+							oncomplete="PF('ProgrammDialog').show()">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{trainerBean.update}" />
 							<h:outputText class="fa fa-search w3-xlarge"
 								style="color: #c43636;" />
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="Full Details">
+						<p:commandLink action="#{trainerBean. displayProgram}">
+							<h:outputText class="fa fa-search w3-xlarge"
+								style="color: #c43636;" />
+							<f:setPropertyActionListener value="#{p}"
+								target="#{trainerBean.update}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
@@ -93,12 +99,18 @@
 					oncomplete="PF('AddProgrammDialog').show()"
 					styleClass="w3-button w3-section"
 					style="background: #c43636; color: white;" />
+				<p:commandButton id="createcategory" icon="ui-icon-plus"
+					value="Add Category" update=":category:addCategoryDialog"
+					oncomplete="PF('AddCategoryDialog').show()"
+					styleClass="w3-button w3-section"
+					style="background: #c43636; color: white;" />
 			</h:form>
 		</div>
 		<ui:include src="updateprogramm.xhtml"></ui:include>
 		<ui:include src="addprogramm.xhtml"></ui:include>
 		<ui:include src="custprog.xhtml"></ui:include>
 		<ui:include src="details.xhtml"></ui:include>
+		<ui:include src="addcategory.xhtml"></ui:include>
 
 	</ui:define>
 </ui:composition>

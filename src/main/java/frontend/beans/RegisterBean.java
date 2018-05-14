@@ -1,23 +1,33 @@
 package frontend.beans;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.context.RequestContext;
+
 import backend.model.Address;
 import backend.model.User;
+import backend.service.CustomerService;
 import backend.service.UserService;
 
 @ManagedBean(name = "registerBean")
 @RequestScoped
 public class RegisterBean {
+	@ManagedProperty(value = "#{customerServiceImpl}")
+	private CustomerService customerService;
+
 	@ManagedProperty(value = "#{userServiceImpl}")
 	private UserService userService;
+
 	@ManagedProperty(value = "#{userProfileBean}")
 	private UserProfileBean userProfileBean;
+
 	private User user;
 	private String confirmPass;
 	private Address address;
@@ -29,18 +39,17 @@ public class RegisterBean {
 
 	}
 
-	public String addCustomer() {
+	public User addCustomer() throws IOException {
 		if (!userService.doesExists(user.getUsername())) {
-			userService.customerReg(user, address);
-			addMessage("You are now registered!" + "You will login to your account when your account will be active!"
-					+ " ");
-			this.user=new User();
-			return "";
-
+			customerService.customerReg(user, address);
+			addMessage(user.getUsername() + "  " + "You are now registered!" + "You will login to your account"
+					+ " after activation !" + " ");
+			user = new User();
+			address = new Address();
 		} else {
 			addMessage("This username is taken!Choose another one .");
 		}
-		return null;
+		return user;
 	}
 
 	public void addMessage(String summary) {
@@ -52,6 +61,7 @@ public class RegisterBean {
 		return FacesContext.getCurrentInstance();
 	}
 
+	@SuppressWarnings("unused")
 	private RequestContext requestContext() {
 		return RequestContext.getCurrentInstance();
 	}
@@ -94,5 +104,13 @@ public class RegisterBean {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public CustomerService getCustomerService() {
+		return customerService;
+	}
+
+	public void setCustomerService(CustomerService customerService) {
+		this.customerService = customerService;
 	}
 }

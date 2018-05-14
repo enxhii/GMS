@@ -14,7 +14,7 @@
 	<h:outputStylesheet library="css" name="input.css"></h:outputStylesheet>
 
 	<div class="main">
-		<p:growl id="growl" life="4000" />
+		<p:growl id="growl" life="5000" />
 		<h:form id="register">
 			<h:panelGrid id="grid" columns="2" style="margin-bottom:10px"
 				cellpadding="5">
@@ -73,7 +73,7 @@
 				
 				<p:inputText id="city" value="#{registerBean.address.city}"
 					required="true" requiredMessage="City is required">
-					<f:validateLength minimum="8" />
+					<f:validateLength minimum="3" />
 					<p:watermark for="city" value="City" />
 				</p:inputText>
 				
